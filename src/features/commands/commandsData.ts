@@ -684,6 +684,118 @@ export const commandsData: Record<string, TechnologyGuide> = {
       'Utilize AWS Budget alerts to monitor costs and prevent billing surprises.'
     ]
   },
+  linux_files: {
+    id: 'linux_files',
+    name: 'File & Directory',
+    category: 'Linux',
+    overview: 'Commands used to navigate the filesystem, view/edit files, search contents, and manage directory trees in Linux environments.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      { title: 'List directory contents with detail', code: 'ls -lah' },
+      { title: 'Create directories with parents', code: 'mkdir -p /path/to/nested/directory' },
+      { title: 'Find files by name recursively', code: 'find . -type f -name "*.log"' },
+      { title: 'Grep string pattern inside files', code: 'grep -rnI "search_string" /path/to/folder/' }
+    ],
+    build: [],
+    troubleshooting: [
+      { title: 'Disk usage of directory contents', code: 'du -sh * | sort -h' },
+      { title: 'Monitor file changes in real-time', code: 'tail -f /var/log/syslog' }
+    ],
+    commonErrors: [
+      { error: 'No space left on device.', solution: 'Clean package caches, delete orphaned files, or check disk usage distribution with `df -h` and `du -sh`.' }
+    ],
+    bestPractices: [
+      'Avoid running `rm -rf` without reviewing paths and checking double slashes.',
+      'Use find in combination with exec carefully to prevent unintended bulk changes.',
+      'Use grep with -I flag to skip searching binary files.'
+    ]
+  },
+  linux_sys: {
+    id: 'linux_sys',
+    name: 'System & Process',
+    category: 'Linux',
+    overview: 'Commands for monitoring CPU/RAM loads, active system threads, daemon services, and process resources.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      { title: 'Show active processes / RAM resources', code: 'htop' },
+      { title: 'Check RAM consumption in human units', code: 'free -h' },
+      { title: 'Check disk storage partitions', code: 'df -h' },
+      { title: 'Search for active process PID', code: 'pgrep -lf node' }
+    ],
+    build: [],
+    troubleshooting: [
+      { title: 'Kill process by PID forcefully', code: 'kill -9 <PID>' },
+      { title: 'Check system service journals', code: 'journalctl -u docker.service -n 50 -f' }
+    ],
+    commonErrors: [
+      { error: 'Failed to start service: Unit not found.', solution: 'Ensure the package is installed, or run `systemctl daemon-reload` to fetch newly added service files.' }
+    ],
+    bestPractices: [
+      'Use systemctl status before restarting services to understand their failure reasons.',
+      'Avoid kill -9 unless normal kill commands fail, as it prevents process cleanups.',
+      'Monitor swap space usage to identify application RAM leaks.'
+    ]
+  },
+  linux_net: {
+    id: 'linux_net',
+    name: 'Network & Ports',
+    category: 'Linux',
+    overview: 'Commands to test connectivity, analyze socket binds, verify open ports, and secure data transfers.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      { title: 'View listening TCP/UDP ports and PIDs', code: 'sudo ss -tulpn' },
+      { title: 'Verify server port connection', code: 'nc -zv 127.0.0.1 80' },
+      { title: 'Download files via web', code: 'wget -c https://example.com/file.tar.gz' },
+      { title: 'Inspect local network interfaces', code: 'ip a' }
+    ],
+    build: [],
+    troubleshooting: [
+      { title: 'Trace network packets routing', code: 'traceroute 8.8.8.8' },
+      { title: 'Inspect DNS details', code: 'dig example.com A' }
+    ],
+    commonErrors: [
+      { error: 'nc: connect to port failed: Connection refused.', solution: 'Verify that the service is running, listening on the correct network interface, and not blocked by local firewalls.' }
+    ],
+    bestPractices: [
+      'Use ss instead of the obsolete netstat command for faster port lookups.',
+      'Restrict socket binds to localhost (127.0.0.1) instead of public interfaces (0.0.0.0) unless necessary.',
+      'Check firewalld or ufw logs when encountering packet losses.'
+    ]
+  },
+  linux_permissions: {
+    id: 'linux_permissions',
+    name: 'Permissions & Users',
+    category: 'Linux',
+    overview: 'Commands for user account management, permission attributes, ownership controls, and security policies.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      { title: 'Make script file executable', code: 'chmod +x install.sh' },
+      { title: 'Change owner/group of files', code: 'sudo chown -R user:group /var/www' },
+      { title: 'Set strict read/write for owner only', code: 'chmod 600 config.json' },
+      { title: 'Create new user account', code: 'sudo useradd -m -s /bin/bash username' }
+    ],
+    build: [],
+    troubleshooting: [
+      { title: 'Add user to sudoers group', code: 'sudo usermod -aG sudo username' },
+      { title: 'Inspect current user privileges', code: 'sudo -l' }
+    ],
+    commonErrors: [
+      { error: 'Permission denied (publickey).', solution: 'Check directory permissions on remote ~/.ssh (must be 700) and authorized_keys (must be 600).' }
+    ],
+    bestPractices: [
+      'Adhere to the principle of least privilege: do not set files to 777.',
+      'Use user groups to coordinate read/write permissions for web root files.',
+      'Avoid running shell utilities or cron daemons directly as root.'
+    ]
+  },
   arch: {
     id: 'arch',
     name: 'Arch Linux',

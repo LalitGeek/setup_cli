@@ -79,6 +79,36 @@ const getTechTheme = (techId: string) => {
       text: 'text-orange-400',
       bg: 'from-orange-950/25 via-transparent to-transparent',
       border: 'border-orange-500/20'
+    },
+    linux_files: {
+      badge: 'bg-yellow-950/40 border-yellow-800 text-yellow-300',
+      text: 'text-yellow-400',
+      bg: 'from-yellow-950/20 via-transparent to-transparent',
+      border: 'border-yellow-500/20'
+    },
+    linux_sys: {
+      badge: 'bg-amber-950/40 border-amber-800 text-amber-300',
+      text: 'text-amber-400',
+      bg: 'from-amber-950/20 via-transparent to-transparent',
+      border: 'border-amber-500/20'
+    },
+    linux_net: {
+      badge: 'bg-cyan-950/40 border-cyan-800 text-cyan-300',
+      text: 'text-cyan-400',
+      bg: 'from-cyan-950/20 via-transparent to-transparent',
+      border: 'border-cyan-500/20'
+    },
+    linux_permissions: {
+      badge: 'bg-red-950/40 border-red-800 text-red-300',
+      text: 'text-red-400',
+      bg: 'from-red-950/20 via-transparent to-transparent',
+      border: 'border-red-500/20'
+    },
+    arch: {
+      badge: 'bg-sky-950/40 border-sky-800 text-sky-300',
+      text: 'text-sky-400',
+      bg: 'from-sky-950/20 via-transparent to-transparent',
+      border: 'border-sky-500/20'
     }
   };
   return themes[techId] || {

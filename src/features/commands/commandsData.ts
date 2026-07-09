@@ -684,116 +684,501 @@ export const commandsData: Record<string, TechnologyGuide> = {
       'Utilize AWS Budget alerts to monitor costs and prevent billing surprises.'
     ]
   },
-  linux_files: {
-    id: 'linux_files',
-    name: 'File & Directory',
+  linux: {
+    id: 'linux',
+    name: 'Linux Commands',
     category: 'Linux',
-    overview: 'Commands used to navigate the filesystem, view/edit files, search contents, and manage directory trees in Linux environments.',
+    overview: 'A comprehensive, interactive reference directory of standard Linux command utilities organized by administrative category.',
     requirements: [],
     installation: [],
     projectCreation: [],
     run: [
-      { title: 'List directory contents with detail', code: 'ls -lah' },
-      { title: 'Create directories with parents', code: 'mkdir -p /path/to/nested/directory' },
-      { title: 'Find files by name recursively', code: 'find . -type f -name "*.log"' },
-      { title: 'Grep string pattern inside files', code: 'grep -rnI "search_string" /path/to/folder/' }
+      {
+        title: '📁 File & Directory Management',
+        description: 'Navigate and manage filesystem folders and paths.',
+        list: [
+          'pwd|Print current working directory path',
+          'ls|List directory contents',
+          'tree|List directory contents recursively in tree structure',
+          'cd|Change working directory',
+          'mkdir|Create a new directory',
+          'rmdir|Remove empty directory',
+          'touch|Create empty file or update timestamps',
+          'cp|Copy files and directories',
+          'mv|Move or rename files and directories',
+          'rm|Remove files or directories',
+          'find|Find files and directories recursively',
+          'locate|Find files by database index lookup',
+          'stat|Display file status details',
+          'file|Determine file type format',
+          'basename|Strip directory path from filename',
+          'dirname|Extract directory path from file path',
+          'realpath|Resolve absolute path of file'
+        ]
+      },
+      {
+        title: '📄 File Viewing & Editing',
+        description: 'Read, parse, and edit file contents in terminal.',
+        list: [
+          'cat|Concatenate and display file content',
+          'tac|Display file content in reverse order (bottom-up)',
+          'less|Page through file content interactively',
+          'more|Page through file content page by page',
+          'head|Display the first lines of a file',
+          'tail|Display the last lines of a file',
+          'nano|Easy-to-use terminal text editor',
+          'vim|Advanced modal terminal text editor',
+          'vi|Standard UNIX visual text editor',
+          'emacs|Extensible and customizable text editor',
+          'bat|Clone of cat command with syntax highlighting',
+          'xxd|Make a hex dump of a file or do the reverse'
+        ]
+      },
+      {
+        title: '🔍 Search & Text Processing',
+        description: 'Process and search text content or streams using regex filters.',
+        list: [
+          'grep|Search for pattern in files using basic regular expressions',
+          'egrep|Search for pattern using extended regular expressions',
+          'fgrep|Search for fixed string patterns quickly',
+          'awk|Pattern scanning and text processing language',
+          'sed|Stream editor for filtering and transforming text',
+          'cut|Remove or extract sections from lines of files',
+          'sort|Sort lines of text files',
+          'uniq|Report or filter out repeated lines in a file',
+          'tr|Translate, squeeze, or delete characters',
+          'wc|Print newline, word, and byte counts for files',
+          'diff|Compare files line by line',
+          'comm|Compare two sorted files line by line',
+          'paste|Merge lines of files side-by-side',
+          'join|Join lines of two files on a common field',
+          'split|Split a file into fixed-size pieces',
+          'csplit|Split a file into sections determined by context patterns',
+          'strings|Print printable characters from a binary file'
+        ]
+      },
+      {
+        title: '📦 Package Management',
+        description: 'Install, update, remove, and query system applications categorywise.',
+        list: [
+          'apt|Install and update packages (Debian/Ubuntu high-level)',
+          'apt-get|Legacy command-line tool for package handling (Debian/Ubuntu)',
+          'dpkg|Low-level Debian package installer',
+          'dnf|Next-generation package manager (Fedora/RHEL)',
+          'yum|Legacy package manager (RHEL/CentOS)',
+          'rpm|Low-level RPM package manager (RHEL/Fedora)',
+          'pacman|Lightweight package manager (Arch Linux)',
+          'snap|Universal sandboxed app package manager (Snapcraft)',
+          'flatpak|Universal sandboxed desktop app package manager'
+        ]
+      },
+      {
+        title: '👤 User & Group Management',
+        description: 'Administer system user accounts, credentials, and access groups.',
+        list: [
+          'whoami|Print the current active user name',
+          'id|Print user and group IDs (UID/GID)',
+          'users|Print usernames of users currently logged in',
+          'who|Show active logged in sessions',
+          'w|Show active user sessions and tasks',
+          'useradd|Create a new user account',
+          'usermod|Modify an existing user account',
+          'userdel|Delete a user account',
+          'passwd|Change user account password',
+          'groupadd|Create a new user group',
+          'groupmod|Modify group properties',
+          'groupdel|Delete a user group',
+          'su|Switch current active shell user',
+          'sudo|Execute commands as superuser or another user'
+        ]
+      },
+      {
+        title: '🔐 Permissions & Ownership',
+        description: 'Govern directory access bits, file ownership, and access control lists.',
+        list: [
+          'chmod|Modify file Mode bits (Read/Write/Execute permissions)',
+          'chown|Change file owner and group owners',
+          'chgrp|Change file group ownership',
+          'umask|Define default file creation permissions mask',
+          'getfacl|Display file access control lists',
+          'setfacl|Configure file access control lists'
+        ]
+      },
+      {
+        title: '⚙ Process Management',
+        description: 'Monitor active tasks, execute background threads, and dispatch shutdown signals.',
+        list: [
+          'ps|Capture snapshot of active processes',
+          'top|Display Linux processes in real-time',
+          'htop|Interactive process viewer and system resource monitor',
+          'pgrep|Find process ID (PID) matching criteria',
+          'pidof|Get process ID of a running program',
+          'kill|Send termination/management signal to PID',
+          'killall|Kill processes by name',
+          'pkill|Signal processes by matching attributes',
+          'nice|Set scheduling priority of a command',
+          'renice|Alter scheduling priority of active PIDs',
+          'jobs|List background shell tasks',
+          'fg|Bring background task to foreground',
+          'bg|Resume suspended task in background',
+          'nohup|Run command immune to hangups',
+          'watch|Run command periodically in fullscreen'
+        ]
+      },
+      {
+        title: '💾 Disk & Storage',
+        description: 'Monitor disk blocks, mount paths, and format filesystems.',
+        list: [
+          'df|Report filesystem disk space usage',
+          'du|Estimate directory space usage recursively',
+          'lsblk|List block storage devices and partitions',
+          'blkid|Print block storage device attributes (UUID, type)',
+          'mount|Mount filesystem paths',
+          'umount|Unmount filesystem paths',
+          'fdisk|Create and modify MBR partition tables',
+          'parted|Manipulate partitions (supports GPT tables)',
+          'mkfs|Format partitions to Linux filesystem',
+          'fsck|Verify and repair filesystem integrity',
+          'tune2fs|Adjust tunable filesystem properties',
+          'swapon|Enable paging and swapping partitions',
+          'swapoff|Disable paging and swapping partitions'
+        ]
+      },
+      {
+        title: '🧠 Memory Management',
+        description: 'Verify RAM consumption, virtual memory, and kernel buffers.',
+        list: [
+          'free|Display amount of free and used memory in the system',
+          'vmstat|Report virtual memory statistics',
+          'slabtop|Display kernel slab cache information in real-time',
+          'smem|Report memory usage with shared memory representation',
+          'pmap|Report memory map of a process'
+        ]
+      },
+      {
+        title: '🌐 Networking',
+        description: 'Configure interfaces, monitor sockets, check connectivity, and parse DNS records.',
+        list: [
+          'ip|Configure routing, network devices, and interfaces',
+          'ifconfig|Legacy interface configuration utility',
+          'ping|Send ICMP ECHO_REQUEST to network hosts',
+          'traceroute|Print route packets trace to host',
+          'tracepath|Trace path to network host discovering MTU',
+          'ss|Investigate socket details (replaces netstat)',
+          'netstat|Print network connections and routing stats',
+          'arp|Manipulate system ARP cache',
+          'route|Show or manipulate IP routing table',
+          'dig|DNS lookup utility',
+          'nslookup|Query name servers interactively',
+          'host|DNS lookup utility',
+          'curl|Transfer data to/from server',
+          'wget|Download files from web links',
+          'telnet|User interface for TELNET protocol',
+          'nc|Network debugging and arbitrary data transfer (netcat)',
+          'tcpdump|Dump network traffic packets',
+          'tshark|Terminal-based packet analyzer (Wireshark CLI)',
+          'nmap|Network exploration and port scanner'
+        ]
+      },
+      {
+        title: '🔑 SSH & Remote Access',
+        description: 'Initiate secure shell connections, key gens, and synchronized file mirroring.',
+        list: [
+          'ssh|OpenSSH secure shell client for remote login',
+          'scp|Secure copy remote file transfer',
+          'sftp|Secure file transfer program',
+          'ssh-keygen|Generate and convert authentication keys',
+          'ssh-copy-id|Install public key to remote authorized_keys',
+          'rsync|Fast, incremental file synchronization tool',
+          'mosh|Mobile shell with roaming and local echo'
+        ]
+      },
+      {
+        title: '🔥 Firewall & Security',
+        description: 'Administer packet filters, cryptographic hashes, and UFW shields.',
+        list: [
+          'ufw|Uncomplicated Firewall configuration manager',
+          'iptables|Administration tool for packet filtering',
+          'nft|Administer packet filtering framework nftables',
+          'fail2ban-client|Ban malicious brute-forcing IPs',
+          'openssl|Cryptography and SSL/TLS CLI tool',
+          'gpg|GNU Privacy Guard encryption tool',
+          'sha256sum|Calculate or verify SHA256 checksums',
+          'md5sum|Calculate or verify MD5 checksums'
+        ]
+      },
+      {
+        title: '📜 System Information',
+        description: 'Display kernel configurations, hostname profiles, and system specifications.',
+        list: [
+          'uname|Print kernel version and system architecture',
+          'hostname|Show or set system hostname',
+          'hostnamectl|Control system hostname and machine ID',
+          'uptime|Show how long the system has been running',
+          'lscpu|Display CPU architecture information',
+          'lsmem|List available memory ranges and online status',
+          'lspci|List all PCI devices',
+          'lsusb|List USB devices',
+          'dmidecode|Dump BIOS DMI tables to human-readable format',
+          'hwinfo|Probe for hardware details',
+          'inxi|Command-line system hardware info script',
+          'neofetch|Distro info and ASCII logo layout (deprecated)',
+          'fastfetch|Modern and fast C implementation of neofetch'
+        ]
+      },
+      {
+        title: '📊 Monitoring',
+        description: 'Inspect CPU ticks, disk input/output, and bandwidth utilization.',
+        list: [
+          'top|Standard real-time process monitoring display',
+          'htop|Interactive process and thread viewer',
+          'iotop|Simple top-like I/O monitor for processes',
+          'iftop|Display bandwidth usage on an interface in real-time',
+          'bmon|Bandwidth monitor and rate estimator',
+          'dstat|Versatile resource stats tool (combines vmstat, iostat)',
+          'iostat|Report CPU and I/O statistics for devices',
+          'sar|Collect, report, or save system activity information',
+          'mpstat|Report processors related statistics',
+          'vmstat|Report virtual memory and scheduling statistics'
+        ]
+      },
+      {
+        title: '⚡ Systemctl & Services',
+        description: 'Control systemd daemons, localizations, time settings, and active sessions.',
+        list: [
+          'systemctl|Control systemd system and service manager',
+          'service|Run system V init scripts (compatibility wrapper)',
+          'journalctl|Query systemd journal logs database',
+          'loginctl|Control systemd session manager',
+          'timedatectl|Configure system clock, date, and timezone settings',
+          'hostnamectl|Control system hostname and machine ID',
+          'localectl|Control system keyboard layout and locale settings'
+        ]
+      },
+      {
+        title: '📅 Scheduling',
+        description: 'Establish cron expressions, automated timers, and delayed commands.',
+        list: [
+          'crontab|Maintain cron jobs for automated schedulers',
+          'at|Queue commands for execution at later time',
+          'batch|Queue commands for execution depending on load levels',
+          'systemd timers|Unit files triggering systemd tasks'
+        ]
+      },
+      {
+        title: '📦 Archive & Compression',
+        description: 'Pack folders into gzip, tar, bzip, zip, and xz archives.',
+        list: [
+          'tar|Tape archive compression and extraction utility',
+          'gzip|Compress files using Lempel-Ziv coding',
+          'gunzip|Decompress gzip archives',
+          'bzip2|Compress files using block-sorting algorithm',
+          'bunzip2|Decompress bzip2 archives',
+          'xz|Compress or decompress files using LZMA algorithm',
+          'unzip|List, test, and extract ZIP archives',
+          'zip|Package and compress files in ZIP format',
+          '7z|High compression ratio file archiver'
+        ]
+      },
+      {
+        title: '🌍 Environment Variables',
+        description: 'Configure and print environment arrays, aliases, and shell sources.',
+        list: [
+          'env|Run program in modified environment or print variables',
+          'printenv|Print system environment variables',
+          'export|Mark variables to be inherited by child processes',
+          'unset|Delete variables or functions from memory',
+          'source|Execute file commands in current shell process',
+          'alias|Create command string shortcuts',
+          'unalias|Remove active command string shortcuts'
+        ]
+      },
+      {
+        title: '🐚 Shell Commands',
+        description: 'Access terminal command history, prints, and execution evaluations.',
+        list: [
+          'echo|Print text line to standard output',
+          'printf|Format and print data text parameters',
+          'history|Display terminal command history logs',
+          'clear|Clear the active terminal viewport',
+          'reset|Reinitialize the terminal context',
+          'exit|Terminate active shell terminal',
+          'exec|Replace current active shell with new command',
+          'eval|Evaluate arguments as a shell command',
+          'which|Locate command binary path inside PATH environment',
+          'whereis|Locate source, binary, and manual pages for command',
+          'type|Show how shell interprets command name input'
+        ]
+      },
+      {
+        title: '📂 File Transfer',
+        description: 'Securely sync and transfer files via FTP, SSH, or HTTP.',
+        list: [
+          'rsync|Faster file sync recursively with compression',
+          'scp|Secure copy file transfer using SSH protocol',
+          'wget|Retrieve files via HTTP, HTTPS, and FTP links',
+          'curl|Transfer data with URL syntax support',
+          'ftp|Interactive File Transfer Protocol client',
+          'sftp|Interactive secure file transfer client'
+        ]
+      },
+      {
+        title: '🔄 Boot & Shutdown',
+        description: 'Trigger machine power cycles, halts, and systemd reboots.',
+        list: [
+          'reboot|Reboot the machine system',
+          'shutdown|Schedule machine poweroffs or reboots',
+          'poweroff|Power down the computer hardware',
+          'halt|Stop all CPU functions',
+          'init|Control system initialization runlevels',
+          'systemctl reboot|Reboot machine via systemd request',
+          'systemctl poweroff|Power down machine via systemd request'
+        ]
+      },
+      {
+        title: '📋 Logs',
+        description: 'Monitor system log events, dmesg ring buffers, and custom syslog writes.',
+        list: [
+          'journalctl|Read and query systemd journal system logs',
+          'dmesg|Inspect and control kernel ring logs',
+          'logger|Write message strings to system syslog database',
+          'tail|Monitor log updates in real-time (tail -f)',
+          'less|View log contents paging interactively'
+        ]
+      },
+      {
+        title: '🐳 Containers',
+        description: 'Pack, spin up, and manage sandboxed OCI containers.',
+        list: [
+          'docker|Docker container manager command-line',
+          'docker-compose|Define multi-container deployments',
+          'podman|Daemonless container engine (OCI standard)',
+          'nerdctl|Docker-compatible container manager for containerd'
+        ]
+      },
+      {
+        title: '☸ Kubernetes',
+        description: 'Manage clusters, orchestrations, and local kinds/minikubes.',
+        list: [
+          'kubectl|Kubernetes cluster orchestrator CLI client',
+          'helm|Package manager for Kubernetes configurations',
+          'minikube|Spin up single-node local Kubernetes cluster',
+          'kind|Run Kubernetes cluster inside local Docker containers'
+        ]
+      },
+      {
+        title: '🛠 Development Tools',
+        description: 'Manage compilations, runtimes, package builders, and local build tools.',
+        list: [
+          'git|Distributed version control system client',
+          'make|Automated compilation parser using Makefiles',
+          'gcc|GNU C Compiler framework launcher',
+          'g++|GNU C++ Compiler framework launcher',
+          'cmake|Cross-platform build system manager',
+          'python|Python language runtime engine launcher',
+          'node|Node.js JavaScript server runtime engine',
+          'npm|Node Package Manager client installer',
+          'yarn|Facebook package manager client installer',
+          'pnpm|Fast disk space efficient package manager client',
+          'bun|All-in-one JS runtime and package manager',
+          'java|Java SE Runtime Environment launcher',
+          'javac|Java SE programming compiler tool',
+          'go|Go compiler toolchain launcher',
+          'rustc|Rust compiler launcher',
+          'cargo|Rust package builder tool'
+        ]
+      },
+      {
+        title: '☁ Cloud CLI',
+        description: 'Configure and invoke APIs for hosting, server deployments, and sync policies.',
+        list: [
+          'aws|Amazon Web Services command-line client',
+          'az|Microsoft Azure command-line client',
+          'gcloud|Google Cloud Platform command-line client',
+          'doctl|DigitalOcean resource command-line client',
+          'flyctl|Fly.io hosting command-line manager',
+          'vercel|Vercel cloud host application manager CLI',
+          'netlify|Netlify cloud host application manager CLI'
+        ]
+      },
+      {
+        title: '🗃 Database CLI',
+        description: 'Initiate SQL command prompts, redis keyspaces, and sqlite terminals.',
+        list: [
+          'psql|PostgreSQL interactive database terminal client',
+          'mysql|MySQL database command line client',
+          'mariadb|MariaDB database command line client',
+          'sqlite3|SQLite file-based database client',
+          'redis-cli|Redis cache database CLI console',
+          'mongosh|MongoDB shell client console'
+        ]
+      },
+      {
+        title: '🔧 Virtualization',
+        description: 'Provision virtual machines, hypervisors, and qemus.',
+        list: [
+          'virsh|Manage libvirt domains and hypervisors',
+          'virt-install|Provision virtual machines via libvirt commands',
+          'qemu|Machine emulator and virtualizer tool',
+          'VBoxManage|VirtualBox command-line interface helper',
+          'multipass|Manage Ubuntu VMs locally via CLI'
+        ]
+      },
+      {
+        title: '📈 Performance',
+        description: 'Trace runtime kernel calls, stress test workloads, and run benchmarks.',
+        list: [
+          'perf|Performance monitoring utility for Linux kernels',
+          'strace|Trace kernel system calls and signal transfers',
+          'ltrace|Trace library calls in program processes',
+          'time|Calculate command execution time properties',
+          'hyperfine|Command-line program benchmarking utility',
+          'stress|Stress test CPU, memory, I/O, and disk sectors',
+          'stress-ng|Intense hardware system stress test tool'
+        ]
+      },
+      {
+        title: '🛡 Security & Pentesting',
+        description: 'Audit network ports, crack passwords, run packet sniffs, and inspect SQL injection vulnerabilities.',
+        list: [
+          'nmap|Network exploration and security port scanner',
+          'hydra|Fast network login credentials cracker',
+          'sqlmap|Automated SQL injection vulnerability detector',
+          'nikto|Web server vulnerability detector scanner',
+          'metasploit (msfconsole)|Penetration testing framework CLI launcher',
+          'aircrack-ng|802.11 wireless keys cracking framework',
+          'john|John the Ripper password cracker',
+          'hashcat|Rule-based multi-threaded password cracker',
+          'wireshark|Interactive network packet analyzer (GUI)',
+          'tcpdump|Command-line packet sniffer analysis tool'
+        ]
+      },
+      {
+        title: '📚 Help & Documentation',
+        description: 'Access command manual pages, simplified summaries, and built-in descriptors.',
+        list: [
+          'man|Format and display system manual pages (Standard)',
+          'info|Read complex GNU info documents',
+          'help|Display built-in shell commands description',
+          'apropos|Search manual page titles for keywords',
+          'whatis|Print single-line manual descriptions',
+          'tldr|Simplified and community-driven cheat-sheets'
+        ]
+      }
     ],
     build: [],
-    troubleshooting: [
-      { title: 'Disk usage of directory contents', code: 'du -sh * | sort -h' },
-      { title: 'Monitor file changes in real-time', code: 'tail -f /var/log/syslog' }
+    troubleshooting: [],
+    usefulLinks: [
+      { label: 'TLDR Pages', url: 'https://tldr.sh/' },
+      { label: 'Linux Commands Directory', url: 'https://www.kernel.org/doc/man-pages/' }
     ],
     commonErrors: [
-      { error: 'No space left on device.', solution: 'Clean package caches, delete orphaned files, or check disk usage distribution with `df -h` and `du -sh`.' }
+      { error: 'Command not found.', solution: 'Check path spelling, verify the binary is inside your PATH environment variable, or run package manager to install it.' }
     ],
     bestPractices: [
-      'Avoid running `rm -rf` without reviewing paths and checking double slashes.',
-      'Use find in combination with exec carefully to prevent unintended bulk changes.',
-      'Use grep with -I flag to skip searching binary files.'
-    ]
-  },
-  linux_sys: {
-    id: 'linux_sys',
-    name: 'System & Process',
-    category: 'Linux',
-    overview: 'Commands for monitoring CPU/RAM loads, active system threads, daemon services, and process resources.',
-    requirements: [],
-    installation: [],
-    projectCreation: [],
-    run: [
-      { title: 'Show active processes / RAM resources', code: 'htop' },
-      { title: 'Check RAM consumption in human units', code: 'free -h' },
-      { title: 'Check disk storage partitions', code: 'df -h' },
-      { title: 'Search for active process PID', code: 'pgrep -lf node' }
-    ],
-    build: [],
-    troubleshooting: [
-      { title: 'Kill process by PID forcefully', code: 'kill -9 <PID>' },
-      { title: 'Check system service journals', code: 'journalctl -u docker.service -n 50 -f' }
-    ],
-    commonErrors: [
-      { error: 'Failed to start service: Unit not found.', solution: 'Ensure the package is installed, or run `systemctl daemon-reload` to fetch newly added service files.' }
-    ],
-    bestPractices: [
-      'Use systemctl status before restarting services to understand their failure reasons.',
-      'Avoid kill -9 unless normal kill commands fail, as it prevents process cleanups.',
-      'Monitor swap space usage to identify application RAM leaks.'
-    ]
-  },
-  linux_net: {
-    id: 'linux_net',
-    name: 'Network & Ports',
-    category: 'Linux',
-    overview: 'Commands to test connectivity, analyze socket binds, verify open ports, and secure data transfers.',
-    requirements: [],
-    installation: [],
-    projectCreation: [],
-    run: [
-      { title: 'View listening TCP/UDP ports and PIDs', code: 'sudo ss -tulpn' },
-      { title: 'Verify server port connection', code: 'nc -zv 127.0.0.1 80' },
-      { title: 'Download files via web', code: 'wget -c https://example.com/file.tar.gz' },
-      { title: 'Inspect local network interfaces', code: 'ip a' }
-    ],
-    build: [],
-    troubleshooting: [
-      { title: 'Trace network packets routing', code: 'traceroute 8.8.8.8' },
-      { title: 'Inspect DNS details', code: 'dig example.com A' }
-    ],
-    commonErrors: [
-      { error: 'nc: connect to port failed: Connection refused.', solution: 'Verify that the service is running, listening on the correct network interface, and not blocked by local firewalls.' }
-    ],
-    bestPractices: [
-      'Use ss instead of the obsolete netstat command for faster port lookups.',
-      'Restrict socket binds to localhost (127.0.0.1) instead of public interfaces (0.0.0.0) unless necessary.',
-      'Check firewalld or ufw logs when encountering packet losses.'
-    ]
-  },
-  linux_permissions: {
-    id: 'linux_permissions',
-    name: 'Permissions & Users',
-    category: 'Linux',
-    overview: 'Commands for user account management, permission attributes, ownership controls, and security policies.',
-    requirements: [],
-    installation: [],
-    projectCreation: [],
-    run: [
-      { title: 'Make script file executable', code: 'chmod +x install.sh' },
-      { title: 'Change owner/group of files', code: 'sudo chown -R user:group /var/www' },
-      { title: 'Set strict read/write for owner only', code: 'chmod 600 config.json' },
-      { title: 'Create new user account', code: 'sudo useradd -m -s /bin/bash username' }
-    ],
-    build: [],
-    troubleshooting: [
-      { title: 'Add user to sudoers group', code: 'sudo usermod -aG sudo username' },
-      { title: 'Inspect current user privileges', code: 'sudo -l' }
-    ],
-    commonErrors: [
-      { error: 'Permission denied (publickey).', solution: 'Check directory permissions on remote ~/.ssh (must be 700) and authorized_keys (must be 600).' }
-    ],
-    bestPractices: [
-      'Adhere to the principle of least privilege: do not set files to 777.',
-      'Use user groups to coordinate read/write permissions for web root files.',
-      'Avoid running shell utilities or cron daemons directly as root.'
+      'Use tldr or man command to preview flags before executing new commands.',
+      'Pipe large command outputs into `less` to read page-by-page without freeze.',
+      'Check system log files inside /var/log/ when applications throw general failures.'
     ]
   },
   arch: {

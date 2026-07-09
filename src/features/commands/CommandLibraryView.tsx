@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Folder, Play, Check, Copy, Download, Link2, AlertTriangle, Lightbulb } from 'lucide-react';
+import { BookOpen, Folder, Play, Check, Copy, Download, Link2, AlertTriangle, Lightbulb, Search } from 'lucide-react';
 import type { TechnologyGuide, CommandSection } from './commandsData';
 
 interface CommandLibraryViewProps {
@@ -80,29 +80,11 @@ const getTechTheme = (techId: string) => {
       bg: 'from-orange-950/25 via-transparent to-transparent',
       border: 'border-orange-500/20'
     },
-    linux_files: {
-      badge: 'bg-yellow-950/40 border-yellow-800 text-yellow-300',
-      text: 'text-yellow-400',
-      bg: 'from-yellow-950/20 via-transparent to-transparent',
-      border: 'border-yellow-500/20'
-    },
-    linux_sys: {
+    linux: {
       badge: 'bg-amber-950/40 border-amber-800 text-amber-300',
       text: 'text-amber-400',
       bg: 'from-amber-950/20 via-transparent to-transparent',
       border: 'border-amber-500/20'
-    },
-    linux_net: {
-      badge: 'bg-cyan-950/40 border-cyan-800 text-cyan-300',
-      text: 'text-cyan-400',
-      bg: 'from-cyan-950/20 via-transparent to-transparent',
-      border: 'border-cyan-500/20'
-    },
-    linux_permissions: {
-      badge: 'bg-red-950/40 border-red-800 text-red-300',
-      text: 'text-red-400',
-      bg: 'from-red-950/20 via-transparent to-transparent',
-      border: 'border-red-500/20'
     },
     arch: {
       badge: 'bg-sky-950/40 border-sky-800 text-sky-300',
@@ -125,13 +107,200 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   const theme = getTechTheme(guide.id);
   const [activeTab, setActiveTab] = useState<'setup' | 'structure' | 'prod' | 'errors'>('setup');
   const [copiedSectionIdx, setCopiedSectionIdx] = useState<string | null>(null);
+  
+  // Custom Linux State Hooks (declared unconditionally at start)
+  const [linuxSearch, setLinuxSearch] = useState('');
+  const [selectedLinuxCat, setSelectedLinuxCat] = useState('All');
+  const [linuxCopiedCmd, setLinuxCopiedCmd] = useState<string | null>(null);
+
+  const handleCopyLinuxCmd = (cmd: string) => {
+    navigator.clipboard.writeText(cmd);
+    setLinuxCopiedCmd(cmd);
+    setTimeout(() => setLinuxCopiedCmd(null), 1500);
+  };
 
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
     setCopiedSectionIdx(id);
-    // Removed audit logging
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
+
+  if (guide.id === 'linux') {
+    const filteredCategories = guide.run.map(category => {
+      if (!category.list) return null;
+      
+      const matchesSearch = category.list.filter(item => {
+        const [cmd, desc] = item.split('|');
+        const query = linuxSearch.toLowerCase();
+        return cmd.toLowerCase().includes(query) || desc.toLowerCase().includes(query);
+      });
+
+      if (matchesSearch.length === 0) return null;
+
+      // Filter by selected category tab if not 'All'
+      if (selectedLinuxCat !== 'All' && category.title !== selectedLinuxCat) return null;
+
+      return {
+        ...category,
+        list: matchesSearch
+      };
+    }).filter(Boolean) as CommandSection[];
+
+    return (
+      <div className="flex flex-col h-full bg-[#0b0c10]/40 rounded-xl border border-white/5 overflow-hidden">
+        {/* Linux Banner / Header */}
+        <div className={`p-4 md:p-6 bg-gradient-to-r ${theme.bg} border-b border-white/10`}>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span className={`text-[10px] border px-2.5 py-1 rounded-md font-semibold tracking-wider uppercase ${theme.badge}`}>
+                {guide.category}
+              </span>
+              <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
+                <span>🐧 Linux Commands Directory</span>
+              </h1>
+              <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
+                {guide.overview}
+              </p>
+            </div>
+            
+            {/* Search Input in header */}
+            <div className="relative w-full md:w-80 flex-shrink-0">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search commands, e.g. ls, grep, ufw..."
+                value={linuxSearch}
+                onChange={(e) => setLinuxSearch(e.target.value)}
+                className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Content Area with side categories list */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Side Categories list - Sticky scroll */}
+          <div className="hidden lg:block w-64 border-r border-white/5 bg-black/20 overflow-y-auto p-4 space-y-1.5 flex-shrink-0">
+            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block px-2 mb-2">
+              Categories
+            </span>
+            <button
+              onClick={() => setSelectedLinuxCat('All')}
+              className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition flex items-center justify-between ${
+                selectedLinuxCat === 'All'
+                  ? 'bg-purple-950/40 text-purple-400 font-bold border-l-2 border-purple-500'
+                  : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+              }`}
+            >
+              <span>All Categories</span>
+              <span className="text-[10px] bg-gray-900 border border-white/5 text-gray-500 px-1.5 py-0.2 rounded-full font-mono">
+                {guide.run.reduce((acc, cat) => acc + (cat.list?.length || 0), 0)}
+              </span>
+            </button>
+            {guide.run.map((cat, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelectedLinuxCat(cat.title)}
+                className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition flex items-center justify-between ${
+                  selectedLinuxCat === cat.title
+                    ? 'bg-purple-950/40 text-purple-400 font-bold border-l-2 border-purple-500'
+                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                }`}
+              >
+                <span className="truncate pr-2">{cat.title.replace(/^[^\s]+\s+/, '')}</span>
+                <span className="text-[10px] bg-gray-900 border border-white/5 text-gray-500 px-1.5 py-0.2 rounded-full font-mono flex-shrink-0">
+                  {cat.list?.length || 0}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Main Grid View */}
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+            {/* Mobile Categories Dropdown selector (Only on small viewports) */}
+            <div className="lg:hidden w-full mb-2 bg-black/40 border border-white/5 p-3 rounded-xl flex items-center justify-between">
+              <span className="text-xs text-gray-400 font-semibold">Category:</span>
+              <select
+                value={selectedLinuxCat}
+                onChange={(e) => setSelectedLinuxCat(e.target.value)}
+                className="bg-gray-900 border border-white/10 rounded-lg text-xs text-white px-2.5 py-1.5 focus:outline-none focus:border-purple-500/50"
+              >
+                <option value="All">All Categories</option>
+                {guide.run.map((cat, idx) => (
+                  <option key={idx} value={cat.title}>
+                    {cat.title.replace(/^[^\s]+\s+/, '')}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {filteredCategories.length === 0 ? (
+              <div className="h-60 flex flex-col items-center justify-center text-center p-6 border border-dashed border-white/5 rounded-xl">
+                <Search className="w-8 h-8 text-gray-600 mb-2" />
+                <h4 className="text-sm font-semibold text-gray-400">No commands found</h4>
+                <p className="text-xs text-gray-600 mt-1 max-w-sm">
+                  We couldn't find any commands matching "{linuxSearch}". Check your spelling or try another keyword.
+                </p>
+              </div>
+            ) : (
+              filteredCategories.map((cat, catIdx) => (
+                <div key={catIdx} className="space-y-3">
+                  <div className="border-b border-white/5 pb-2">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                      <span>{cat.title}</span>
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{cat.description}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                    {cat.list?.map((item, itemIdx) => {
+                      const [cmd, desc] = item.split('|');
+                      const isCopied = linuxCopiedCmd === cmd;
+                      return (
+                        <div
+                          key={itemIdx}
+                          onClick={() => handleCopyLinuxCmd(cmd)}
+                          className="bg-gray-900/40 border border-white/5 p-3.5 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-2 relative"
+                          title="Click to copy command"
+                        >
+                          <div className="flex items-center justify-between">
+                            <code className="font-mono text-purple-300 text-xs md:text-sm font-semibold">
+                              {cmd}
+                            </code>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleCopyLinuxCmd(cmd);
+                              }}
+                              className="p-1 rounded-md text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
+                            >
+                              {isCopied ? (
+                                <Check className="w-3.5 h-3.5 text-green-400" />
+                              ) : (
+                                <Copy className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition" />
+                              )}
+                            </button>
+                          </div>
+                          <p className="text-xs text-gray-400 leading-relaxed">
+                            {desc}
+                          </p>
+                          {isCopied && (
+                            <span className="absolute top-1 right-8 text-[9px] font-bold text-green-400 bg-green-950/60 border border-green-900 px-1 rounded">
+                              Copied!
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleDownload = (code: string, filename: string) => {
     const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });

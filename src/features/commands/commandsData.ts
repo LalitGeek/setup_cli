@@ -198,6 +198,259 @@ export const commandsData: Record<string, TechnologyGuide> = {
       'Write tests in views, models, and forms.'
     ]
   },
+  flask: {
+    id: 'flask',
+    name: 'Flask',
+    category: 'Backend',
+    overview: 'Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries, keeping the core extensible.',
+    requirements: [
+      { title: 'Python 3.8+', code: 'python3 --version' },
+      { title: 'pip (Python package manager)', code: 'pip3 --version' }
+    ],
+    installation: [
+      { title: 'Install Flask package', code: 'pip install Flask' }
+    ],
+    projectCreation: [
+      { title: 'Create virtualenv and setup minimal app', code: 'mkdir flask-app && cd flask-app\npython3 -m venv venv\nsource venv/bin/activate\npip install Flask\necho -e "from flask import Flask\\napp = Flask(__name__)\\n\\n@app.route(\'/\')\\ndef hello():\\n    return \'Hello, World!\'\\n\\nif __name__ == \'__main__\':\\n    app.run(debug=True)" > app.py' }
+    ],
+    folderStructure: `flask-app/
+├── app.py
+├── requirements.txt
+├── static/
+│   └── style.css
+├── templates/
+│   └── index.html
+└── venv/`,
+    run: [
+      { title: 'Run Development Server', code: 'flask run --debug' },
+      { title: 'Run with Custom Port', code: 'flask run --port=8080' }
+    ],
+    build: [
+      { title: 'Freeze Dependencies', code: 'pip freeze > requirements.txt' }
+    ],
+    production: [
+      { title: 'Configure Gunicorn WSGI Server', code: 'pip install gunicorn\ngunicorn -w 4 -b 0.0.0.0:8000 app:app' }
+    ],
+    deployment: [
+      { title: 'Systemd Service Configuration', description: 'Configure a systemd service file (/etc/systemd/system/flaskapp.service) to daemonize and monitor the Gunicorn server process automatically.' }
+    ],
+    troubleshooting: [
+      { title: 'Enable debug mode manually', code: 'export FLASK_APP=app.py\nexport FLASK_DEBUG=1\nflask run' }
+    ],
+    usefulLinks: [
+      { label: 'Flask Documentation', url: 'https://flask.palletsprojects.com/' }
+    ],
+    commonErrors: [
+      { error: 'Error: Could not locate a Flask application.', solution: 'Ensure your app script is named app.py or export the entrypoint using `export FLASK_APP=filename.py`.' }
+    ],
+    bestPractices: [
+      'Use blueprints to organize large-scale project code into modular sub-modules.',
+      'Always utilize virtual environments (venv) to isolate package dependencies.',
+      'Configure python-dotenv to decouple environment variables from configuration files.'
+    ]
+  },
+  nodejs: {
+    id: 'nodejs',
+    name: 'Node.js',
+    category: 'Backend',
+    overview: 'Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside a web browser, built on Chrome\'s V8 JavaScript engine.',
+    requirements: [
+      { title: 'Terminal Shell access', code: 'node --version' }
+    ],
+    installation: [
+      { title: 'Debian/Ubuntu installation', code: 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -\nsudo apt-get install -y nodejs' },
+      { title: 'macOS Installation', code: 'brew install node' }
+    ],
+    projectCreation: [
+      { title: 'Initialize Node project', code: 'mkdir node-app && cd node-app && npm init -y' }
+    ],
+    folderStructure: `node-app/
+├── index.js
+├── package.json
+├── package-lock.json
+└── node_modules/`,
+    run: [
+      { title: 'Run JS File', code: 'node index.js' },
+      { title: 'Run with watch mode (Node 18+)', code: 'node --watch index.js' }
+    ],
+    build: [
+      { title: 'Install Dependencies', code: 'npm install' }
+    ],
+    production: [
+      { title: 'Run under PM2 Process Manager', code: 'npm install -g pm2\npm2 start index.js --name "node-app"' }
+    ],
+    deployment: [
+      { title: 'Configure reverse proxy in Nginx', description: 'Configure an upstream proxy block pointing to port 3000 to serve web requests through Nginx.' }
+    ],
+    troubleshooting: [
+      { title: 'Reinstall node_modules clean', code: 'rm -rf node_modules package-lock.json && npm install' }
+    ],
+    usefulLinks: [
+      { label: 'Node.js Official Website', url: 'https://nodejs.org' }
+    ],
+    commonErrors: [
+      { error: 'Error: Cannot find module "xxx"', solution: 'Install the missing library dependency by running `npm install xxx`.' }
+    ],
+    bestPractices: [
+      'Use npm ci in deployment workflows to enforce locked versions from package-lock.json.',
+      'Decouple configurations and secrets into environment files using dotenv.',
+      'Listen for uncaught exceptions to gracefully shut down server processes.'
+    ]
+  },
+  express: {
+    id: 'express',
+    name: 'Express.js',
+    category: 'Backend',
+    overview: 'Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.',
+    requirements: [
+      { title: 'Node.js Runtime', code: 'node -v' },
+      { title: 'npm client', code: 'npm -v' }
+    ],
+    installation: [
+      { title: 'Install express framework', code: 'npm install express' }
+    ],
+    projectCreation: [
+      { title: 'Scaffold using express-generator', code: 'npx express-generator --git my-express-app\ncd my-express-app && npm install' }
+    ],
+    folderStructure: `my-express-app/
+├── app.js
+├── bin/
+│   └── www
+├── package.json
+├── public/
+├── routes/
+│   ├── index.js
+│   └── users.js
+└── views/`,
+    run: [
+      { title: 'Start default server', code: 'npm start' },
+      { title: 'Run with Nodemon (live reload)', code: 'npx nodemon bin/www' }
+    ],
+    build: [
+      { title: 'Prune non-production dependencies', code: 'npm prune --production' }
+    ],
+    production: [
+      { title: 'PM2 Cluster mode launcher', code: 'pm2 start bin/www -i max' }
+    ],
+    deployment: [
+      { title: 'Expose through reverse proxy', description: 'Configure routing maps in Nginx pointing to localhost ports.' }
+    ],
+    troubleshooting: [
+      { title: 'Check and kill active port', code: 'npx kill-port 3000' }
+    ],
+    usefulLinks: [
+      { label: 'Express.js Website', url: 'https://expressjs.com' }
+    ],
+    commonErrors: [
+      { error: 'Error: Address already in use :::3000', solution: 'A running process is occupying port 3000. Kill the process or launch on a different port using `PORT=4000 npm start`.' }
+    ],
+    bestPractices: [
+      'Enable HTTP payload compression middleware (compression) to save outbound bandwidth.',
+      'Configure helmet middleware to defend against typical web exploits.',
+      'Always handle errors in custom middleware boundaries to avoid crashing server runtimes.'
+    ]
+  },
+  php: {
+    id: 'php',
+    name: 'PHP',
+    category: 'Backend',
+    overview: 'PHP is a popular general-purpose scripting language that is especially suited to web development. Fast, flexible and pragmatic, PHP powers everything from blogs to major websites.',
+    requirements: [
+      { title: 'Terminal Shell access', code: 'php --version' }
+    ],
+    installation: [
+      { title: 'Ubuntu installation', code: 'sudo apt update && sudo apt install php php-cli php-fpm php-json php-common -y' },
+      { title: 'macOS Installation', code: 'brew install php' }
+    ],
+    projectCreation: [
+      { title: 'Create index.php script file', code: 'mkdir php-app && cd php-app && echo "<?php phpinfo();" > index.php' }
+    ],
+    folderStructure: `php-project/
+├── index.php
+├── config.php
+└── public/
+    └── assets/`,
+    run: [
+      { title: 'Start Built-in Server', code: 'php -S localhost:8000' },
+      { title: 'Run PHP script file', code: 'php index.php' }
+    ],
+    build: [
+      { title: 'Syntax Lint Check', code: 'php -l index.php' }
+    ],
+    production: [
+      { title: 'Run under Nginx & PHP-FPM', description: 'Set up Nginx configuration matching php-fpm socket pool (`fastcgi_pass unix:/var/run/php/php-fpm.sock`).' }
+    ],
+    deployment: [
+      { title: 'Deploy configuration', description: 'Configure php.ini settings such as `display_errors = Off` and `opcache.enable = 1`.' }
+    ],
+    troubleshooting: [
+      { title: 'Print CLI Configuration info', code: 'php -i' }
+    ],
+    usefulLinks: [
+      { label: 'PHP Documentation Portal', url: 'https://php.net' }
+    ],
+    commonErrors: [
+      { error: 'PHP Fatal error: Allowed memory size exhausted', solution: 'Increase memory allocations by updating `memory_limit` key inside active php.ini.' }
+    ],
+    bestPractices: [
+      'Enforce strict typing by adding declare(strict_types=1) at the top of file scripts.',
+      'Deploy libraries securely using Composer package manager instead of direct source imports.',
+      'Always bind PDO parameters to prevent SQL injection vulnerabilities.'
+    ]
+  },
+  laravel: {
+    id: 'laravel',
+    name: 'Laravel',
+    category: 'Backend',
+    overview: 'Laravel is a web application framework with expressive, elegant syntax. It provides robust database migrations, validation, queues, and MVC architecture routing.',
+    requirements: [
+      { title: 'PHP 8.2+', code: 'php -v' },
+      { title: 'Composer package manager', code: 'composer --version' }
+    ],
+    installation: [
+      { title: 'Install Laravel installer CLI globally', code: 'composer global require laravel/installer' }
+    ],
+    projectCreation: [
+      { title: 'Create new project', code: 'laravel new my-laravel-app && cd my-laravel-app' }
+    ],
+    folderStructure: `my-laravel-app/
+├── app/
+├── bootstrap/
+├── config/
+├── database/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+└── artisan`,
+    run: [
+      { title: 'Start local server', code: 'php artisan serve' },
+      { title: 'Run database migrations', code: 'php artisan migrate' }
+    ],
+    build: [
+      { title: 'Optimize Cache tables', code: 'php artisan config:cache\nphp artisan route:cache\nphp artisan view:cache' }
+    ],
+    production: [
+      { title: 'Optimized Composer install', code: 'composer install --no-dev --optimize-autoloader' }
+    ],
+    deployment: [
+      { title: 'Deploy script hooks', description: 'Run queue listeners (`php artisan queue:work --daemon`) and schedule cron events.' }
+    ],
+    troubleshooting: [
+      { title: 'Clear cached settings', code: 'php artisan optimize:clear' }
+    ],
+    usefulLinks: [
+      { label: 'Laravel Documentation Site', url: 'https://laravel.com' }
+    ],
+    commonErrors: [
+      { error: 'The stream or file "laravel.log" could not be opened: permission denied', solution: 'Adjust folder privileges by running `chmod -R 775 storage bootstrap/cache`.' }
+    ],
+    bestPractices: [
+      'Cache configurations, routes, and views in production environments to speed up request lifecycles.',
+      'Manage database changes exclusively using migrations and seeders.',
+      'Run expensive tasks in the background using laravel queue systems.'
+    ]
+  },
   docker: {
     id: 'docker',
     name: 'Docker',

@@ -9,7 +9,7 @@ export interface CommandSection {
 export interface TechnologyGuide {
   id: string;
   name: string;
-  category: 'Development' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI';
+  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI';
   overview: string;
   requirements: CommandSection[];
   installation: CommandSection[];
@@ -29,7 +29,7 @@ export const commandsData: Record<string, TechnologyGuide> = {
   react: {
     id: 'react',
     name: 'React',
-    category: 'Development',
+    category: 'Frontend',
     overview: 'React is a popular open-source JavaScript library for building user interfaces, particularly single-page applications. Developed and maintained by Meta.',
     requirements: [
       { title: 'Node.js (v18.0.0+)', code: 'node -v' },
@@ -93,7 +93,7 @@ export const commandsData: Record<string, TechnologyGuide> = {
   nextjs: {
     id: 'nextjs',
     name: 'Next.js',
-    category: 'Development',
+    category: 'Frontend',
     overview: 'Next.js is a React framework created by Vercel that enables developer features such as Server-Side Rendering (SSR), Static Site Generation (SSG), and API Routes.',
     requirements: [
       { title: 'Node.js (v18.17.0+)', code: 'node -v' }
@@ -140,6 +140,275 @@ export const commandsData: Record<string, TechnologyGuide> = {
       'Mark components with "use client" only when using interactivity, state, or hooks.',
       'Use next/image for automatic image optimization.',
       'Use next/font to automatically optimize and load web fonts.'
+    ]
+  },
+  vue: {
+    id: 'vue',
+    name: 'Vue.js',
+    category: 'Frontend',
+    overview: 'Vue.js is a progressive JavaScript framework for building user interfaces. It is designed to be incrementally adoptable and integrates easily with other libraries.',
+    requirements: [
+      { title: 'Node.js (v18.0.0+)', code: 'node -v' },
+      { title: 'npm (v9.0.0+)', code: 'npm -v' }
+    ],
+    installation: [
+      { title: 'Create Vue App via Vite', code: 'npm create vue@latest' }
+    ],
+    projectCreation: [
+      { title: 'Initialize Vue project with Vite', code: 'npm create vite@latest my-vue-app -- --template vue-ts\ncd my-vue-app\nnpm install' }
+    ],
+    folderStructure: `my-vue-app/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── App.vue
+│   ├── main.ts
+│   └── vite-env.d.ts
+├── index.html
+├── package.json
+└── vite.config.ts`,
+    run: [
+      { title: 'Run dev server', code: 'npm run dev' }
+    ],
+    build: [
+      { title: 'Build Vue App', code: 'npm run build' }
+    ],
+    troubleshooting: [
+      { title: 'Clear npm cache and reinstall', code: 'rm -rf node_modules package-lock.json && npm install' }
+    ],
+    usefulLinks: [
+      { label: 'Vue.js Docs', url: 'https://vuejs.org' }
+    ],
+    commonErrors: [
+      { error: 'Component name "Home" should always be multi-word.', solution: 'Rename component to "HomeView" or disable the `vue/multi-word-component-names` ESLint rule.' }
+    ],
+    bestPractices: [
+      'Use the Composition API with <script setup> syntax for clean and readable code.',
+      'Always use props and emit validation.',
+      'Use key attributes with v-for properly to ensure correct rendering update paths.'
+    ]
+  },
+  nuxt: {
+    id: 'nuxt',
+    name: 'Nuxt.js',
+    category: 'Frontend',
+    overview: 'Nuxt is an open-source framework that makes web development intuitive and powerful. Create performant and production-ready full-stack web apps and websites.',
+    requirements: [
+      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
+    ],
+    installation: [
+      { title: 'Initialize Nuxt App', code: 'npx nuxi@latest init my-nuxt-app' }
+    ],
+    projectCreation: [
+      { title: 'Initialize and Install', code: 'npx nuxi@latest init my-app\ncd my-app\nnpm install' }
+    ],
+    folderStructure: `my-app/
+├── .nuxt/
+├── components/
+├── layouts/
+├── pages/
+│   └── index.vue
+├── public/
+├── server/
+│   └── api/
+├── app.vue
+├── nuxt.config.ts
+└── package.json`,
+    run: [
+      { title: 'Run Dev Server', code: 'npm run dev -- -o' }
+    ],
+    build: [
+      { title: 'Build for Production', code: 'npm run build' },
+      { title: 'Preview production build', code: 'node .output/server/index.mjs' }
+    ],
+    troubleshooting: [
+      { title: 'Clear Nuxt cache', code: 'rm -rf .nuxt .output node_modules && npm install' }
+    ],
+    usefulLinks: [
+      { label: 'Nuxt Docs', url: 'https://nuxt.com' }
+    ],
+    commonErrors: [
+      { error: 'Hydration node mismatch error.', solution: 'Ensure Server-Side Rendered (SSR) HTML matches client state. Avoid client-only elements or window APIs during created hooks.' }
+    ],
+    bestPractices: [
+      'Use directory-based routing in the pages/ folder for clean page structure.',
+      'Leverage Nuxt composables like useFetch and useAsyncData for data fetching.',
+      'Wrap client-only code inside <ClientOnly> tags.'
+    ]
+  },
+  angular: {
+    id: 'angular',
+    name: 'Angular',
+    category: 'Frontend',
+    overview: 'Angular is a development platform, built on TypeScript, that includes a component-based framework for building scalable web applications.',
+    requirements: [
+      { title: 'Node.js (v18.13.0+)', code: 'node -v' }
+    ],
+    installation: [
+      { title: 'Install Angular CLI globally', code: 'npm install -g @angular/cli' }
+    ],
+    projectCreation: [
+      { title: 'Create new Angular app', code: 'ng new my-app --style css --routing --ssr\ncd my-app' }
+    ],
+    folderStructure: `my-app/
+├── src/
+│   ├── app/
+│   │   ├── app.component.ts
+│   │   ├── app.config.ts
+│   │   └── app.routes.ts
+│   ├── index.html
+│   └── main.ts
+├── angular.json
+├── package.json
+└── tsconfig.json`,
+    run: [
+      { title: 'Run Development Server', code: 'ng serve' }
+    ],
+    build: [
+      { title: 'Build production application', code: 'ng build' }
+    ],
+    troubleshooting: [
+      { title: 'Clear cache and rebuild', code: 'ng cache clean\nrm -rf .angular dist node_modules && npm install' }
+    ],
+    usefulLinks: [
+      { label: 'Angular Documentation', url: 'https://angular.dev' }
+    ],
+    commonErrors: [
+      { error: 'NG0203: inject() must be called from an injection context.', solution: 'Ensure you call inject() within constructor or provider init stages, not inside async handlers.' }
+    ],
+    bestPractices: [
+      'Use standalone components by default for modular, clean component declarations.',
+      'Manage state reactively using Angular Signals or RxJS observables.',
+      'Optimize performance with trackBy function or the new @for loop tracking.'
+    ]
+  },
+  svelte: {
+    id: 'svelte',
+    name: 'SvelteKit',
+    category: 'Frontend',
+    overview: 'Svelte is a compiler approach to building user interfaces. SvelteKit is the official application framework for Svelte, featuring file-based routing and SSR.',
+    requirements: [
+      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
+    ],
+    installation: [
+      { title: 'Create Svelte project via Svelte CLI', code: 'npm create svelte@latest my-svelte-app' }
+    ],
+    projectCreation: [
+      { title: 'Initialize SvelteKit project', code: 'npm create svelte@latest my-app\ncd my-app\nnpm install' }
+    ],
+    folderStructure: `my-app/
+├── src/
+│   ├── routes/
+│   │   ├── +layout.svelte
+│   │   └── +page.svelte
+│   └── app.html
+├── static/
+├── package.json
+├── svelte.config.js
+└── vite.config.ts`,
+    run: [
+      { title: 'Run Dev Server', code: 'npm run dev -- --open' }
+    ],
+    build: [
+      { title: 'Build production application', code: 'npm run build' }
+    ],
+    troubleshooting: [
+      { title: 'Re-sync Svelte types', code: 'npx svelte-kit sync' }
+    ],
+    usefulLinks: [
+      { label: 'Svelte Docs', url: 'https://svelte.dev' }
+    ],
+    commonErrors: [
+      { error: 'db connection fails inside component script', solution: 'Move sensitive database code to +page.server.js instead of inline inside +page.svelte script blocks.' }
+    ],
+    bestPractices: [
+      'Use Svelte stores or Svelte 5 Runes for global reactive state.',
+      'Keep style blocks local inside Svelte components; styles are automatically scoped.',
+      'Use +page.server.ts for secure data fetching and API calls.'
+    ]
+  },
+  solid: {
+    id: 'solid',
+    name: 'SolidJS',
+    category: 'Frontend',
+    overview: 'SolidJS is a declarative, efficient, and flexible JavaScript library for building user interfaces without a virtual DOM, compiling directly to real DOM nodes.',
+    requirements: [
+      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
+    ],
+    installation: [
+      { title: 'Create Solid App via Vite', code: 'npm create vite@latest my-solid-app -- --template solid-ts' }
+    ],
+    projectCreation: [
+      { title: 'Create and run Solid app', code: 'npm create vite@latest my-app -- --template solid-ts\ncd my-app\nnpm install' }
+    ],
+    folderStructure: `my-app/
+├── src/
+│   ├── App.tsx
+│   ├── index.css
+│   └── index.tsx
+├── index.html
+├── package.json
+└── vite.config.ts`,
+    run: [
+      { title: 'Run Development Server', code: 'npm run dev' }
+    ],
+    build: [
+      { title: 'Build for production', code: 'npm run build' }
+    ],
+    troubleshooting: [
+      { title: 'Reinstall node modules', code: 'rm -rf node_modules package-lock.json && npm install' }
+    ],
+    usefulLinks: [
+      { label: 'SolidJS Docs', url: 'https://www.solidjs.com' }
+    ],
+    commonErrors: [
+      { error: 'Props object losing reactivity.', solution: 'Do not destructure React-style props in SolidJS. Use props.propName directly or use `splitProps`.' }
+    ],
+    bestPractices: [
+      'Use Signals (createSignal) for local reactive state.',
+      'Avoid destructuring props to keep reactivity intact.',
+      'Use <Show> and <For> components instead of standard JS ternary/map operators.'
+    ]
+  },
+  tailwind: {
+    id: 'tailwind',
+    name: 'Tailwind CSS',
+    category: 'Frontend',
+    overview: 'Tailwind CSS is a utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.',
+    requirements: [
+      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
+    ],
+    installation: [
+      { title: 'Install tailwindcss via npm', code: 'npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p' }
+    ],
+    projectCreation: [
+      { title: 'Install Tailwind and generate configuration', code: 'npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p' }
+    ],
+    folderStructure: `my-project/
+├── tailwind.config.js
+├── postcss.config.js
+└── src/
+    └── index.css`,
+    run: [
+      { title: 'Build CSS (standalone CLI)', code: 'npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch' }
+    ],
+    build: [
+      { title: 'Minify CSS build', code: 'npx tailwindcss -o ./dist/output.css --minify' }
+    ],
+    troubleshooting: [
+      { title: 'Styles not showing up', description: 'Double check the `content` array paths in tailwind.config.js. Make sure it covers all HTML/TS/JS templates!' }
+    ],
+    usefulLinks: [
+      { label: 'Tailwind CSS Docs', url: 'https://tailwindcss.com' }
+    ],
+    commonErrors: [
+      { error: 'Tailwind classes not rendering on dynamically injected HTML.', solution: 'Add the classes to tailwind whitelist safelist config or avoid using dynamic template string class injection.' }
+    ],
+    bestPractices: [
+      'Use Arbitrary Values sparingly; define custom theme classes in tailwind.config.js instead.',
+      'Group custom configurations inside tailwind.config.js theme extension block.',
+      'Use Tailwind CSS IntelliSense plugin in VS Code for autocomplete and formatting.'
     ]
   },
   django: {
@@ -191,6 +460,9 @@ export const commandsData: Record<string, TechnologyGuide> = {
     troubleshooting: [
       { title: 'Reset migrations (Dev ONLY)', code: 'find . -path "*/migrations/*.py" -not -name "__init__.py" -delete\nfind . -path "*/migrations/*.pyc" -delete\nrm db.sqlite3' }
     ],
+    usefulLinks: [
+      { label: 'Django Docs', url: 'https://docs.djangoproject.com' }
+    ],
     commonErrors: [
       { error: 'You have unapplied migrations.', solution: 'Run `python manage.py migrate` to apply database schema updates.' },
       { error: 'Allowed Hosts check failed.', solution: 'Add your domain or IP to the ALLOWED_HOSTS list in settings.py.' }
@@ -214,13 +486,7 @@ export const commandsData: Record<string, TechnologyGuide> = {
       { title: 'Ubuntu installation script', code: 'curl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh get-docker.sh\nsudo usermod -aG docker $USER' }
     ],
     projectCreation: [
-      { title: 'Example Dockerfile for Node.js', code: `FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]` }
+      { title: 'Example Dockerfile for Node.js', code: `FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD ["npm", "start"]` }
     ],
     run: [
       { title: 'Build Image', code: 'docker build -t my-app:latest .' },
@@ -295,19 +561,7 @@ CMD ["npm", "start"]` }
       { title: 'Install on Ubuntu', code: 'sudo apt update && sudo apt install nginx -y' }
     ],
     projectCreation: [
-      { title: 'Reverse Proxy Config', code: `server {
-    listen 80;
-    server_name example.com;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}` }
+      { title: 'Reverse Proxy Config', code: `server {\n    listen 80;\n    server_name example.com;\n\n    location / {\n        proxy_pass http://localhost:3000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection 'upgrade';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n    }\n}` }
     ],
     run: [
       { title: 'Start Nginx', code: 'sudo systemctl start nginx' },
@@ -374,25 +628,7 @@ CMD ["npm", "start"]` }
       { title: 'Install kubectl (Debian/Ubuntu)', code: 'sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl\ncurl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg\necho "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list\nsudo apt-get update && sudo apt-get install -y kubectl' }
     ],
     projectCreation: [
-      { title: 'Create deployment YAML', code: `apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-app-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-app
-        image: my-app-image:v1
-        ports:
-        - containerPort: 3000` }
+      { title: 'Create deployment YAML', code: `apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app-deployment\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n  template:\n    metadata:\n      labels:\n        app: my-app\n    spec:\n      containers:\n      - name: my-app\n        image: my-app-image:v1\n        ports:\n        - containerPort: 3000` }
     ],
     run: [
       { title: 'Apply deployment configuration', code: 'kubectl apply -f deployment.yaml' },
@@ -488,17 +724,7 @@ spec:
     ],
     projectCreation: [
       { title: 'Run local Llama3 via Ollama', code: 'ollama run llama3' },
-      { title: 'Node.js OpenAI connection script', code: `import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const completion = await openai.chat.completions.create({
-  model: "gpt-4o",
-  messages: [{ role: "user", content: "Hello!" }],
-});
-console.log(completion.choices[0].message.content);` }
+      { title: 'Node.js OpenAI connection script', code: `import OpenAI from "openai";\n\nconst openai = new OpenAI({\n  apiKey: process.env.OPENAI_API_KEY,\n});\n\nconst completion = await openai.chat.completions.create({\n  model: "gpt-4o",\n  messages: [{ role: "user", content: "Hello!" }],\n});\nconsole.log(completion.choices[0].message.content);` }
     ],
     run: [
       { title: 'Ollama List Local Models', code: 'ollama list' },

@@ -20,6 +20,42 @@ const getTechTheme = (techId: string) => {
       bg: 'from-zinc-900/30 via-transparent to-transparent',
       border: 'border-zinc-500/20'
     },
+    vue: {
+      badge: 'bg-emerald-950/40 border-emerald-800 text-emerald-300',
+      text: 'text-emerald-400',
+      bg: 'from-emerald-950/20 via-transparent to-transparent',
+      border: 'border-emerald-500/20'
+    },
+    nuxt: {
+      badge: 'bg-teal-950/40 border-teal-800 text-teal-300',
+      text: 'text-teal-400',
+      bg: 'from-teal-950/20 via-transparent to-transparent',
+      border: 'border-teal-500/20'
+    },
+    angular: {
+      badge: 'bg-rose-950/40 border-rose-800 text-rose-300',
+      text: 'text-rose-400',
+      bg: 'from-rose-950/20 via-transparent to-transparent',
+      border: 'border-rose-500/20'
+    },
+    svelte: {
+      badge: 'bg-orange-950/40 border-orange-800 text-orange-300',
+      text: 'text-orange-400',
+      bg: 'from-orange-950/20 via-transparent to-transparent',
+      border: 'border-orange-500/20'
+    },
+    solid: {
+      badge: 'bg-sky-950/40 border-sky-800 text-sky-300',
+      text: 'text-sky-400',
+      bg: 'from-sky-950/20 via-transparent to-transparent',
+      border: 'border-sky-500/20'
+    },
+    tailwind: {
+      badge: 'bg-cyan-950/40 border-cyan-800 text-cyan-300',
+      text: 'text-cyan-400',
+      bg: 'from-cyan-950/20 via-transparent to-transparent',
+      border: 'border-cyan-500/20'
+    },
     django: {
       badge: 'bg-emerald-950/40 border-emerald-800 text-emerald-300',
       text: 'text-emerald-400',

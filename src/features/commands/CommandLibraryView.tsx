@@ -125,6 +125,9 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   const [selectedLinuxCat, setSelectedLinuxCat] = useState('All');
   const [linuxCopiedCmd, setLinuxCopiedCmd] = useState<string | null>(null);
 
+  // Ebook reader state for Web Core Learning
+  const [activeEbookIndex, setActiveEbookIndex] = useState<number>(0);
+
   // Custom Hacking Tool detail view overlay states
   const [selectedTool, setSelectedTool] = useState<{
     name: string;
@@ -163,6 +166,43 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
 
   const nextConcept = getNextConcept();
 
+  // Ebook reader concepts array mapping
+  const ebookConcepts: { name: string; description: string; example: string; levelTitle: string }[] = [];
+  if (guide.id === 'learning') {
+    guide.run.forEach(level => {
+      level.list?.forEach(item => {
+        const [cmd, desc, example] = item.split('|');
+        ebookConcepts.push({
+          name: cmd,
+          description: desc,
+          example: example || cmd,
+          levelTitle: level.title
+        });
+      });
+    });
+  }
+
+  const [ebookAiPrompt, setEbookAiPrompt] = useState('');
+  const [ebookAiAnswers, setEbookAiAnswers] = useState<Record<string, string[]>>({});
+  const [isEbookAnswering, setIsEbookAnswering] = useState(false);
+
+  const handleAskEbookAI = (conceptName: string) => {
+    if (!ebookAiPrompt.trim()) return;
+    setIsEbookAnswering(true);
+    const userQ = ebookAiPrompt;
+    setEbookAiPrompt('');
+    
+    setTimeout(() => {
+      const answersList = ebookAiAnswers[conceptName] || [];
+      const mockAnswer = `Here is a lesson breakdown on **${conceptName}** for your question "${userQ}":\n\n1. **Concept Insights**: Web elements conform to HTML specifications, which browsers parse into live nodes.\n2. **Code Syntax Example**: You can style these using CSS selectors or bind interactive behaviors with JavaScript listeners.\n3. **Practical Tip**: Ensure you always close your tags, use semantic markup for accessibility, and test responsiveness in viewport profiles.`;
+      setEbookAiAnswers({
+        ...ebookAiAnswers,
+        [conceptName]: [...answersList, mockAnswer]
+      });
+      setIsEbookAnswering(false);
+    }, 800);
+  };
+
   const handleCopyModalCmd = (cmd: string) => {
     navigator.clipboard.writeText(cmd);
     setCopiedModalCmd(true);
@@ -198,7 +238,290 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
 
-  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'backend' || guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'learning') {
+  if (guide.id === 'learning' && ebookConcepts.length > 0) {
+    const currentConcept = ebookConcepts[activeEbookIndex] || ebookConcepts[0];
+    const prevEbookConcept = activeEbookIndex > 0 ? ebookConcepts[activeEbookIndex - 1] : null;
+    const nextEbookConcept = activeEbookIndex < ebookConcepts.length - 1 ? ebookConcepts[activeEbookIndex + 1] : null;
+
+    // Filter levels for left sidebar index based on search
+    const filteredSidebarLevels = guide.run.map(level => {
+      const matched = level.list?.filter(item => {
+        const [cmd, desc] = item.split('|');
+        const q = linuxSearch.toLowerCase();
+        return cmd.toLowerCase().includes(q) || desc.toLowerCase().includes(q);
+      });
+      return { ...level, list: matched || [] };
+    }).filter(level => level.list.length > 0);
+
+    return (
+      <div className="flex flex-col h-full bg-[#0b0c10]/40 rounded-xl border border-white/5 overflow-hidden">
+        {/* Ebook Top Header */}
+        <div className="p-4 md:p-6 bg-gradient-to-r from-indigo-950/30 to-purple-950/20 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-md font-semibold uppercase tracking-wider">
+                Ebook Reader Edition
+              </span>
+              <span className="text-[10px] text-gray-500 font-mono">
+                {activeEbookIndex + 1} of {ebookConcepts.length} chapters
+              </span>
+            </div>
+            <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight">
+              📚 HTML5 Roadmap Curriculum
+            </h1>
+          </div>
+          
+          {/* Ebook search index */}
+          <div className="relative w-full md:w-80 flex-shrink-0">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search chapters index..."
+              value={linuxSearch}
+              onChange={(e) => setLinuxSearch(e.target.value)}
+              className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 transition"
+            />
+          </div>
+        </div>
+
+        {/* Ebook split content view */}
+        <div className="flex-1 flex overflow-hidden">
+          
+          {/* Table of contents (Left sidebar) */}
+          <div className="hidden md:block w-72 border-r border-white/5 bg-black/20 overflow-y-auto p-4 space-y-4 flex-shrink-0">
+            <div className="flex items-center justify-between px-2 pb-1 border-b border-white/5">
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
+                Table of Contents
+              </span>
+              {linuxSearch && (
+                <button onClick={() => setLinuxSearch('')} className="text-[9px] text-indigo-400 hover:underline">
+                  clear
+                </button>
+              )}
+            </div>
+            
+            <div className="space-y-4">
+              {filteredSidebarLevels.map((level, lvlIdx) => (
+                <div key={lvlIdx} className="space-y-1">
+                  <h4 className="text-[10px] uppercase font-bold text-gray-400 tracking-wider px-2 pt-1">
+                    {level.title}
+                  </h4>
+                  <div className="space-y-0.5">
+                    {level.list.map((item) => {
+                      const [cmd, desc] = item.split('|');
+                      const itemFlatIndex = ebookConcepts.findIndex(c => c.name === cmd);
+                      const isActive = activeEbookIndex === itemFlatIndex;
+                      return (
+                        <button
+                          key={cmd}
+                          onClick={() => {
+                            if (itemFlatIndex !== -1) {
+                              setActiveEbookIndex(itemFlatIndex);
+                            }
+                          }}
+                          className={`w-full text-left px-2.5 py-2 rounded-lg text-xs transition border flex flex-col items-start ${
+                            isActive
+                              ? 'bg-indigo-950/40 text-indigo-300 font-bold border-indigo-500/30 shadow-[0_0_12px_rgba(99,102,241,0.05)]'
+                              : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-gray-200'
+                          }`}
+                          title={desc}
+                        >
+                          <span className="truncate w-full font-medium">{cmd}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+              {filteredSidebarLevels.length === 0 && (
+                <p className="text-xs text-gray-500 italic text-center py-4">No chapters match your query.</p>
+              )}
+            </div>
+          </div>
+
+          {/* Main Book Reader Frame (Right reading page) */}
+          <div className="flex-1 overflow-y-auto bg-black/10 flex flex-col justify-between">
+            <div className="p-6 max-w-4xl w-full mx-auto space-y-6">
+              
+              {/* Ebook Page Head */}
+              <div className="pb-4 border-b border-white/5">
+                <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider block mb-1">
+                  {currentConcept.levelTitle}
+                </span>
+                <h2 className="text-xl md:text-3xl font-extrabold text-white tracking-tight">
+                  {currentConcept.name}
+                </h2>
+              </div>
+
+              {/* 1. Overview / Explanation card */}
+              <div className="bg-gradient-to-r from-indigo-950/10 to-transparent border border-indigo-500/20 p-5 rounded-2xl relative overflow-hidden">
+                <div className="absolute -right-4 -top-4 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl"></div>
+                <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+                  <BookOpen className="w-4 h-4" />
+                  <span>Lesson Overview</span>
+                </h3>
+                <p className="text-xs md:text-sm text-gray-200 leading-relaxed font-normal">
+                  {currentConcept.description}
+                </p>
+              </div>
+
+              {/* 2. macOS Code block window */}
+              <div className="bg-gray-950 border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                {/* Header buttons */}
+                <div className="bg-gray-900 px-4 py-3 border-b border-white/5 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500/40"></span>
+                    <span className="w-3 h-3 rounded-full bg-yellow-500/40"></span>
+                    <span className="w-3 h-3 rounded-full bg-green-500/40"></span>
+                    <span className="text-[10px] text-gray-500 font-mono pl-2">syntax_example.html</span>
+                  </div>
+                  <button
+                    onClick={() => handleCopyLinuxCmd(currentConcept.example)}
+                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-gray-400 hover:text-white transition flex items-center space-x-1 text-xs"
+                    title="Copy lesson snippet"
+                  >
+                    {linuxCopiedCmd === currentConcept.example ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-green-400" />
+                        <span className="text-[10px] text-green-400 font-medium">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span className="text-[10px]">Copy Code</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                {/* Code viewport */}
+                <div className="p-5 overflow-x-auto">
+                  <pre className="font-mono text-xs md:text-sm text-green-400 leading-relaxed select-all">
+                    <code>{currentConcept.example}</code>
+                  </pre>
+                </div>
+              </div>
+
+              {/* 3. Lesson Guidelines & References */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-purple-950/5 border border-purple-900/10 p-5 rounded-2xl">
+                  <h4 className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-2.5">
+                    Best Practices
+                  </h4>
+                  <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
+                    <li>Always write semantic layout elements (header, nav, article) instead of unstyled divs.</li>
+                    <li>Utilize explicit attributes and specify alt targets for descriptive accessibility.</li>
+                    <li>Keep stylesheet attributes decoupled from the structural markup layout.</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-red-950/5 border border-red-900/10 p-5 rounded-2xl">
+                  <h4 className="text-[10px] text-red-400 font-bold uppercase tracking-wider block mb-2.5">
+                    Common Mistakes
+                  </h4>
+                  <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
+                    <li>Leaving document tags unclosed, causing broken container flow structures.</li>
+                    <li>Using presentational selectors instead of CSS-driven styling grids.</li>
+                    <li>Neglecting meta responsive viewport controls, breaking smartphone views.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* 4. Embedded AI Q&A Panel */}
+              <div className="border border-white/5 rounded-2xl overflow-hidden bg-black/20 mt-4">
+                <div className="bg-gray-950/80 px-4.5 py-3.5 border-b border-white/5 flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-xs font-bold text-white">
+                    <HelpCircle className="w-4 h-4 text-indigo-400" />
+                    <span>Ask Antigravity Assistant About This Lesson</span>
+                  </div>
+                </div>
+                <div className="p-5 space-y-4">
+                  {/* Q&A scroll log */}
+                  <div className="space-y-3 max-h-52 overflow-y-auto">
+                    <div className="bg-gray-900/60 p-3.5 rounded-xl text-xs text-gray-300 leading-relaxed border border-white/5">
+                      💡 **Ask any questions**: Compare details, request complex code templates, or ask how this topic applies to real-world projects.
+                    </div>
+                    
+                    {ebookAiAnswers[currentConcept.name]?.map((ans, idx) => (
+                      <div key={idx} className="bg-indigo-950/15 p-4 rounded-xl text-xs text-gray-200 leading-relaxed border border-indigo-900/10 whitespace-pre-line">
+                        {ans}
+                      </div>
+                    ))}
+
+                    {isEbookAnswering && (
+                      <div className="text-xs text-gray-500 italic flex items-center space-x-1.5 px-1">
+                        <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></span>
+                        <span>AI helper is writing response...</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Input Form */}
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleAskEbookAI(currentConcept.name);
+                    }}
+                    className="flex space-x-2"
+                  >
+                    <input
+                      type="text"
+                      placeholder={`Ask a question about "${currentConcept.name}"...`}
+                      value={ebookAiPrompt}
+                      onChange={(e) => setEbookAiPrompt(e.target.value)}
+                      className="flex-1 bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500/50"
+                    />
+                    <button
+                      type="submit"
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-4 flex items-center justify-center transition"
+                    >
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Ebook Page-by-Page Navigation Footer */}
+            <div className="p-4 md:p-6 bg-gray-950 border-t border-white/5 flex items-center justify-between mt-8">
+              {prevEbookConcept ? (
+                <button
+                  onClick={() => {
+                    setActiveEbookIndex(activeEbookIndex - 1);
+                    setEbookAiPrompt('');
+                  }}
+                  className="flex items-center space-x-2 px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white font-bold transition cursor-pointer"
+                >
+                  <span>⬅️ Previous: {prevEbookConcept.name}</span>
+                </button>
+              ) : (
+                <div />
+              )}
+
+              {nextEbookConcept ? (
+                <button
+                  onClick={() => {
+                    setActiveEbookIndex(activeEbookIndex + 1);
+                    setEbookAiPrompt('');
+                  }}
+                  className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-xs text-white font-bold transition shadow-[0_0_15px_rgba(99,102,241,0.2)] cursor-pointer"
+                >
+                  <span>Next: {nextEbookConcept.name} ➡️</span>
+                </button>
+              ) : (
+                <div className="text-xs text-gray-500 font-bold">🎉 Congratulations! You completed the HTML5 Roadmap!</div>
+              )}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
+  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'backend' || guide.id === 'hacking' || guide.id === 'termux') {
+    const guideId = guide.id as string;
     const filteredCategories = guide.run.map(category => {
       if (!category.list) return null;
       
@@ -229,7 +552,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {guide.category}
               </span>
               <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
-                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'backend' ? '⚙️ Backend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guide.id === 'termux' ? '📱 Termux Command Library' : guide.id === 'learning' ? '📚 Web Core Learning Curriculum' : '🐧 Linux Commands Directory'}</span>
+                <span>{guideId === 'frontend' ? '⚡ Frontend Setup Directory' : guideId === 'backend' ? '⚙️ Backend Setup Directory' : guideId === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guideId === 'termux' ? '📱 Termux Command Library' : guideId === 'learning' ? '📚 Web Core Learning Curriculum' : '🐧 Linux Commands Directory'}</span>
               </h1>
               <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
                 {guide.overview}
@@ -241,7 +564,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'backend' ? "Search backend setups, e.g. django, express, laravel..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guide.id === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : guide.id === 'learning' ? "Search chapters or concepts, e.g. flexbox, classes..." : "Search commands, e.g. ls, grep, ufw..."}
+                placeholder={guideId === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guideId === 'backend' ? "Search backend setups, e.g. django, express, laravel..." : guideId === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guideId === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : guideId === 'learning' ? "Search chapters or concepts, e.g. flexbox, classes..." : "Search commands, e.g. ls, grep, ufw..."}
                 value={linuxSearch}
                 onChange={(e) => setLinuxSearch(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"
@@ -415,7 +738,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               {/* Modal Head */}
               <div className="px-6 py-4 bg-gray-950 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
-                  {guide.id === 'learning' ? (
+                  {guideId === 'learning' ? (
                     <BookOpen className="w-5 h-5 text-indigo-400" />
                   ) : (
                     <Shield className="w-5 h-5 text-purple-400" />
@@ -423,7 +746,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <div>
                     <h2 className="text-lg font-extrabold text-white">{selectedTool.name}</h2>
                     <span className="text-[10px] text-gray-400 font-medium">
-                      {guide.id === 'learning' ? 'Web Core Learning Reference Card' : guide.id === 'backend' ? 'Backend Reference Card' : guide.id === 'termux' ? 'Termux Command Reference Card' : 'Cybersecurity Utility Reference Card'}
+                      {guideId === 'learning' ? 'Web Core Learning Reference Card' : guideId === 'backend' ? 'Backend Reference Card' : guideId === 'termux' ? 'Termux Command Reference Card' : 'Cybersecurity Utility Reference Card'}
                     </span>
                   </div>
                 </div>
@@ -444,15 +767,15 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {/* 1. Overview */}
                 <div className="bg-purple-950/10 border border-purple-900/20 p-4.5 rounded-xl">
                   <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1">
-                    {guide.id === 'learning' ? 'Concept Explanation' : 'Tool Overview'}
+                    {guideId === 'learning' ? 'Concept Explanation' : 'Tool Overview'}
                   </span>
                   <p className="text-xs md:text-sm text-gray-200 leading-relaxed">
-                    {selectedTool.description} {guide.id !== 'learning' && 'This application is loaded onto testing setups to verify hosts, endpoints, and directories for system vulnerabilities.'}
+                    {selectedTool.description} {guideId !== 'learning' && 'This application is loaded onto testing setups to verify hosts, endpoints, and directories for system vulnerabilities.'}
                   </p>
                 </div>
 
                 {/* 2. Installation (Hidden for learning concepts) */}
-                {guide.id !== 'learning' && (
+                {guideId !== 'learning' && (
                   <div>
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center space-x-1.5">
                       <Terminal className="w-4 h-4 text-purple-400" />
@@ -476,10 +799,10 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">
-                      {guide.id === 'learning' ? 'Associated Technologies' : 'Command Options'}
+                      {guideId === 'learning' ? 'Associated Technologies' : 'Command Options'}
                     </h3>
                     <div className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2.5 text-xs text-gray-300">
-                      {(guide.id === 'learning'
+                      {(guideId === 'learning'
                         ? [
                             { code: 'HTML5', desc: 'Standard markup structures' },
                             { code: 'CSS3', desc: 'Sleek presentation styling layout' },
@@ -502,7 +825,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <div>
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Common Use Cases</h3>
                     <ul className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2 text-xs text-gray-300 list-disc list-inside">
-                      {(guide.id === 'learning'
+                      {(guideId === 'learning'
                         ? [
                             'Building responsive layouts and page segments',
                             'Validating inputs & dynamic DOM rendering',
@@ -523,7 +846,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {/* 4. Example Command & Output explanation */}
                 <div>
                   <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">
-                    {guide.id === 'learning' ? 'Example Code Snippet' : 'Example Commands'}
+                    {guideId === 'learning' ? 'Example Code Snippet' : 'Example Commands'}
                   </h3>
                   <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center mb-3">
                     <code className="font-mono text-purple-300 text-xs">
@@ -538,10 +861,10 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   </div>
                   <div className="bg-gray-950/60 border border-white/5 rounded-xl p-4 space-y-1">
                     <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
-                      {guide.id === 'learning' ? 'Execution & Presentation' : 'Output Explanation'}
+                      {guideId === 'learning' ? 'Execution & Presentation' : 'Output Explanation'}
                     </span>
                     <p className="text-xs text-gray-400 leading-relaxed">
-                      {guide.id === 'learning' ? 'Integrating this code snippet renders structure elements, styles the viewport, or manipulates DOM properties.' : 'Executing this output prints scanning telemetry to standard out. Successful responses return system fingerprints, server banners, or operational response flags.'}
+                      {guideId === 'learning' ? 'Integrating this code snippet renders structure elements, styles the viewport, or manipulates DOM properties.' : 'Executing this output prints scanning telemetry to standard out. Successful responses return system fingerprints, server banners, or operational response flags.'}
                     </p>
                   </div>
                 </div>
@@ -551,13 +874,13 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <div className="bg-purple-950/5 border border-purple-950/20 p-4 rounded-xl">
                     <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1.5">Best Practices</span>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      {guide.id === 'learning' ? 'Write clean, semantic layout markers and scope your variables to prevent memory leakage.' : 'Run commands inside secure sandbox nodes. Limit parallel socket requests to prevent service degradation.'}
+                      {guideId === 'learning' ? 'Write clean, semantic layout markers and scope your variables to prevent memory leakage.' : 'Run commands inside secure sandbox nodes. Limit parallel socket requests to prevent service degradation.'}
                     </p>
                   </div>
                   <div className="bg-red-950/5 border border-red-950/25 p-4 rounded-xl">
                     <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider block mb-1.5">Troubleshooting</span>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      {guide.id === 'learning' ? 'Double check class naming references, check scripts console logs, and verify styling properties in inspector.' : 'If commands return socket timeouts, verify system paths and ensure firewall rules are configured to permit local egress.'}
+                      {guideId === 'learning' ? 'Double check class naming references, check scripts console logs, and verify styling properties in inspector.' : 'If commands return socket timeouts, verify system paths and ensure firewall rules are configured to permit local egress.'}
                     </p>
                   </div>
                 </div>
@@ -641,14 +964,14 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <div className="flex items-center space-x-2 text-xs text-gray-500">
                     <Info className="w-4 h-4 text-gray-500" />
                     <span>
-                      {guide.id === 'learning' 
+                      {guideId === 'learning' 
                         ? 'Related: HTML5 specifications, MDN layout rules, W3C accessibility guidelines' 
                         : 'Related: theHarvester, Nmap, OWASP ZAP, Metasploit'}
                     </span>
                   </div>
                   
                   <div className="flex space-x-3 text-xs">
-                    {guide.id === 'learning' ? (
+                    {guideId === 'learning' ? (
                       <a href="https://developer.mozilla.org" target="_blank" rel="noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
                         <span>MDN Web Docs</span>
                         <ExternalLink className="w-3 h-3" />

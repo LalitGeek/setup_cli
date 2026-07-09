@@ -9,7 +9,7 @@ export interface CommandSection {
 export interface TechnologyGuide {
   id: string;
   name: string;
-  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI' | 'Security';
+  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI' | 'Security' | 'Mobile';
   overview: string;
   requirements: CommandSection[];
   installation: CommandSection[];
@@ -1262,6 +1262,370 @@ export const commandsData: Record<string, TechnologyGuide> = {
     bestPractices: [
       'Always secure explicit authorization before initiating security audits.',
       'Document your audit trails clearly to maintain accountability.'
+    ]
+  },
+  termux: {
+    id: 'termux',
+    name: 'Termux Command Library',
+    category: 'Mobile',
+    overview: 'A premium, fully interactive console library for Termux android environments covering packages, virtualization, text processing, security, and developer runtimes.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      {
+        title: '🚀 Getting Started',
+        description: 'Initialize, configure, and secure your primary Termux application container.',
+        list: [
+          'Install Termux|Setup Termux from official F-Droid or GitHub repositories|pkg install termux-tools',
+          'Initial Setup|Initialize primary directory setup configuration|termux-setup-storage',
+          'Update & Upgrade|Fetch repository updates and upgrade core modules|pkg update && pkg upgrade -y',
+          'Change Repository Mirrors|Select the fastest global/local mirror repository|termux-change-repo',
+          'Storage Permission|Request Android system storage permissions|termux-setup-storage',
+          'Reset Environment|Clean termux environment back to default|rm -rf $PREFIX && exit',
+          'Backup & Restore|Archive current Termux prefix directory to storage|tar -zcvf /sdcard/termux-backup.tar.gz -C /data/data/com.termux/files usr home'
+        ]
+      },
+      {
+        title: '📦 Package Management',
+        description: 'Install, remove, and clean package binaries on local Termux.',
+        list: [
+          'pkg|Shorthand Termux-specific package manager utility|pkg install git',
+          'apt|Advanced package tool for DEB packages|apt update',
+          'dpkg|Directly install or query custom .deb package archives|dpkg -i file.deb',
+          'apt-cache|Search package metadata and dependencies|apt-cache search python',
+          'Package Search|Query termux mirrors for available utilities|pkg search curl',
+          'Package Install|Install a packages and resolve dependencies|pkg install tmux -y',
+          'Package Remove|Uninstall a package and delete binary shortcuts|pkg uninstall tmux -y',
+          'Package Update|Synchronize package index database|pkg update',
+          'Package Upgrade|Apply package version upgrades|pkg upgrade',
+          'Package Cleanup|Remove cached packages and unused dependencies|pkg clean && pkg autoclean'
+        ]
+      },
+      {
+        title: '🐚 Shell & Terminal',
+        description: 'Configure interactive environments, custom aliases, and scripts.',
+        list: [
+          'Bash|Default interactive Unix system shell|bash',
+          'Zsh|Extensible shell with themes and custom completions|pkg install zsh',
+          'Fish|User-friendly shell with auto-suggestions out of the box|pkg install fish',
+          'Oh My Zsh|Framework for managing Zsh shell configurations|sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"',
+          'Aliases|Set quick command shortcuts in terminal config|alias gs="git status"',
+          'Environment Variables|Export environment configuration parameters|export PATH=$PATH:$HOME/bin',
+          'Shell Scripts|Create executable automation bash scripts|nano script.sh && chmod +x script.sh',
+          'Command History|View previous commands run in shell session|history',
+          'Auto Completion|Enable tab auto-completion utility packages|pkg install bash-completion'
+        ]
+      },
+      {
+        title: '📂 File Management',
+        description: 'Navigate directories, modify permissions, and find files.',
+        list: [
+          'ls|List directory files and folders|ls -la',
+          'cd|Change directory path in the shell|cd $HOME',
+          'pwd|Print current working directory path|pwd',
+          'cp|Copy file or directory recursively|cp -r source/ dest/',
+          'mv|Move or rename files and directories|mv old.txt new.txt',
+          'rm|Remove files or folders recursively|rm -rf folder/',
+          'mkdir|Create a new directory folder path|mkdir project',
+          'touch|Create an empty file or update timestamp|touch index.html',
+          'find|Search for files matching name or regex query|find . -name "*.js"',
+          'tree|Visualize folders and file structure hierarchical tree|tree -L 2',
+          'chmod|Modify file or directory read/write/execute permissions|chmod 755 script.sh',
+          'chown|Change owner user and group parameters|chown user:group file.txt',
+          'ln|Create symbolic link shortcut reference|ln -s target_dir shortcut_name',
+          'stat|Display detailed file metadata status|stat file.txt'
+        ]
+      },
+      {
+        title: '📄 Text Editors',
+        description: 'Edit configuration files and write code in the console.',
+        list: [
+          'nano|Simple and easy to use terminal text editor|nano config.txt',
+          'vim|Highly customizable advanced modal editor|vim index.js',
+          'neovim|Modern rewrite of Vim with Lua plugin support|pkg install neovim',
+          'micro|Intuitive modern terminal editor with mouse support|pkg install micro',
+          'sed|Stream editor for parsing and transforming text|sed -i "s/old/new/g" file.txt',
+          'awk|Pattern scanning and processing language utility|awk "{print $1}" file.txt',
+          'grep|Search files for lines matching regular expression|grep -rn "TODO" .'
+        ]
+      },
+      {
+        title: '🌐 Networking',
+        description: 'Analyze connections, resolve DNS, and fetch remote documents.',
+        list: [
+          'ping|Send ICMP echo packets to test host accessibility|ping google.com -c 4',
+          'curl|Command-line tool for transferring data via URLs|curl -I https://google.com',
+          'wget|Non-interactive network downloader utility|wget https://example.com/file.zip',
+          'ip|Display and configure network routing interfaces|ip addr show',
+          'netstat|Print active network sockets and TCP states|netstat -pant',
+          'ss|Modern utility to inspect socket stats (replaces netstat)|ss -tuln',
+          'traceroute|Trace routing path packet hops to target|traceroute google.com',
+          'dig|Perform advanced DNS resolution lookups|dig google.com ANY',
+          'nslookup|Query internet name servers interactively|nslookup google.com',
+          'host|Simple DNS lookup utility|host google.com',
+          'ifconfig|View and configure legacy network interface stats|ifconfig'
+        ]
+      },
+      {
+        title: '🔐 SSH & Remote Access',
+        description: 'Connect to servers, generate keypairs, and transfer data.',
+        list: [
+          'OpenSSH|Open-source SSH server and client suite|pkg install openssh',
+          'ssh|Connect securely to remote server shells|ssh user@remote_ip -p 22',
+          'scp|Securely copy files over SSH protocol|scp local.txt user@remote_ip:/path/',
+          'sftp|Secure file transfer program interface|sftp user@remote_ip',
+          'ssh-keygen|Generate public/private authentication keypairs|ssh-keygen -t ed25519',
+          'ssh-copy-id|Install public key on remote SSH authorized_keys|ssh-copy-id -i ~/.ssh/id_ed25519.pub user@remote_ip',
+          'rsync|Fast incremental directory synchronization tool|rsync -avz local/ user@remote_ip:/remote/',
+          'tmux remote sessions|Keep SSH sessions active after disconnecting|tmux new -s remote'
+        ]
+      },
+      {
+        title: '👤 User & Permissions',
+        description: 'Audit privileges, manage credentials, and emulate root.',
+        list: [
+          'sudo (proot)|Emulate root environment privileges in user namespaces|proot -0 -w ~ bash',
+          'passwd|Change Termux user session password credentials|passwd',
+          'groups|Display user group memberships|groups',
+          'id|Print user and group IDs for the shell session|id',
+          'whoami|Print active shell user name|whoami',
+          'chmod|Modify file permissions flags|chmod +x binary',
+          'chown|Change file owner ownership properties|chown owner file'
+        ]
+      },
+      {
+        title: '📦 Archives',
+        description: 'Compress and expand package archives and folders.',
+        list: [
+          'zip|Package and compress files in standard ZIP layout|zip archive.zip file1.txt file2.txt',
+          'unzip|Extract files from ZIP compressed archive|unzip archive.zip',
+          'tar|Tape archive utility to package folders|tar -cvf archive.tar folder/',
+          'gzip|Compress or expand files using GNU ZIP compression|gzip file.txt',
+          'bzip2|High quality data compressor utilizing Burrows-Wheeler|bzip2 file.txt',
+          'xz|Fast compression utility using LZMA algorithms|xz file.txt',
+          '7zip|Archive utility with very high compression ratios|pkg install 7zip'
+        ]
+      },
+      {
+        title: '💻 Programming Languages',
+        description: 'Deploy runtime engines and package managers on Termux.',
+        list: [
+          'Install Python|Install Python 3 runtime and development headers|pkg install python python-pip -y',
+          'pip|Python package installer for third-party libraries|pip install requests',
+          'venv|Create isolated Python virtual environments|python -m venv venv',
+          'pipx|Install and run Python applications in isolated environments|pipx install black',
+          'node|Execute Node.js JavaScript runtime scripts|node app.js',
+          'npm|JavaScript Node package manager client|npm install axios',
+          'yarn|Fast package manager by Meta|npm install -g yarn',
+          'pnpm|Performant npm replacement utilising hard links|npm install -g pnpm',
+          'bun|All-in-one JavaScript runtime and package manager|curl -fsSL https://bun.sh/install | bash',
+          'PHP CLI|Run PHP scripts directly in termux|pkg install php',
+          'Composer|PHP dependency package manager|php -r "readfile(\'https://getcomposer.org/installer\');" | php',
+          'OpenJDK|Install Java SE runtime and compiler environment|pkg install openjdk-17 -y',
+          'javac|Compile Java classes from source files|javac App.java',
+          'Go Toolchain|Install Go compiler and environment|pkg install golang',
+          'rustup|Install and manage Rust toolchains|curl --proto \'=https\' --tlsv1.2 -sSf https://sh.rustup.rs | sh',
+          'cargo|Rust package manager and compiler runner|cargo run',
+          'gem|Ruby package distribution runtime installer|pkg install ruby'
+        ]
+      },
+      {
+        title: '🌐 Web Development',
+        description: 'Scaffold modern reactive user interfaces on Android.',
+        list: [
+          'Vite|Ultra-fast frontend build tool and server|npm create vite@latest',
+          'Create React App|Classic standard React starter template|npx create-react-app my-app',
+          'npm|Node Package Manager project init|npm init -y',
+          'pnpm|Install dev dependencies in nested folders|pnpm install',
+          'Next.js|React application server-side framework|npx create-next-app@latest',
+          'Angular|Enterprise frontend web application framework|npm install -g @angular/cli',
+          'Vue|Progressive web application framework template|npm create vue@latest',
+          'Svelte|Component compiler framework scaffold|npx sv create'
+        ]
+      },
+      {
+        title: '⚙ Backend Development',
+        description: 'Build robust network server APIs on Termux.',
+        list: [
+          'Express.js|Minimalist web framework for Node.js|npm install express',
+          'NestJS|Progressive TypeScript backend framework|npm install -g @nestjs/cli',
+          'Django|Batteries-included Python web framework|pip install django',
+          'Flask|Lightweight Python WSGI web application framework|pip install flask',
+          'FastAPI|Modern, fast Python web framework for APIs|pip install fastapi uvicorn',
+          'Laravel|PHP web application framework with elegant syntax|composer global require laravel/installer'
+        ]
+      },
+      {
+        title: '🗄 Databases',
+        description: 'Setup and query local relational and document engines.',
+        list: [
+          'SQLite|Lightweight serverless SQL database engine|pkg install sqlite',
+          'PostgreSQL Client|Connect to PostgreSQL database servers|pkg install postgresql',
+          'MySQL Client|Connect to MariaDB/MySQL database servers|pkg install mariadb',
+          'Redis CLI|Run Redis server database in background|pkg install redis',
+          'MongoDB Shell|Query remote or local MongoDB databases|pkg install mongodb'
+        ]
+      },
+      {
+        title: '🐳 Containers & Virtualization',
+        description: 'Run standard Linux distributions in isolated chroots.',
+        list: [
+          'proot|Chroot emulation without root permissions|pkg install proot',
+          'proot-distro|Manage and run Linux distros in Termux|pkg install proot-distro',
+          'Ubuntu|Run an Ubuntu OS user space container|proot-distro install ubuntu',
+          'Debian|Run a Debian Linux environment|proot-distro install debian',
+          'Arch Linux|Run Arch Linux distro inside Termux|proot-distro install archlinux',
+          'Fedora|Run a Fedora Linux environment|proot-distro install fedora',
+          'Alpine|Run ultra-lightweight Alpine Linux distribution|proot-distro install alpine'
+        ]
+      },
+      {
+        title: '☁ Cloud & DevOps',
+        description: 'Deploy clouds, run playbooks, and manage versioning.',
+        list: [
+          'Git|Distributed version control system client|pkg install git',
+          'GitHub CLI|Manage repositories and issues from console|pkg install gh',
+          'Docker (remote client)|Control Docker daemons from Termux console|pkg install docker',
+          'AWS CLI|Command-line tool to manage AWS cloud services|pip install awscli',
+          'Azure CLI|Command-line tool to manage Azure cloud services|pip install azure-cli',
+          'Google Cloud CLI|Manage Google Cloud platform assets|curl https://sdk.cloud.google.com | bash',
+          'Terraform|Infrastructure as code provisioning client|pkg install terraform',
+          'Ansible|Run playbooks and configure environments|pip install ansible'
+        ]
+      },
+      {
+        title: '📱 Android Development',
+        description: 'Interact with Android debug ports and decompile bundles.',
+        list: [
+          'ADB|Android Debug Bridge terminal utility|pkg install android-tools',
+          'Fastboot|Flash Android recovery images and kernels|fastboot devices',
+          'APKTool|Rebuild and decompile Android APK assets|pkg install apktool',
+          'JADX|Decompile Dalvik bytecodes to readable Java|pkg install jadx',
+          'Gradle|Build automation tool for Java/Android applications|pkg install gradle',
+          'OpenJDK|Compile and test Java programs on-device|pkg install openjdk-17'
+        ]
+      },
+      {
+        title: '🛡 Cybersecurity (Authorized Use)',
+        description: 'Audit network ports, web services, and check vulnerabilities.',
+        list: [
+          'Nmap|Perform host port checks and network discovery|nmap -F target_ip',
+          'Whois|Query domain ownership record details|whois google.com',
+          'dnsrecon| DNS enumeration and zone transfer testing|pkg install dnsrecon',
+          'Amass|Discover subdomains and map out target attack surface|amass enum -d target.com',
+          'Nikto|Scan target web servers for dangerous files and configs|nikto -h target.com',
+          'Gobuster|Directory and file brute-forcer for web servers|gobuster dir -u http://target.com -w wordlist.txt',
+          'ffuf|Fast web vulnerability fuzzer written in Go|ffuf -u http://target.com/FUZZ -w wordlist.txt',
+          'tcpdump|Intercept and dump network packets from interfaces|tcpdump -vv',
+          'tshark|Terminal-based packet analyzer (Wireshark CLI)|tshark',
+          'Aircrack-ng tools|Crack WPA keys and audit wireless signals|pkg install aircrack-ng',
+          'strings|Scan binaries for ASCII/Unicode character sequences|strings binary',
+          'objdump|Disassemble binary files to inspect instruction sets|objdump -d binary',
+          'readelf|Display structural metadata from ELF files|readelf -h binary'
+        ]
+      },
+      {
+        title: '🤖 AI & Machine Learning',
+        description: 'Run lightweight local LLMs and integrate cloud models.',
+        list: [
+          'Ollama Client|Query Ollama LLM servers from Termux|curl -X POST http://local_ip:11434/api/generate',
+          'OpenAI API|Interact with OpenAI completions via curl|curl https://api.openai.com/v1/chat/completions',
+          'Gemini API|Query Google Gemini model endpoints from console|curl https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+          'Hugging Face CLI|Download datasets and model weights from Hub|pip install huggingface_hub'
+        ]
+      },
+      {
+        title: '🔧 Automation',
+        description: 'Schedule scripts, configure cron utilities, and run tasks.',
+        list: [
+          'Cron|Schedule recurring jobs in user namespace background|pkg install cronie',
+          'Task Scheduling|Execute tasks at specific absolute times|at 12:00 PM tomorrow -f script.sh',
+          'Shell Scripts|Write bash automation scripts to chain programs|bash script.sh',
+          'Python Automation|Run advanced scripting playbooks with python|python automation.py',
+          'Node.js Automation|Write automated API callers in Node|node automation.js'
+        ]
+      },
+      {
+        title: '📊 Monitoring',
+        description: 'Inspect CPU, memory usage, disk allocations, and processes.',
+        list: [
+          'htop|Interactive colorful process monitor client|htop',
+          'top|Display CPU activities and process lists|top',
+          'free|Print system memory allocation and swap space stats|free -h',
+          'df|Display disk space allocations and mount points|df -h',
+          'du|Summarize disk space usage of files and directories|du -sh *',
+          'ps|Display snapshot of active processes|ps aux',
+          'vmstat|Print virtual memory statistics and queue states|vmstat 1'
+        ]
+      },
+      {
+        title: '🔍 Search & Text Processing',
+        description: 'Filter lines, format data tables, and calculate words.',
+        list: [
+          'grep|Search files for lines matching query regex|grep -i "error" log.txt',
+          'sed|Search and replace substrings in-place|sed -i "s/http/https/g" config.json',
+          'awk|Retrieve columns and run calculations on tables|awk \'{print $2, $4}\' data.txt',
+          'cut|Extract specific fields or characters from fields|cut -d "," -f 1 data.csv',
+          'sort|Sort lines of text files alphabetically or numerically|sort -n file.txt',
+          'uniq|Delete duplicate adjacent lines from sorted input|uniq -c file.txt',
+          'wc|Count characters, lines, and words of text inputs|wc -l file.txt',
+          'tr|Translate, squeeze, or delete characters from input|tr "[:lower:]" "[:upper:]"'
+        ]
+      },
+      {
+        title: '🎨 Productivity',
+        description: 'Run multiple windows, preview syntax, and find files.',
+        list: [
+          'tmux|Terminal multiplexer for window splitting and sessions|tmux new-session -s main',
+          'screen|Multiplex shell sessions with simple commands|screen',
+          'fzf|Fuzzy finder command-line interactive filter|find . | fzf',
+          'bat|Clone of cat command with syntax highlighting|pkg install bat',
+          'eza|Modern replacement for ls written in Rust|pkg install eza',
+          'ripgrep|Ultra-fast recursively grep tool|pkg install ripgrep',
+          'fd|Simple and fast alternative to find utility|pkg install fd'
+        ]
+      },
+      {
+        title: '📚 Git & GitHub',
+        description: 'Initialize repositories, submit commits, and authenticate keys.',
+        list: [
+          'Git Installation|Setup git configuration options|git config --global user.name "Name"',
+          'Repository Management|Initialize and manage local git databases|git init',
+          'Branching|Create or switch isolated code branches|git checkout -b feature-branch',
+          'Merging|Merge commits from target branch into active branch|git merge main',
+          'Rebasing|Reapply commits on top of another base tip|git rebase main',
+          'GitHub Authentication|Authenticate with remote GitHub accounts|gh auth login',
+          'SSH Keys|Configure SSH credentials for secure pushes|ssh -T git@github.com',
+          'GitHub CLI|Check issues, pull requests, and status|gh pr status'
+        ]
+      },
+      {
+        title: '🔧 Utilities',
+        description: 'Encode parameters, generate passwords, and encode QR codes.',
+        list: [
+          'QR Code Generator|Encode text to printable QR code formats|pkg install qrencode && qrencode -t ansiutf8 "text"',
+          'Base64 Encode/Decode|Convert text to base64 encoding formats|echo -n "test" | base64',
+          'JSON Formatter|Format minified JSON structures in console|echo \'{"a":1}\' | jq',
+          'UUID Generator|Generate unique identification keys|uuidgen',
+          'Password Generator|Create high entropy random passwords|openssl rand -base64 12',
+          'Hash Utilities|Generate MD5/SHA checksum file verification|sha256sum file.txt',
+          'Cron Expression Generator|Generate cron trigger schedules|echo "0 12 * * * command"'
+        ]
+      }
+    ],
+    build: [],
+    troubleshooting: [],
+    usefulLinks: [
+      { label: 'Termux Wiki', url: 'https://wiki.termux.com/' },
+      { label: 'F-Droid Termux', url: 'https://f-droid.org/en/packages/com.termux/' }
+    ],
+    commonErrors: [
+      { error: 'Repository under maintenance or offline', solution: 'Run `termux-change-repo` and choose an alternative official mirror.' }
+    ],
+    bestPractices: [
+      'Only install packages from official and verified mirror sources.',
+      'Regularly back up your home and prefix directories.'
     ]
   }
 };

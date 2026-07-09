@@ -143,12 +143,23 @@ export const commandsData: Record<string, TechnologyGuide> = {
       },
       {
         title: '🎨 Tailwind CSS CLI',
-        description: 'Utility styling compiler CLI configurations.',
+        description: 'Utility styling compiler CLI configurations, plugins, and helpers.',
         list: [
-          'Install Tailwind|Install Tailwind CSS post-css utilities|npm install -D tailwindcss postcss autoprefixer',
-          'Generate Configurations|Create tailwind.config.js and postcss.config.js|npx tailwindcss init -p',
-          'Watch CSS CLI|Watch custom styles input and build output CSS files|npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch',
-          'Minify CSS Output|Minify compiled output styles for production|npx tailwindcss -o ./dist/output.css --minify'
+          'Install Tailwind v3 (NPM)|Install Tailwind CSS, PostCSS, and Autoprefixer packages|npm install -D tailwindcss postcss autoprefixer',
+          'Init Tailwind v3 Config|Create tailwind.config.js and postcss.config.js initializers|npx tailwindcss init -p',
+          'Init Config (Full)|Create tailwind.config.js with all default values expanded|npx tailwindcss init --full',
+          'Install Tailwind v4|Install Tailwind CSS v4 and the vite plugin integration|npm install tailwindcss@next @tailwindcss/vite@next',
+          'Watch CSS CLI|Watch custom input.css and compile utility classes dynamically|npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch',
+          'Minify CSS Output|Build and compress CSS payload for production deployment|npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify',
+          'Install Typography|Install official typography plugin for prose layout|npm install -D @tailwindcss/typography',
+          'Install Forms Plugin|Install forms plugin for default element resets|npm install -D @tailwindcss/forms',
+          'Install Aspect Ratio|Install aspect-ratio utility compatibility plugin|npm install -D @tailwindcss/aspect-ratio',
+          'Install Container Queries|Install container-based responsive query utility|npm install -D @tailwindcss/container-queries',
+          'Install Class Sorter|Install Prettier plugin for automated Tailwind class sorting|npm install -D prettier-plugin-tailwindcss',
+          'Format Class Order|Sort and format classes across files utilizing Prettier|npx prettier --write "src/**/*.tsx"',
+          'Install Tailwind Merge|Install tailwind-merge and clsx for dynamic class merging|npm install tailwind-merge clsx',
+          'Download Standalone CLI|Download the standalone, node-free compiled Tailwind executable|curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 && chmod +x tailwindcss-linux-x64',
+          'Run Standalone CLI|Watch and build utilizing standalone executable|./tailwindcss-linux-x64 -i input.css -o output.css --watch'
         ]
       }
     ],

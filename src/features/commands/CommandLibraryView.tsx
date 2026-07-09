@@ -56,7 +56,7 @@ const getTechTheme = (techId: string) => {
       bg: 'from-cyan-950/20 via-transparent to-transparent',
       border: 'border-cyan-500/20'
     },
-    django: {
+    backend: {
       badge: 'bg-emerald-950/40 border-emerald-800 text-emerald-300',
       text: 'text-emerald-400',
       bg: 'from-emerald-950/25 via-transparent to-transparent',
@@ -165,7 +165,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
 
-  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'hacking' || guide.id === 'termux') {
+  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'backend' || guide.id === 'hacking' || guide.id === 'termux') {
     const filteredCategories = guide.run.map(category => {
       if (!category.list) return null;
       
@@ -196,7 +196,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {guide.category}
               </span>
               <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
-                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guide.id === 'termux' ? '📱 Termux Command Library' : '🐧 Linux Commands Directory'}</span>
+                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'backend' ? '⚙️ Backend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guide.id === 'termux' ? '📱 Termux Command Library' : '🐧 Linux Commands Directory'}</span>
               </h1>
               <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
                 {guide.overview}
@@ -208,7 +208,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guide.id === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : "Search commands, e.g. ls, grep, ufw..."}
+                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'backend' ? "Search backend setups, e.g. django, express, laravel..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guide.id === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : "Search commands, e.g. ls, grep, ufw..."}
                 value={linuxSearch}
                 onChange={(e) => setLinuxSearch(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"
@@ -301,7 +301,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                         <div
                           key={itemIdx}
                           onClick={() => {
-                            if (guide.id === 'hacking' || guide.id === 'termux') {
+                            if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend') {
                               setSelectedTool({
                                 name: cmd,
                                 description: desc,
@@ -312,7 +312,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             }
                           }}
                           className="bg-gray-900/40 border border-white/5 p-4 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-3 relative"
-                          title={guide.id === 'hacking' || guide.id === 'termux' ? "Click to view full tool manual & options" : "Click to copy usage example"}
+                          title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? "Click to view full tool manual & options" : "Click to copy usage example"}
                         >
                           <div>
                             <div className="flex items-center justify-between">
@@ -320,7 +320,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                                 {cmd}
                               </code>
                               <span className="text-[9px] uppercase text-gray-500 font-mono tracking-wider font-bold bg-white/5 border border-white/5 px-1.5 py-0.5 rounded">
-                                {guide.id === 'hacking' || guide.id === 'termux' ? 'utility' : 'command'}
+                                {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? 'utility' : 'command'}
                               </span>
                             </div>
                             <p className="text-xs text-gray-400 leading-relaxed mt-2">
@@ -336,7 +336,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                if (guide.id === 'hacking' || guide.id === 'termux') {
+                                if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend') {
                                   setSelectedTool({
                                     name: cmd,
                                     description: desc,
@@ -347,9 +347,9 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                                 }
                               }}
                               className="p-1 rounded text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
-                              title={guide.id === 'hacking' || guide.id === 'termux' ? "Open Tool Manual" : "Copy Example Usage"}
+                              title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? "Open Tool Manual" : "Copy Example Usage"}
                             >
-                              {guide.id === 'hacking' || guide.id === 'termux' ? (
+                              {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? (
                                 <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover/code:opacity-100 transition text-purple-400" />
                               ) : isCopied ? (
                                 <Check className="w-3.5 h-3.5 text-green-400" />

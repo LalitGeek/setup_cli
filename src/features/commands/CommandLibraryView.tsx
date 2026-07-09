@@ -254,38 +254,53 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
                     {cat.list?.map((item, itemIdx) => {
-                      const [cmd, desc] = item.split('|');
-                      const isCopied = linuxCopiedCmd === cmd;
+                      const [cmd, desc, example] = item.split('|');
+                      const targetCopy = example || cmd;
+                      const isCopied = linuxCopiedCmd === targetCopy;
                       return (
                         <div
                           key={itemIdx}
-                          onClick={() => handleCopyLinuxCmd(cmd)}
-                          className="bg-gray-900/40 border border-white/5 p-3.5 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-2 relative"
-                          title="Click to copy command"
+                          onClick={() => handleCopyLinuxCmd(targetCopy)}
+                          className="bg-gray-900/40 border border-white/5 p-4 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-3 relative"
+                          title="Click to copy usage example"
                         >
-                          <div className="flex items-center justify-between">
-                            <code className="font-mono text-purple-300 text-xs md:text-sm font-semibold">
-                              {cmd}
+                          <div>
+                            <div className="flex items-center justify-between">
+                              <code className="font-mono text-purple-300 text-xs md:text-sm font-extrabold">
+                                {cmd}
+                              </code>
+                              <span className="text-[9px] uppercase text-gray-500 font-mono tracking-wider font-bold bg-white/5 border border-white/5 px-1.5 py-0.5 rounded">
+                                command
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-400 leading-relaxed mt-2">
+                              {desc}
+                            </p>
+                          </div>
+                          
+                          {/* Usage Example Code Block */}
+                          <div className="bg-black/40 border border-white/5 rounded-lg px-2.5 py-1.5 flex items-center justify-between group/code select-all">
+                            <code className="font-mono text-green-400 text-[10px] md:text-xs truncate mr-2">
+                              {targetCopy}
                             </code>
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleCopyLinuxCmd(cmd);
+                                handleCopyLinuxCmd(targetCopy);
                               }}
-                              className="p-1 rounded-md text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
+                              className="p-1 rounded text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
+                              title="Copy Example Usage"
                             >
                               {isCopied ? (
                                 <Check className="w-3.5 h-3.5 text-green-400" />
                               ) : (
-                                <Copy className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition" />
+                                <Copy className="w-3.5 h-3.5 opacity-40 group-hover/code:opacity-100 transition" />
                               )}
                             </button>
                           </div>
-                          <p className="text-xs text-gray-400 leading-relaxed">
-                            {desc}
-                          </p>
+
                           {isCopied && (
-                            <span className="absolute top-1 right-8 text-[9px] font-bold text-green-400 bg-green-950/60 border border-green-900 px-1 rounded">
+                            <span className="absolute top-1 right-8 text-[9px] font-bold text-green-400 bg-green-950/60 border border-green-900 px-1.5 py-0.5 rounded">
                               Copied!
                             </span>
                           )}

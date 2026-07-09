@@ -36,56 +36,183 @@ export const commandsData: Record<string, TechnologyGuide> = {
     projectCreation: [],
     run: [
       {
-        title: '🌐 Chapter 1: HTML5 Structure (Basic)',
-        description: 'Core concepts of semantic markup, standard page structure, input controls, and web media elements.',
+        title: '🟢 Level 1 — HTML Basics',
+        description: 'Introduction to HTML vs HTML5, how browsers render, file structure, headings, paragraphs, and text formatting tags.',
         list: [
-          '1.1 Document Structure|Basic HTML5 standard boilerplate configuration|<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Document</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n</body>\n</html>',
-          '1.2 Semantic Elements|Structure web layouts with header, nav, main, article, and footer sections|<header>\n  <nav>Navigation</nav>\n</header>\n<main>\n  <article>\n    <h2>Article Title</h2>\n    <p>Content</p>\n  </article>\n</main>\n<footer>Footer</footer>',
-          '1.3 Input Forms|Standard forms with label, email, password validation inputs, and submit button|<form action="/submit" method="POST">\n  <label for="email">Email Address:</label>\n  <input type="email" id="email" name="email" required>\n  <button type="submit">Submit Info</button>\n</form>',
-          '1.4 Media Embeds|Embedding images, video players, and audio media tags|<img src="banner.jpg" alt="Banner Image" width="400">\n<video src="clip.mp4" controls width="300">\n  Your browser does not support the video tag.\n</video>'
+          "1.1 What is HTML?|HyperText Markup Language (HTML) is the standard markup language for creating web pages.|<!-- HTML structures the web content -->\n<p>Hello World</p>",
+          "1.2 HTML vs HTML5|Differences include native audio/video playback, canvas graphics, and modern semantic element support.|<!-- HTML5 introduces new elements & APIs -->\n<header>\n  <nav>Navigation</nav>\n</header>",
+          "1.3 How Browsers Render HTML|The browser parses HTML markup into a Document Object Model (DOM) tree, combines it with styles (CSSOM), and paints it.|<!-- DOM parsing flow: HTML -> Tokenization -> DOM Nodes -> Render Tree -->",
+          "1.4 HTML Boilerplate|Standard HTML5 layout containing DOCTYPE, html language, character set, viewport responsive tags, and page titles.|<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Document</title>\n</head>\n<body>\n</body>\n</html>",
+          "1.5 Basic Elements|Usage of standard headings (h1 to h6), paragraphs, line breaks, comments, and horizontal rules.|<!-- Heading 1 -->\n<h1>Main Title</h1>\n<p>This is a paragraph.</p>\n<hr>\n<br>",
+          "1.6 Text Formatting|Using inline tags like strong, em, b, i, mark, small, sub, sup, del, ins, code, pre, and kbd.|<p>\n  <strong>Bold</strong> and <em>Italic</em>.\n  <mark>Highlighted</mark>.\n  <code>console.log()</code>.\n</p>"
         ]
       },
       {
-        title: '🎨 Chapter 2: CSS3 Styling & Layouts (Intermediate)',
-        description: 'Harness the styling power of CSS selectors, box modeling, Flexbox alignments, CSS Grid layouts, media queries, and transition animations.',
+        title: '🟢 Level 2 — Links & Media',
+        description: 'Working with hyperlink attributes, responsive image formats, audio players, video embeds, and sandboxed iframes.',
         list: [
-          '2.1 Selectors & Specificity|Targeting elements via classes, IDs, elements, and structural attributes|/* ID selector (highest) */\n#main-header {\n  color: #8b5cf6;\n}\n/* Class selector */\n.card-container p > span.highlight {\n  background-color: yellow;\n}',
-          '2.2 Box Model|Adjust margin, borders, padding, and layout sizing boundaries|* {\n  box-sizing: border-box;\n}\n.box {\n  width: 300px;\n  padding: 20px;\n  border: 1px solid #ccc;\n  margin: 10px;\n}',
-          '2.3 Flexbox Layout|Dynamic layout alignment and spacing along horizontal and vertical axises|.flex-container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n}',
-          '2.4 CSS Grid Layout|Constructing two-dimensional row-and-column layout layouts|.grid-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 16px;\n}',
-          '2.5 Transitions & Animations|Creating smooth interface micro-interactions and custom keyframe animations|.btn-primary {\n  transition: background-color 0.3s ease, transform 0.2s;\n}\n.btn-primary:hover {\n  background-color: #8b5cf6;\n  transform: translateY(-2px);\n}',
-          '2.6 Responsive Queries|Applying styling breakpoints for mobile, tablet, and desktop viewports|@media (max-width: 768px) {\n  .sidebar {\n    display: none;\n  }\n  .content {\n    width: 100%;\n  }\n}'
+          "2.1 Hyperlinks|Creating absolute, relative, email, telephone, anchor, and downloadable links.|<a href=\"https://google.com\" target=\"_blank\">Google</a>\n<a href=\"mailto:info@domain.com\">Email Us</a>\n<a href=\"#section-2\">Go to Section 2</a>",
+          "2.2 Images & Picture|Embedding images with fallback srcset, picture tags, responsive resizing, and native lazy loading.|<picture>\n  <source srcset=\"image-large.webp\" media=\"(min-width: 800px)\">\n  <img src=\"image-fallback.jpg\" alt=\"Responsive Image\" loading=\"lazy\">\n</picture>",
+          "2.3 Audio Players|Embedding sound assets with controls, loops, and muted autoplays.|<audio controls loop>\n  <source src=\"audio.mp3\" type=\"audio/mpeg\">\n  Your browser does not support audio.\n</audio>",
+          "2.4 Video Players|Embedding video assets with poster frames, tracking subtitles, and play/pause controls.|<video controls poster=\"thumbnail.jpg\" width=\"400\">\n  <source src=\"video.mp4\" type=\"video/mp4\">\n  <track src=\"subs.vtt\" kind=\"subtitles\" srclang=\"en\" label=\"English\">\n</video>",
+          "2.5 Iframes & Sandbox|Embedding external documents, maps, or videos securely utilizing sandboxing privileges.|<iframe src=\"https://example.com\" sandbox=\"allow-scripts allow-forms\" width=\"100%\" height=\"300\">\n</iframe>"
         ]
       },
       {
-        title: '⚡ Chapter 3: JavaScript Core Concepts (Intermediate)',
-        description: 'Mastering JavaScript primitives, let/const variable scopes, control flow structures, arrow functions, and arrays.',
+        title: '🟢 Level 3 — Lists & Tables',
+        description: 'Generating bullet lists, numbered ordered sequences, definition maps, and complex multi-row spreadsheet grids.',
         list: [
-          '3.1 Variables & Scopes|Declaring block-scoped variables and read-only constants|const maxLimit = 100;\nlet currentCount = 0;\nconst user = { name: "Alice", active: true };\nconsole.log(typeof maxLimit); // "number"',
-          '3.2 Modern Arrow Functions|Writing arrow syntax functions with implicit returns|const multiply = (a, b) => a * b;\nconsole.log(multiply(5, 10)); // Output: 50',
-          '3.3 Array Iterators|Iterating lists using filter mapping, reductions, and search tools|const numbers = [1, 2, 3, 4, 5];\nconst doubledEvens = numbers\n  .filter(n => n % 2 === 0)\n  .map(n => n * 2);\nconsole.log(doubledEvens); // Output: [4, 8]',
-          '3.4 Destructuring Syntax|Unpacking values from array structures and objects|const profile = { username: "guest", role: "user" };\nconst { username, role } = profile;\nconsole.log(username); // Output: "guest"'
+          "3.1 HTML Lists|Unordered bullet lists, ordered numbering lists, definition descriptions, and nested structures.|<ul>\n  <li>Item 1</li>\n  <li>\n    Item 2\n    <ol>\n      <li>Nested Item</li>\n    </ol>\n  </li>\n</ul>",
+          "3.2 Table Grids|Generating complex spreadsheets using table, tr, td, th, colspan, rowspan, and semantic sections (thead, tbody, tfoot).|<table>\n  <thead>\n    <tr>\n      <th>Header 1</th>\n      <th>Header 2</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"2\">Cell spanning two columns</td>\n    </tr>\n  </tbody>\n</table>"
         ]
       },
       {
-        title: '🌳 Chapter 4: JS DOM & Async Operations (Expert)',
-        description: 'Direct interactions with the Document Object Model, events handling, creating nodes, and async network operations.',
+        title: '🟢 Level 4 — Interactive Forms',
+        description: 'Building user-input interfaces using forms, labels, inputs, validation rules, regex patterns, select options, and progress trackers.',
         list: [
-          '4.1 Select & Edit Elements|Querying DOM nodes and changing contents/classes|const header = document.querySelector("#main-title");\nconst listItems = document.querySelectorAll(".item");\nheader.textContent = "New Web Core Title";',
-          '4.2 Custom Event Listeners|Binding user interactions (clicks, inputs, submits)|const button = document.querySelector(".btn-submit");\nbutton.addEventListener("click", (event) => {\n  event.preventDefault();\n  console.log("Submit button clicked!");\n});',
-          '4.3 Create & Append Nodes|Creating, adjusting, and appending elements dynamically|const alertBox = document.createElement("div");\nalertBox.className = "alert-message shadow";\nalertBox.textContent = "Operation completed successfully!";\ndocument.body.appendChild(alertBox);',
-          '4.4 Async Fetch API|Performing asynchronous REST API requests with async/await|async function fetchUserData() {\n  try {\n    const response = await fetch("https://api.github.com/users/lalit");\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n}'
+          "4.1 Form Basics|Setting up form containers with submission methods (GET/POST) and destination action URLs.|<form action=\"/api/submit\" method=\"POST\">\n  <!-- Inputs go here -->\n</form>",
+          "4.2 Input Types|Working with text, email, password, url, search, number, slider ranges, date pickers, colors, checkboxes, and radio buttons.|<input type=\"text\" placeholder=\"Username\">\n<input type=\"password\" placeholder=\"Secure Password\">\n<input type=\"range\" min=\"0\" max=\"100\">\n<input type=\"color\">",
+          "4.3 Form Elements|Utilizing selects, options, grouped lists, datalists, fieldsets, legends, output displays, and progress bars.|<fieldset>\n  <legend>Details</legend>\n  <select>\n    <optgroup label=\"Fruits\">\n      <option value=\"apple\">Apple</option>\n    </optgroup>\n  </select>\n</fieldset>",
+          "4.4 Input Validation|Enforcing browser-side validations using required fields, lengths, min/max limits, patterns (regex), and autocompletes.|<input type=\"text\" required minlength=\"4\" pattern=\"[a-zA-Z0-9]+\" placeholder=\"Alpha-numeric only\">"
         ]
       },
       {
-        title: '🧠 Chapter 5: Advanced JavaScript APIs (Expert)',
-        description: 'Advanced ES6 Class patterns, Promise orchestrations, closure scoping, browser storage client APIs, and module bundles.',
+        title: '🟢 Level 5 — Semantic HTML5',
+        description: 'Creating accessible, search-engine friendly structures using header, footer, article, section, aside, details, and summary tags.',
         list: [
-          '5.1 Promises & Async Flows|Handling callbacks, chains, and promise collections|const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));\nwait(1000).then(() => console.log("1 second passed"));\nPromise.all([p1, p2]).then(results => console.log(results));',
-          '5.2 ES6 Classes & OOP|Structuring Object-Oriented patterns using ES6 class specifications|class User {\n  constructor(name) {\n    this.name = name;\n  }\n  sayHello() {\n    return \`Hello, \${this.name}\`;\n  }\n}',
-          '5.3 Closures & Scopes|Understanding function scope boundaries and memory retention|function createCounter() {\n  let count = 0;\n  return function() {\n    count++;\n    return count;\n  };\n}\nconst counter = createCounter();',
-          '5.4 Web Storage Client APIs|Cache records dynamically using LocalStorage and SessionStorage|localStorage.setItem("user_theme", "dark");\nconst cachedTheme = localStorage.getItem("user_theme");\nlocalStorage.removeItem("user_theme");',
-          '5.5 JavaScript ES Modules|Separating concerns across files utilizing Import and Export statements|// math.js: export const add = (a, b) => a + b;\n// app.js: import { add } from "./math.js";\nconsole.log(add(5, 7));'
+          "5.1 Semantic Tags|Creating logical page divisions using header, main, section, article, nav, aside, and footer elements.|<main>\n  <section>\n    <h2>Section Name</h2>\n    <article>Article Body</article>\n  </section>\n</main>",
+          "5.2 Interactive Disclosure|Creating native collapsible details widgets using details, summary, and address structures.|<details>\n  <summary>Click to Expand</summary>\n  <p>Hidden information disclosed on user request.</p>\n</details>"
+        ]
+      },
+      {
+        title: '🟢 Level 6 — HTML5 Web APIs',
+        description: 'Leveraging modern browser APIs like client localStorage, drag and drop events, user Geolocation coordinates, and web workers.',
+        list: [
+          "6.1 Local & Session Storage|Saving client key-value preferences inside local browser memory buffers.|// Save data\nlocalStorage.setItem(\"user_theme\", \"dark\");\n// Retrieve data\nconst theme = localStorage.getItem(\"user_theme\");",
+          "6.2 Geolocation API|Requesting client coordinates (latitude & longitude) with user permission.|navigator.geolocation.getCurrentPosition(\n  (pos) => console.log(pos.coords.latitude, pos.coords.longitude),\n  (err) => console.error(err)\n);",
+          "6.3 Web Workers|Delegating computationally heavy tasks to background execution threads.|// main.js\nconst worker = new Worker(\"worker.js\");\nworker.postMessage(\"start\");\nworker.onmessage = (e) => console.log(e.data);",
+          "6.4 Drag & Drop API|Making elements draggable and registering target drop drop zones.|<div draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text', event.target.id)\">\n  Drag me!\n</div>"
+        ]
+      },
+      {
+        title: '🟢 Level 7 — Search Engine Optimization (SEO)',
+        description: 'Managing search metadata, crawl instructions, canonical links, Open Graph social cards, and JSON-LD structured data formats.',
+        list: [
+          "7.1 Meta & Canonical|Configuring page title, descriptions, robots directions, and canonical duplicate indicators.|<meta name=\"description\" content=\"Detailed guide on setup workflows.\">\n<link rel=\"canonical\" href=\"https://example.com/page\">",
+          "7.2 Open Graph & Twitter|Providing custom title, descriptions, and banner images for social media platforms.|<meta property=\"og:title\" content=\"Setup CLI Developer Guide\">\n<meta property=\"og:image\" content=\"https://example.com/banner.jpg\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">",
+          "7.3 JSON-LD Structured Data|Embedding schema markup contexts to tell crawlers how to render rich rich search results.|<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"WebSite\",\n  \"name\": \"Setup CLI\"\n}\n</script>"
+        ]
+      },
+      {
+        title: '🟢 Level 8 — Web Accessibility (A11Y)',
+        description: 'Enforcing web accessibility utilizing ARIA labels, interactive focus boundaries, semantic tags, and skip links.',
+        list: [
+          "8.1 ARIA Labels & Roles|Adding accessible labels and role modifiers to generic tags for screen reader navigation.|<button aria-label=\"Close menu\" role=\"button\">\n  &times;\n</button>",
+          "8.2 Focus & Skip Links|Setting skip links to bypass navigation and managing focus index coordinates.|<a href=\"#main-content\" class=\"skip-link\">Skip to content</a>\n<input type=\"text\" tabindex=\"0\">"
+        ]
+      },
+      {
+        title: '🟢 Level 9 — Performance Optimization',
+        description: 'Speeding up asset loads using asset preloading, prefetching, DNS preconnect, and script loading flags (async/defer).',
+        list: [
+          "9.1 Resource Hints|Telling the browser to fetch resources early using preload, prefetch, and dns-prefetch.|<link rel=\"preload\" href=\"font.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n<link rel=\"dns-prefetch\" href=\"https://api.example.com\">",
+          "9.2 Script Load Flags|Differentiating execution flows using default, async, and defer script loadings.|<!-- Execute script after document is parsed -->\n<script defer src=\"main.js\"></script>\n<!-- Execute script asynchronously as soon as it is fetched -->\n<script async src=\"tracker.js\"></script>"
+        ]
+      },
+      {
+        title: '🟢 Level 10 — Responsive viewports',
+        description: 'Fluid layout concepts, mobile-first design, viewport settings, and media sizing wrappers.',
+        list: [
+          "10.1 Viewport Configuration|Using the meta viewport tag to adjust layout sizing ratios correctly across mobile screens.|<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=5.0\">"
+        ]
+      },
+      {
+        title: '🟢 Level 11 — SVG Graphics',
+        description: 'Embedding scalable vector paths, circles, rectangles, styling gradients, animations, and icons.',
+        list: [
+          "11.1 Scalable Vectors (SVG)|Drawing inline vector components, shapes, and complex paths.|<svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\">\n  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"#8b5cf6\" />\n</svg>"
+        ]
+      },
+      {
+        title: '🟢 Level 12 — HTML5 Canvas Elements',
+        description: 'Drawing 2D shapes, texts, render operations, dynamic sprite sheets, and gaming animation frames.',
+        list: [
+          "12.1 Canvas 2D Context|Initializing canvas elements and rendering shapes programmatically via script.|<canvas id=\"my-canvas\" width=\"200\" height=\"200\"></canvas>\n<script>\n  const ctx = document.getElementById(\"my-canvas\").getContext(\"2d\");\n  ctx.fillStyle = \"blue\";\n  ctx.fillRect(10, 10, 150, 100);\n</script>"
+        ]
+      },
+      {
+        title: '🟢 Level 13 — Document Metadata',
+        description: 'Applying document tags, content locales, system themes, manifest paths, and device wrappers.',
+        list: [
+          "13.1 Metadata & Theme|Declaring charset systems, languages, mobile theme color, and application manifest icons.|<meta name=\"theme-color\" content=\"#8b5cf6\">\n<link rel=\"manifest\" href=\"/manifest.json\">"
+        ]
+      },
+      {
+        title: '🟢 Level 14 — Progressive Web Apps (PWA)',
+        description: 'Scaffolding manifests, managing offline service workers, and configuring app installers.',
+        list: [
+          "14.1 Service Worker Registrations|Registering service worker files to support offline caching and background syncs.|<script>\n  if (\"serviceWorker\" in navigator) {\n    navigator.serviceWorker.register(\"/sw.js\");\n  }\n</script>"
+        ]
+      },
+      {
+        title: '🟢 Level 15 — HTML Web Components',
+        description: 'Scaffolding modular custom elements, shadowing DOM boundaries, and using HTML templates/slots.',
+        list: [
+          "15.1 Custom Web Components|Creating custom components with templates, slot placeholders, and Shadow DOM.|<template id=\"card-template\">\n  <style>.card { color: red; }</style>\n  <div class=\"card\"><slot name=\"title\">Title</slot></div>\n</template>"
+        ]
+      },
+      {
+        title: '🟢 Level 16 — Embedded Content',
+        description: 'Working with object, embed, iframe, picture, and source element wrappers.',
+        list: [
+          "16.1 Native Embeds|Using embed and object tags to render media or external assets.|<object data=\"document.pdf\" type=\"application/pdf\" width=\"100%\" height=\"400\">\n  <p>PDF cannot be rendered.</p>\n</object>"
+        ]
+      },
+      {
+        title: '🟢 Level 17 — Developer Best Practices',
+        description: 'Structuring clean folders, maintaining conventions, writing descriptive comments, and organizing reusable HTML modules.',
+        list: [
+          "17.1 Clean Markup Standards|Writing self-descriptive comments, tags, indentation, and clean markup hierarchy.|<!-- Recommended: Use lowercase tags and close all elements -->\n<div class=\"card\">\n  <p>Hello World</p>\n</div>"
+        ]
+      },
+      {
+        title: '🟢 Level 18 — Client Side Security',
+        description: 'Protecting websites against Cross-Site Scripting (XSS) attacks, sandboxing, and configuring Content Security Policies.',
+        list: [
+          "18.1 XSS & Sandboxing|Mitigating script injection risks using strict sandbox wrappers on iframes.|<iframe src=\"https://untrusted-source.com\" sandbox=\"allow-scripts\">\n</iframe>"
+        ]
+      },
+      {
+        title: '🟢 Level 19 — Browser Feature Detection',
+        description: 'Detecting modern API capabilities and building backward compatibility polyfills.',
+        list: [
+          "19.1 Feature Detection|Checking browser support for storage, workers, or canvas APIs.|if (window.Worker) {\n  console.log(\"Web Workers Supported\");\n} else {\n  console.log(\"Fallback to main thread\");\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 20 — Interview Prep & FAQ',
+        description: 'Typical interview tasks, answers on semantic tags, accessibility, performance, and HTML5 APIs.',
+        list: [
+          "20.1 Common Questions|Interview Q&A: Explain the difference between block elements and inline elements.|// Answer: Block elements take up the full container width (e.g. div, p);\n// Inline elements only take up their text content width (e.g. span, strong)."
+        ]
+      },
+      {
+        title: '📚 HTML Element Reference',
+        description: 'An ultimate cheatsheet categorizing standard Document, Text, Layout, Media, Form, and Interactive elements.',
+        list: [
+          "Document Elements|html, head, body, title, meta, link, script tags.|<!-- HTML document nodes -->",
+          "Text Formatting|h1-h6 headings, p paragraphs, span, div sections.|<!-- Text containers -->",
+          "Layout Elements|header, nav, main, section, article, aside, footer.|<!-- Layout layout nodes -->",
+          "Media Elements|img, picture, audio, video, canvas, svg.|<!-- Media nodes -->"
+        ]
+      },
+      {
+        title: '💼 Practice Projects Catalog',
+        description: 'Exercises to build your HTML knowledge from beginner card panels up to complex multipage app wireframes.',
+        list: [
+          "Beginner Projects|Build a Personal Portfolio page, a resume layout, or product cards.|<!-- Practice Task: Create index.html representing your developer bio -->",
+          "Intermediate Projects|Scaffold login forms, survey inputs, or dynamic layout grids.|<!-- Practice Task: Form validation and flex wrap dashboard -->",
+          "Advanced Projects|Design a documentation website, PWA application dashboard, or CMS pages.|<!-- Practice Task: Complete accessible corporate landing template -->"
         ]
       }
     ],

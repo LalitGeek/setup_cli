@@ -136,6 +136,33 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   const [aiAnswers, setAiAnswers] = useState<Record<string, string[]>>({});
   const [isAnswering, setIsAnswering] = useState(false);
 
+  // Find the next concept in the list for ebook-style navigation
+  const getNextConcept = () => {
+    if (!selectedTool) return null;
+    
+    // Flatten all items in the guide.run lists
+    const allItems: { name: string; description: string; example: string }[] = [];
+    guide.run.forEach(category => {
+      category.list?.forEach(item => {
+        const [cmd, desc, example] = item.split('|');
+        allItems.push({
+          name: cmd,
+          description: desc,
+          example: example || cmd
+        });
+      });
+    });
+
+    // Find current index
+    const currentIndex = allItems.findIndex(item => item.name === selectedTool.name);
+    if (currentIndex !== -1 && currentIndex < allItems.length - 1) {
+      return allItems[currentIndex + 1];
+    }
+    return null;
+  };
+
+  const nextConcept = getNextConcept();
+
   const handleCopyModalCmd = (cmd: string) => {
     navigator.clipboard.writeText(cmd);
     setCopiedModalCmd(true);
@@ -589,18 +616,49 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   </div>
                 </div>
 
+                {/* 6.5 Ebook-style Next Chapter Continuation */}
+                {nextConcept && (
+                  <button
+                    onClick={() => {
+                      setSelectedTool(nextConcept);
+                      setAiPrompt('');
+                    }}
+                    className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-indigo-950/60 to-purple-950/60 hover:from-indigo-900/50 hover:to-purple-900/50 border border-indigo-500/20 rounded-xl transition group cursor-pointer"
+                  >
+                    <div className="text-left">
+                      <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider block">Next Chapter / Topic</span>
+                      <span className="text-sm font-extrabold text-white group-hover:text-indigo-300 transition">{nextConcept.name}</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5 text-xs text-indigo-400 group-hover:text-indigo-300 font-bold">
+                      <span>Continue reading</span>
+                      <Play className="w-3 h-3 fill-indigo-400 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </button>
+                )}
+
                 {/* 7. Related Tools & Reference links */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-white/5">
                   <div className="flex items-center space-x-2 text-xs text-gray-500">
                     <Info className="w-4 h-4 text-gray-500" />
-                    <span>Related: theHarvester, Nmap, OWASP ZAP, Metasploit</span>
+                    <span>
+                      {guide.id === 'learning' 
+                        ? 'Related: HTML5 specifications, MDN layout rules, W3C accessibility guidelines' 
+                        : 'Related: theHarvester, Nmap, OWASP ZAP, Metasploit'}
+                    </span>
                   </div>
                   
                   <div className="flex space-x-3 text-xs">
-                    <a href="https://www.kali.org/tools/" target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 flex items-center space-x-1">
-                      <span>Kali tools doc</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                    {guide.id === 'learning' ? (
+                      <a href="https://developer.mozilla.org" target="_blank" rel="noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
+                        <span>MDN Web Docs</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    ) : (
+                      <a href="https://www.kali.org/tools/" target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 flex items-center space-x-1">
+                        <span>Kali tools doc</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                   </div>
                 </div>
 

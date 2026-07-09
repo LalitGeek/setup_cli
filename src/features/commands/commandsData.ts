@@ -26,389 +26,113 @@ export interface TechnologyGuide {
 }
 
 export const commandsData: Record<string, TechnologyGuide> = {
-  react: {
-    id: 'react',
-    name: 'React',
+  frontend: {
+    id: 'frontend',
+    name: 'Frontend Commands',
     category: 'Frontend',
-    overview: 'React is a popular open-source JavaScript library for building user interfaces, particularly single-page applications. Developed and maintained by Meta.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' },
-      { title: 'npm (v9.0.0+)', code: 'npm -v' }
-    ],
-    installation: [
-      { title: 'Install React globally or use Vite initializer', code: 'npm create vite@latest my-react-app -- --template react-ts' }
-    ],
-    projectCreation: [
-      { title: 'Create App using Vite', code: 'npm create vite@latest my-app -- --template react-ts\ncd my-app\nnpm install' }
-    ],
-    folderStructure: `my-app/
-├── node_modules/
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── App.css
-│   ├── App.tsx
-│   ├── index.css
-│   ├── main.tsx
-│   └── vite-env.d.ts
-├── .gitignore
-├── index.html
-├── package.json
-├── tsconfig.json
-└── vite.config.ts`,
+    overview: 'A consolidated, searchable directory of setup, build, and management commands for major web frameworks and libraries.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
     run: [
-      { title: 'Run Development Server', code: 'npm run dev' }
+      {
+        title: '⚛️ React.js CLI',
+        description: 'Create, run, and compile React applications using Vite compiler setups.',
+        list: [
+          'Create Vite React App|Initialize a Vite React TypeScript boilerplate app|npm create vite@latest my-app -- --template react-ts',
+          'Run Dev Server|Start the Vite development web server locally|npm run dev',
+          'Build Production|Compile production optimized build directory|npm run build',
+          'Preview Build|Preview the compiled production assets locally|npm run preview',
+          'Clean NPM Reinstall|Force clear NPM cache and clean reinstall all dependencies|rm -rf node_modules package-lock.json && npm cache clean --force && npm install'
+        ]
+      },
+      {
+        title: '⏭️ Next.js App CLI',
+        description: 'Enterprise React framework development, server side rendering, and compile tasks.',
+        list: [
+          'Create Next.js (Interactive)|Run interactive create-next-app initialization prompt|npx create-next-app@latest my-next-app',
+          'Create Next.js (Flags)|Provision Next.js template with TypeScript, Tailwind, and App router|npx create-next-app@latest my-next-app --typescript --tailwind --app',
+          'Run Dev Server|Start Next.js dev server with hot module reloading|npm run dev',
+          'Build Production|Compile Next.js production builds|npm run build',
+          'Start Prod Server|Launch built production server locally on port 3000|npm run start',
+          'Clear Next Cache|Wipe Next.js build cache folder and restart development server|rm -rf .next && npm run dev'
+        ]
+      },
+      {
+        title: '🟢 Vue.js CLI',
+        description: 'Scaffold and run progressive client applications.',
+        list: [
+          'Create Vue App|Run interactive Vue project configuration tool|npm create vue@latest',
+          'Create Vue via Vite|Initialize Vue framework with Vite and TypeScript|npm create vite@latest my-vue-app -- --template vue-ts',
+          'Run Dev Server|Launch local dev server with hot module updates|npm run dev',
+          'Build Production|Compile optimized production assets|npm run build'
+        ]
+      },
+      {
+        title: '⛰️ Nuxt.js App CLI',
+        description: 'Universal Vue framework full-stack setup tasks.',
+        list: [
+          'Create Nuxt App|Initialize a fresh Nuxt application scaffolding|npx nuxi@latest init my-nuxt-app',
+          'Run Dev Server|Launch Nuxt local server and open port automatically|npm run dev -- -o',
+          'Build Production|Compile Nuxt app for server-side hosting distributions|npm run build',
+          'Preview Build|Run compiled local server production output|node .output/server/index.mjs',
+          'Reset Nuxt Cache|Remove build caches, outputs, modules, and reinstall|rm -rf .nuxt .output node_modules && npm install'
+        ]
+      },
+      {
+        title: '🅰️ Angular CLI',
+        description: 'Enterprise structural application platform cli commands.',
+        list: [
+          'Install CLI Globally|Install Angular cli tooling globally|npm install -g @angular/cli',
+          'Create Angular App|Create Angular app with Routing & Server Side Rendering|ng new my-app --style css --routing --ssr',
+          'Run Dev Server|Start Angular dev server on local port|ng serve',
+          'Build Production|Compile production-ready application bundles|ng build',
+          'Clear Angular Cache|Clean dev cache and rebuild project dependencies|ng cache clean && rm -rf .angular dist node_modules && npm install'
+        ]
+      },
+      {
+        title: '⚡ SvelteKit CLI',
+        description: 'Extremely fast compiling Svelte framework commands.',
+        list: [
+          'Create Svelte App|Initialize Svelte project template boilerplate|npm create svelte@latest my-svelte-app',
+          'Run Dev Server|Start SvelteKit development web server and open browser|npm run dev -- --open',
+          'Build Production|Compile production optimized bundles|npm run build',
+          'Sync Svelte Types|Synchronize SvelteKit auto-generated type bindings|npx svelte-kit sync'
+        ]
+      },
+      {
+        title: '🟦 SolidJS CLI',
+        description: 'Vite compiling web components without Virtual DOM.',
+        list: [
+          'Create Solid App|Vite-based SolidJS TypeScript project setup|npm create vite@latest my-app -- --template solid-ts',
+          'Run Dev Server|Start SolidJS local development server|npm run dev',
+          'Build Production|Compile production bundle distributions|npm run build'
+        ]
+      },
+      {
+        title: '🎨 Tailwind CSS CLI',
+        description: 'Utility styling compiler CLI configurations.',
+        list: [
+          'Install Tailwind|Install Tailwind CSS post-css utilities|npm install -D tailwindcss postcss autoprefixer',
+          'Generate Configurations|Create tailwind.config.js and postcss.config.js|npx tailwindcss init -p',
+          'Watch CSS CLI|Watch custom styles input and build output CSS files|npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch',
+          'Minify CSS Output|Minify compiled output styles for production|npx tailwindcss -o ./dist/output.css --minify'
+        ]
+      }
     ],
-    build: [
-      { title: 'Build for Production', code: 'npm run build' },
-      { title: 'Preview Local Production Build', code: 'npm run preview' }
-    ],
-    production: [
-      { title: 'Production environment checks', description: 'Ensure React Developer Tools are disabled in prod, use production builds, and enable gzip compression on Nginx/Cloudflare.' }
-    ],
-    deployment: [
-      { title: 'Deploy to Vercel', code: 'npm install -g vercel\nvercel' },
-      { title: 'Deploy to Netlify', code: 'npm install -g netlify-cli\nnetlify deploy --prod' }
-    ],
-    troubleshooting: [
-      { title: 'Clear NPM cache and reinstall', code: 'rm -rf node_modules package-lock.json\nnpm cache clean --force\nnpm install' }
-    ],
+    build: [],
+    troubleshooting: [],
     usefulLinks: [
-      { label: 'Official Documentation', url: 'https://react.dev' },
-      { label: 'Vite Guide', url: 'https://vite.dev/guide/' }
+      { label: 'Vite documentation', url: 'https://vite.dev' },
+      { label: 'Next.js documentation', url: 'https://nextjs.org' },
+      { label: 'Tailwind CSS documentation', url: 'https://tailwindcss.com' }
     ],
     commonErrors: [
-      { error: 'Hooks can only be called inside the body of a function component.', solution: 'Ensure you are not calling hooks inside conditional statements, loops, or nested functions.' },
-      { error: 'Module not found: Can\'t resolve \'react-router-dom\'', solution: 'Run `npm install react-router-dom` to install the router package.' }
+      { error: 'npm ERR! code ERESOLVE', solution: 'Try appending `--legacy-peer-deps` to bypass conflicting peer dependency versions.' }
     ],
     bestPractices: [
-      'Keep components small and focused on a single responsibility.',
-      'Use functional components and modern React Hooks instead of class components.',
-      'Memoize expensive calculations using useMemo and callbacks using useCallback.',
-      'Keep state as local as possible to avoid unnecessary re-renders.'
-    ]
-  },
-  nextjs: {
-    id: 'nextjs',
-    name: 'Next.js',
-    category: 'Frontend',
-    overview: 'Next.js is a React framework created by Vercel that enables developer features such as Server-Side Rendering (SSR), Static Site Generation (SSG), and API Routes.',
-    requirements: [
-      { title: 'Node.js (v18.17.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Create Next.js App (Interactive)', code: 'npx create-next-app@latest my-next-app' },
-      { title: 'Create Next.js App with flags', code: 'npx create-next-app@latest my-next-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"' }
-    ],
-    projectCreation: [
-      { title: 'Create and Navigate', code: 'npx create-next-app@latest my-app --typescript --tailwind --app\ncd my-app' }
-    ],
-    folderStructure: `my-app/
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   └── globals.css
-│   └── components/
-├── public/
-├── package.json
-├── tailwind.config.ts
-└── next.config.ts`,
-    run: [
-      { title: 'Run Dev Server', code: 'npm run dev' }
-    ],
-    build: [
-      { title: 'Build for Production', code: 'npm run build' },
-      { title: 'Start Production Server Locally', code: 'npm run start' }
-    ],
-    deployment: [
-      { title: 'Deploy on Vercel', description: 'Next.js is optimized for Vercel. Push to Github/Gitlab and connect your repository to Vercel for zero-config deployments.' }
-    ],
-    troubleshooting: [
-      { title: 'Reset Next.js Cache', code: 'rm -rf .next\nnpm run dev' }
-    ],
-    usefulLinks: [
-      { label: 'Next.js Docs', url: 'https://nextjs.org/docs' }
-    ],
-    commonErrors: [
-      { error: 'Error: Next Router was not mounted.', solution: 'Import `useRouter` from `next/navigation` instead of `next/router` when using the App Router.' }
-    ],
-    bestPractices: [
-      'Use Server Components by default for better SEO and performance.',
-      'Mark components with "use client" only when using interactivity, state, or hooks.',
-      'Use next/image for automatic image optimization.',
-      'Use next/font to automatically optimize and load web fonts.'
-    ]
-  },
-  vue: {
-    id: 'vue',
-    name: 'Vue.js',
-    category: 'Frontend',
-    overview: 'Vue.js is a progressive JavaScript framework for building user interfaces. It is designed to be incrementally adoptable and integrates easily with other libraries.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' },
-      { title: 'npm (v9.0.0+)', code: 'npm -v' }
-    ],
-    installation: [
-      { title: 'Create Vue App via Vite', code: 'npm create vue@latest' }
-    ],
-    projectCreation: [
-      { title: 'Initialize Vue project with Vite', code: 'npm create vite@latest my-vue-app -- --template vue-ts\ncd my-vue-app\nnpm install' }
-    ],
-    folderStructure: `my-vue-app/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── App.vue
-│   ├── main.ts
-│   └── vite-env.d.ts
-├── index.html
-├── package.json
-└── vite.config.ts`,
-    run: [
-      { title: 'Run dev server', code: 'npm run dev' }
-    ],
-    build: [
-      { title: 'Build Vue App', code: 'npm run build' }
-    ],
-    troubleshooting: [
-      { title: 'Clear npm cache and reinstall', code: 'rm -rf node_modules package-lock.json && npm install' }
-    ],
-    usefulLinks: [
-      { label: 'Vue.js Docs', url: 'https://vuejs.org' }
-    ],
-    commonErrors: [
-      { error: 'Component name "Home" should always be multi-word.', solution: 'Rename component to "HomeView" or disable the `vue/multi-word-component-names` ESLint rule.' }
-    ],
-    bestPractices: [
-      'Use the Composition API with <script setup> syntax for clean and readable code.',
-      'Always use props and emit validation.',
-      'Use key attributes with v-for properly to ensure correct rendering update paths.'
-    ]
-  },
-  nuxt: {
-    id: 'nuxt',
-    name: 'Nuxt.js',
-    category: 'Frontend',
-    overview: 'Nuxt is an open-source framework that makes web development intuitive and powerful. Create performant and production-ready full-stack web apps and websites.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Initialize Nuxt App', code: 'npx nuxi@latest init my-nuxt-app' }
-    ],
-    projectCreation: [
-      { title: 'Initialize and Install', code: 'npx nuxi@latest init my-app\ncd my-app\nnpm install' }
-    ],
-    folderStructure: `my-app/
-├── .nuxt/
-├── components/
-├── layouts/
-├── pages/
-│   └── index.vue
-├── public/
-├── server/
-│   └── api/
-├── app.vue
-├── nuxt.config.ts
-└── package.json`,
-    run: [
-      { title: 'Run Dev Server', code: 'npm run dev -- -o' }
-    ],
-    build: [
-      { title: 'Build for Production', code: 'npm run build' },
-      { title: 'Preview production build', code: 'node .output/server/index.mjs' }
-    ],
-    troubleshooting: [
-      { title: 'Clear Nuxt cache', code: 'rm -rf .nuxt .output node_modules && npm install' }
-    ],
-    usefulLinks: [
-      { label: 'Nuxt Docs', url: 'https://nuxt.com' }
-    ],
-    commonErrors: [
-      { error: 'Hydration node mismatch error.', solution: 'Ensure Server-Side Rendered (SSR) HTML matches client state. Avoid client-only elements or window APIs during created hooks.' }
-    ],
-    bestPractices: [
-      'Use directory-based routing in the pages/ folder for clean page structure.',
-      'Leverage Nuxt composables like useFetch and useAsyncData for data fetching.',
-      'Wrap client-only code inside <ClientOnly> tags.'
-    ]
-  },
-  angular: {
-    id: 'angular',
-    name: 'Angular',
-    category: 'Frontend',
-    overview: 'Angular is a development platform, built on TypeScript, that includes a component-based framework for building scalable web applications.',
-    requirements: [
-      { title: 'Node.js (v18.13.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Install Angular CLI globally', code: 'npm install -g @angular/cli' }
-    ],
-    projectCreation: [
-      { title: 'Create new Angular app', code: 'ng new my-app --style css --routing --ssr\ncd my-app' }
-    ],
-    folderStructure: `my-app/
-├── src/
-│   ├── app/
-│   │   ├── app.component.ts
-│   │   ├── app.config.ts
-│   │   └── app.routes.ts
-│   ├── index.html
-│   └── main.ts
-├── angular.json
-├── package.json
-└── tsconfig.json`,
-    run: [
-      { title: 'Run Development Server', code: 'ng serve' }
-    ],
-    build: [
-      { title: 'Build production application', code: 'ng build' }
-    ],
-    troubleshooting: [
-      { title: 'Clear cache and rebuild', code: 'ng cache clean\nrm -rf .angular dist node_modules && npm install' }
-    ],
-    usefulLinks: [
-      { label: 'Angular Documentation', url: 'https://angular.dev' }
-    ],
-    commonErrors: [
-      { error: 'NG0203: inject() must be called from an injection context.', solution: 'Ensure you call inject() within constructor or provider init stages, not inside async handlers.' }
-    ],
-    bestPractices: [
-      'Use standalone components by default for modular, clean component declarations.',
-      'Manage state reactively using Angular Signals or RxJS observables.',
-      'Optimize performance with trackBy function or the new @for loop tracking.'
-    ]
-  },
-  svelte: {
-    id: 'svelte',
-    name: 'SvelteKit',
-    category: 'Frontend',
-    overview: 'Svelte is a compiler approach to building user interfaces. SvelteKit is the official application framework for Svelte, featuring file-based routing and SSR.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Create Svelte project via Svelte CLI', code: 'npm create svelte@latest my-svelte-app' }
-    ],
-    projectCreation: [
-      { title: 'Initialize SvelteKit project', code: 'npm create svelte@latest my-app\ncd my-app\nnpm install' }
-    ],
-    folderStructure: `my-app/
-├── src/
-│   ├── routes/
-│   │   ├── +layout.svelte
-│   │   └── +page.svelte
-│   └── app.html
-├── static/
-├── package.json
-├── svelte.config.js
-└── vite.config.ts`,
-    run: [
-      { title: 'Run Dev Server', code: 'npm run dev -- --open' }
-    ],
-    build: [
-      { title: 'Build production application', code: 'npm run build' }
-    ],
-    troubleshooting: [
-      { title: 'Re-sync Svelte types', code: 'npx svelte-kit sync' }
-    ],
-    usefulLinks: [
-      { label: 'Svelte Docs', url: 'https://svelte.dev' }
-    ],
-    commonErrors: [
-      { error: 'db connection fails inside component script', solution: 'Move sensitive database code to +page.server.js instead of inline inside +page.svelte script blocks.' }
-    ],
-    bestPractices: [
-      'Use Svelte stores or Svelte 5 Runes for global reactive state.',
-      'Keep style blocks local inside Svelte components; styles are automatically scoped.',
-      'Use +page.server.ts for secure data fetching and API calls.'
-    ]
-  },
-  solid: {
-    id: 'solid',
-    name: 'SolidJS',
-    category: 'Frontend',
-    overview: 'SolidJS is a declarative, efficient, and flexible JavaScript library for building user interfaces without a virtual DOM, compiling directly to real DOM nodes.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Create Solid App via Vite', code: 'npm create vite@latest my-solid-app -- --template solid-ts' }
-    ],
-    projectCreation: [
-      { title: 'Create and run Solid app', code: 'npm create vite@latest my-app -- --template solid-ts\ncd my-app\nnpm install' }
-    ],
-    folderStructure: `my-app/
-├── src/
-│   ├── App.tsx
-│   ├── index.css
-│   └── index.tsx
-├── index.html
-├── package.json
-└── vite.config.ts`,
-    run: [
-      { title: 'Run Development Server', code: 'npm run dev' }
-    ],
-    build: [
-      { title: 'Build for production', code: 'npm run build' }
-    ],
-    troubleshooting: [
-      { title: 'Reinstall node modules', code: 'rm -rf node_modules package-lock.json && npm install' }
-    ],
-    usefulLinks: [
-      { label: 'SolidJS Docs', url: 'https://www.solidjs.com' }
-    ],
-    commonErrors: [
-      { error: 'Props object losing reactivity.', solution: 'Do not destructure React-style props in SolidJS. Use props.propName directly or use `splitProps`.' }
-    ],
-    bestPractices: [
-      'Use Signals (createSignal) for local reactive state.',
-      'Avoid destructuring props to keep reactivity intact.',
-      'Use <Show> and <For> components instead of standard JS ternary/map operators.'
-    ]
-  },
-  tailwind: {
-    id: 'tailwind',
-    name: 'Tailwind CSS',
-    category: 'Frontend',
-    overview: 'Tailwind CSS is a utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.',
-    requirements: [
-      { title: 'Node.js (v18.0.0+)', code: 'node -v' }
-    ],
-    installation: [
-      { title: 'Install tailwindcss via npm', code: 'npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p' }
-    ],
-    projectCreation: [
-      { title: 'Install Tailwind and generate configuration', code: 'npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p' }
-    ],
-    folderStructure: `my-project/
-├── tailwind.config.js
-├── postcss.config.js
-└── src/
-    └── index.css`,
-    run: [
-      { title: 'Build CSS (standalone CLI)', code: 'npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch' }
-    ],
-    build: [
-      { title: 'Minify CSS build', code: 'npx tailwindcss -o ./dist/output.css --minify' }
-    ],
-    troubleshooting: [
-      { title: 'Styles not showing up', description: 'Double check the `content` array paths in tailwind.config.js. Make sure it covers all HTML/TS/JS templates!' }
-    ],
-    usefulLinks: [
-      { label: 'Tailwind CSS Docs', url: 'https://tailwindcss.com' }
-    ],
-    commonErrors: [
-      { error: 'Tailwind classes not rendering on dynamically injected HTML.', solution: 'Add the classes to tailwind whitelist safelist config or avoid using dynamic template string class injection.' }
-    ],
-    bestPractices: [
-      'Use Arbitrary Values sparingly; define custom theme classes in tailwind.config.js instead.',
-      'Group custom configurations inside tailwind.config.js theme extension block.',
-      'Use Tailwind CSS IntelliSense plugin in VS Code for autocomplete and formatting.'
+      'Keep your node_modules folder updated and run audit checks periodically.',
+      'Always configure Tailwind content directories correctly to purge unused styles.'
     ]
   },
   django: {

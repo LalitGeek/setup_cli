@@ -88,14 +88,29 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
       // Match command code/titles
       tech.installation.concat(tech.projectCreation).concat(tech.run).concat(tech.build).forEach((sec) => {
-        if (sec.title.toLowerCase().includes(query) || (sec.code && sec.code.toLowerCase().includes(query))) {
-          matches.push({
-            type: 'command',
-            title: `${tech.name}: ${sec.title}`,
-            subtitle: 'CLI Command Snippet',
-            content: sec.code || '',
-            techId: tech.id
+        if (sec.list) {
+          sec.list.forEach((item) => {
+            const [cmd, desc, example] = item.split('|');
+            if (cmd.toLowerCase().includes(query) || desc.toLowerCase().includes(query) || (example && example.toLowerCase().includes(query))) {
+              matches.push({
+                type: 'command',
+                title: `${tech.name}: ${cmd}`,
+                subtitle: desc,
+                content: example || cmd,
+                techId: tech.id
+              });
+            }
           });
+        } else {
+          if (sec.title.toLowerCase().includes(query) || (sec.code && sec.code.toLowerCase().includes(query))) {
+            matches.push({
+              type: 'command',
+              title: `${tech.name}: ${sec.title}`,
+              subtitle: 'CLI Command Snippet',
+              content: sec.code || '',
+              techId: tech.id
+            });
+          }
         }
       });
 

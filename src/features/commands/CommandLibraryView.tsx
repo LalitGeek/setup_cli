@@ -86,6 +86,12 @@ const getTechTheme = (techId: string) => {
       bg: 'from-amber-950/20 via-transparent to-transparent',
       border: 'border-amber-500/20'
     },
+    frontend: {
+      badge: 'bg-purple-950/40 border-purple-800 text-purple-300',
+      text: 'text-purple-400',
+      bg: 'from-purple-950/20 via-transparent to-transparent',
+      border: 'border-purple-500/20'
+    },
     arch: {
       badge: 'bg-sky-950/40 border-sky-800 text-sky-300',
       text: 'text-sky-400',
@@ -125,7 +131,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
 
-  if (guide.id === 'linux') {
+  if (guide.id === 'linux' || guide.id === 'frontend') {
     const filteredCategories = guide.run.map(category => {
       if (!category.list) return null;
       
@@ -148,7 +154,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
 
     return (
       <div className="flex flex-col h-full bg-[#0b0c10]/40 rounded-xl border border-white/5 overflow-hidden">
-        {/* Linux Banner / Header */}
+        {/* Banner / Header */}
         <div className={`p-4 md:p-6 bg-gradient-to-r ${theme.bg} border-b border-white/10`}>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -156,7 +162,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {guide.category}
               </span>
               <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
-                <span>🐧 Linux Commands Directory</span>
+                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : '🐧 Linux Commands Directory'}</span>
               </h1>
               <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
                 {guide.overview}
@@ -168,7 +174,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder="Search commands, e.g. ls, grep, ufw..."
+                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : "Search commands, e.g. ls, grep, ufw..."}
                 value={linuxSearch}
                 onChange={(e) => setLinuxSearch(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"

@@ -59,7 +59,7 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) =
 export const App: React.FC = () => {
   // Navigation & Core States
   const [activeView, setActiveView] = useState<ViewType>('chat');
-  const [selectedTechId, setSelectedTechId] = useState<string>('react');
+  const [selectedTechId, setSelectedTechId] = useState<string>('frontend');
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 

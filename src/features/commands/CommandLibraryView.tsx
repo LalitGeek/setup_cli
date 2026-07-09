@@ -135,7 +135,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
 
         {/* Quick run details */}
         {guide.requirements.length > 0 && (
-          <div className="bg-black/40 border border-white/5 rounded-xl p-3 flex flex-col space-y-1 w-full md:w-auto">
+          <div className="hidden md:flex bg-black/40 border border-white/5 rounded-xl p-3 flex-col space-y-1 w-full md:w-auto">
             <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">System Prerequisites</span>
             <div className="flex flex-col space-y-1">
               {guide.requirements.map((req, rIdx) => (

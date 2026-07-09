@@ -214,6 +214,206 @@ export const commandsData: Record<string, TechnologyGuide> = {
           "Intermediate Projects|Scaffold login forms, survey inputs, or dynamic layout grids.|<!-- Practice Task: Form validation and flex wrap dashboard -->",
           "Advanced Projects|Design a documentation website, PWA application dashboard, or CMS pages.|<!-- Practice Task: Complete accessible corporate landing template -->"
         ]
+      },
+      {
+        title: '🟢 Level 21 — CSS Fundamentals',
+        description: 'Introduction to CSS syntax, history, best practices, and integration methods (inline, internal, external).',
+        list: [
+          "1.1 CSS Introduction|CSS (Cascading Style Sheets) styles markup. Features include layouts, colors, responsive queries, and animations.|/* CSS Syntax */\nbody {\n  background: #0f172a;\n  color: #f8fafc;\n}",
+          "1.2 Adding CSS|Inline, Internal, External, and Import stylesheets.|<!-- External Link -->\n<link rel=\"stylesheet\" href=\"styles.css\">",
+          "1.3 Selectors|Universal (*), Element, Class, ID, and Group selectors.|/* Class & ID Selectors */\n.btn { padding: 8px; }\n#main-header { border-bottom: 1px solid; }"
+        ]
+      },
+      {
+        title: '🟢 Level 22 — CSS Selectors',
+        description: 'Advanced targeting including attribute matching, structural combinators, state pseudo-classes, and pseudo-elements.',
+        list: [
+          "2.1 Attribute Selectors|Match elements based on the presence or value of attributes.|a[href*=\"secure\"] {\n  color: #10b981;\n}",
+          "2.2 Combinators|Descendant (space), Child (>), Adjacent Sibling (+), and General Sibling (~).|div > p {\n  margin-bottom: 1rem;\n}",
+          "2.3 Pseudo Classes|Style states like :hover, :focus, :active, :nth-child(), and :has().|button:hover {\n  filter: brightness(1.1);\n}",
+          "2.4 Pseudo Elements|Style parts of an element using ::before, ::after, ::first-line.|div::before {\n  content: \"⚡ \";\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 23 — Colors & Units',
+        description: 'Mastering color spaces (HEX, RGB, HSL, currentColor) and absolute vs relative measurement units.',
+        list: [
+          "3.1 CSS Colors|Named, HEX, RGB, HSL, RGBA, HSLA, currentColor, and transparent.|color: hsla(220, 15%, 60%, 0.8);",
+          "3.2 CSS Units|Absolute (px) and Relative (em, rem, %, vh, vw, vmin, vmax, ch).|font-size: 1.25rem;\nwidth: 50vw;"
+        ]
+      },
+      {
+        title: '🟢 Level 24 — Typography',
+        description: 'Configuring fonts, sizes, text transformations, decoration lines, spacing controls, text shadows, and word wrapping.',
+        list: [
+          "4.1 Typography|font-family, size, weight, line-height, text-align, text-shadow, and white-space.|h1 {\n  font-family: 'Outfit', sans-serif;\n  line-height: 1.2;\n  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 25 — Box Model',
+        description: 'Managing dimensions, padding borders, margins, outlines, box-sizing, and overflow scroll states.',
+        list: [
+          "5.1 Box Model|Handling padding, margin, border, box-sizing, and overflow.|* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 26 — Backgrounds',
+        description: 'Working with background-image scaling, alignment coordinate values, attachments, and CSS gradient patterns.',
+        list: [
+          "6.1 Backgrounds & Gradients|background-color, background-image, background-repeat, size, and CSS gradients.|.gradient-hero {\n  background: linear-gradient(135deg, #4f46e5, #9333ea);\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 27 — Borders & Effects',
+        description: 'Creating element borders, outline offsets, box shadows, element filtering, and backdrop-filter blends.',
+        list: [
+          "7.1 Borders & Filters|border-radius, box-shadow, filter, and glassmorphism backdrop-filters.|.card {\n  box-shadow: 0 4px 20px rgba(0,0,0,0.1);\n  backdrop-filter: blur(10px);\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 28 — Display & Visibility',
+        description: 'Configuring displays (block, inline, flex, grid, none), element visibility, opacity, and cursor interaction rules.',
+        list: [
+          "8.1 Display & Visibility|display (block, inline, inline-block, none), visibility, opacity, and pointer-events.|.hidden {\n  display: none;\n  pointer-events: none;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 29 — Positioning',
+        description: 'Absolute coordinates, static, relative, fixed, sticky position behaviors, z-index overlays, and floats.',
+        list: [
+          "9.1 Positioning|static, relative, absolute, fixed, sticky, and z-index.|.sticky-nav {\n  position: sticky;\n  top: 0;\n  z-index: 100;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 30 — Flexbox',
+        description: 'Setting up flex directions, cross-axis alignment, justifications, flexible spacing, and order indexes.',
+        list: [
+          "10.1 Flexbox Layout|display: flex, flex-direction, justify-content, align-items, flex-wrap, and gap.|.flex-container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 1rem;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 31 — CSS Grid',
+        description: 'Two-dimensional templates, fractional layout sizes, grid gap spacings, auto-fit repeat templates, and minmax boundaries.',
+        list: [
+          "11.1 Grid Layout|display: grid, grid-template-columns, grid-template-rows, areas, minmax, auto-fit, and gap.|.grid-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 1.5rem;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 32 — Responsive Design',
+        description: 'Authoring responsive media query breaks, container queries, mobile-first strategies, and responsive font heights.',
+        list: [
+          "12.1 Responsive Design|Media queries, breakpoints, mobile-first design, and container queries.|@media (min-width: 768px) {\n  .sidebar {\n    display: block;\n  }\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 33 — Animations',
+        description: 'Applying ease transitions, delay keyframes, animation iterations, play states, and timing functions.',
+        list: [
+          "13.1 Transitions & Keyframes|transition-property, duration, @keyframes, iteration-count, and easing.|@keyframes pulse {\n  0% { transform: scale(1); }\n  50% { transform: scale(1.05); }\n  100% { transform: scale(1); }\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 34 — Transformations',
+        description: 'Manipulating 2D/3D scales, translations, rotates, transforms origins, skew factors, and perspectives.',
+        list: [
+          "14.1 Transformations|translate(), rotate(), scale(), skew(), transform-origin, and 3D perspective.|.rotate-card {\n  transform: rotateY(180deg);\n  perspective: 1000px;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 35 — Variables',
+        description: 'Configuring CSS custom properties at root scopes, var mappings, and fallback values.',
+        list: [
+          "15.1 CSS Variables|Declaring variables inside :root, using var(), and configuring fallbacks.|:root {\n  --primary: #6366f1;\n}\n.btn {\n  background: var(--primary, #3b82f6);\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 36 — Functions',
+        description: 'Programmatic calculations using calc(), clamping fluid sizes, selecting min/max nodes, and color functions.',
+        list: [
+          "16.1 CSS Functions|calc(), clamp(), min(), max(), minmax(), rgb(), and hsl().|width: calc(100% - 2rem);\nfont-size: clamp(1rem, 2.5vw, 2rem);"
+        ]
+      },
+      {
+        title: '🟢 Level 37 — Modern CSS',
+        description: 'Leveraging nested syntax selectors, cascade layers (@layer), scope rules, logical parameters, and snap coordinates.',
+        list: [
+          "17.1 Modern CSS|CSS Nesting, Cascade Layers (@layer), @scope, scroll snap, scroll behavior.|@layer components {\n  .card {\n    margin: 1rem;\n  }\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 38 — CSS Architecture',
+        description: 'Adopting modular structural styles using BEM notation, OOCSS guidelines, SMACSS categories, ITCSS, and Atomic properties.',
+        list: [
+          "18.1 CSS Architecture|BEM, OOCSS, SMACSS, ITCSS, and Atomic CSS methodologies.|/* BEM Syntax example */\n.card { }\n.card__header { }\n.card__header--active { }"
+        ]
+      },
+      {
+        title: '🟢 Level 39 — CSS Frameworks',
+        description: 'Leveraging component/utility styles with Tailwind CSS, Bootstrap grid systems, Bulma, Foundation, and material guidelines.',
+        list: [
+          "19.1 Frameworks|Sleek utilities with Bootstrap, Tailwind CSS, Bulma, Foundation, and Materialize.|<!-- Tailwind utilities -->\n<div class=\"flex items-center space-x-2 bg-indigo-600 text-white p-4 rounded-xl\">\n</div>"
+        ]
+      },
+      {
+        title: '🟢 Level 40 — Preprocessors',
+        description: 'Writing preprocessor markup styles with Sass/SCSS nesting, variables, mixins, imports, and inheritance trees.',
+        list: [
+          "20.1 Preprocessors|Adding variables, nested rules, mixins, imports, and functions in Sass, SCSS, and Less.|/* SCSS mixin */\n@mixin flex-center {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 41 — Performance',
+        description: 'Configuring critical fold CSS rules, code minifications, removing unused classes, and loading flags.',
+        list: [
+          "21.1 CSS Performance|Critical CSS paths, minification, removing unused classes, and load strategies.|/* Minify and load css asynchronously */\n<link rel=\"preload\" href=\"styles.css\" as=\"style\">"
+        ]
+      },
+      {
+        title: '🟢 Level 42 — Accessibility',
+        description: 'Enabling readable focus rings, high contrast visual filters, and media query reduced motion preferences.',
+        list: [
+          "22.1 CSS Accessibility|Focus outline styles, high contrast themes, and reduced motion queries.|@media (prefers-reduced-motion: reduce) {\n  * {\n    animation-duration: 0.01ms !important;\n    transition-duration: 0.01ms !important;\n  }\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 43 — CSS for Components',
+        description: 'Component stylesheets for buttons, UI cards, form selectors, tables, navigation nodes, modal frames, and skeleton screens.',
+        list: [
+          "23.1 CSS Components|Buttons, cards, input forms, tables, navbars, sidebars, modals, skeleton loaders.|.skeleton {\n  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);\n  background-size: 200% 100%;\n  animation: loading 1.5s infinite;\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 44 — Visual Effects',
+        description: 'Developing glassmorphic cards, neumorphism shadows, glowing borders, parallax backgrounds, and custom scroll bars.',
+        list: [
+          "24.1 Glassmorphism & Effects|Neumorphism, glow shadows, blur backdrops, parallax scrollings, scrollbars.|.glass {\n  background: rgba(255, 255, 255, 0.05);\n  backdrop-filter: blur(10px);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n}"
+        ]
+      },
+      {
+        title: '🟢 Level 45 — Interview Preparation',
+        description: 'Typical CSS interview questions, specificities, and layout challenges.',
+        list: [
+          "25.1 Interview Prep|Common CSS interview questions, specificities, and layout challenges.|/* Specificity calculation: Inline (1000) > ID (100) > Class (10) > Element (1) */"
+        ]
+      },
+      {
+        title: '📚 CSS Property Reference',
+        description: 'Ultimate cheatsheet categorizing Layout, Sizing, Spacing, Typography, Backgrounds, Borders, Effects, Flexbox, Grid, Animations, and Responsive properties.',
+        list: [
+          "Layout Properties|display, position, float, clear, z-index, overflow, aspect-ratio.|/* Layout elements */",
+          "Spacing Properties|margin, padding, gap, columns.|/* Layout spacing */",
+          "Typography Properties|font, text, line-height, letter-spacing.|/* Font settings */",
+          "Effects Properties|box-shadow, filter, backdrop-filter, opacity.|/* Visual filters */"
+        ]
+      },
+      {
+        title: '💼 CSS Practice Projects',
+        description: 'Exercises to build your CSS knowledge from profile cards to advanced admin dashboard screens and design systems.',
+        list: [
+          "Beginner Projects|Build a Personal Profile Card, Login Form, Pricing Table, or Navigation Bar.|/* Task: Styled bio card layout */",
+          "Intermediate Projects|Scaffold a full blog layout grid, dashboard UI elements, or modern portfolio pages.|/* Task: CSS Grid & Flex dashboard */",
+          "Advanced Projects|Develop an enterprise SaaS landing page, Kanban Trello-style board, or component library.|/* Task: Pure CSS responsive design system */"
+        ]
       }
     ],
     build: [],

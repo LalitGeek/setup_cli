@@ -68,11 +68,26 @@ export const commandsData: Record<string, TechnologyGuide> = {
         description: 'Enterprise React framework development, server side rendering, and compile tasks.',
         list: [
           'Create Next.js (Interactive)|Run interactive create-next-app initialization prompt|npx create-next-app@latest my-next-app',
-          'Create Next.js (Flags)|Provision Next.js template with TypeScript, Tailwind, and App router|npx create-next-app@latest my-next-app --typescript --tailwind --app',
+          'Create Next.js (Flags)|Provision Next.js project with TypeScript, Tailwind, App Router, Src dir, and Import alias|npx create-next-app@latest my-next-app --typescript --tailwind --app --src-dir --import-alias "@/*" --eslint',
           'Run Dev Server|Start Next.js dev server with hot module reloading|npm run dev',
-          'Build Production|Compile Next.js production builds|npm run build',
-          'Start Prod Server|Launch built production server locally on port 3000|npm run start',
-          'Clear Next Cache|Wipe Next.js build cache folder and restart development server|rm -rf .next && npm run dev'
+          'Run on Custom Port|Start Next.js development server on port 8080|npm run dev -- -p 8080',
+          'Build Production|Compile Next.js production optimized builds|npm run build',
+          'Start Prod Server|Launch built production server locally on default port 3000|npm run start',
+          'Start Prod on Port|Launch built production server on port 8080|npm run start -- -p 8080',
+          'Static HTML Export|Compile and export project to static HTML files (output: export)|npm run build',
+          'Install Shadcn UI|Initialize shadcn/ui configuration for Next.js App Router|npx shadcn@latest init',
+          'Install Auth.js (Next-Auth)|Install Next-Auth package for user authentication|npm install next-auth@beta',
+          'Install Prisma ORM|Install Prisma devDependency and client|npm install prisma --save-dev && npx prisma init',
+          'Prisma DB Pull|Introspect schema from the database|npx prisma db pull',
+          'Prisma Migrations|Generate and apply database migration schema|npx prisma migrate dev --name init',
+          'Prisma Studio|Open interactive local database viewer GUI|npx prisma studio',
+          'Install Next-Themes|Install dark mode theme toggle support for Next.js|npm install next-themes',
+          'Install Bundle Analyzer|Install next bundle analyzer package|npm install @next/bundle-analyzer',
+          'TypeScript Typecheck|Run TypeScript compiler check on all code files|npx tsc --noEmit',
+          'Run ESLint check|Run linter diagnostics across all files|npm run lint',
+          'Format with Prettier|Format all files utilizing Prettier|npx prettier --write "src/**/*.{js,jsx,ts,tsx,css,json}"',
+          'Clear Next Cache|Wipe Next.js build cache folder and restart development server|rm -rf .next && npm run dev',
+          'Clean NPM Reinstall|Wipe node_modules, cache, and lockfile then reinstall|rm -rf node_modules package-lock.json .next && npm cache clean --force && npm install'
         ]
       },
       {

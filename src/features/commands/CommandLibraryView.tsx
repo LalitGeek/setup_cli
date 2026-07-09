@@ -127,6 +127,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
 
   // Ebook reader state for Web Core Learning
   const [activeEbookIndex, setActiveEbookIndex] = useState<number>(0);
+  const [ebookSubTab, setEbookSubTab] = useState<'HTML' | 'CSS'>('HTML');
 
   // Custom Hacking Tool detail view overlay states
   const [selectedTool, setSelectedTool] = useState<{
@@ -243,7 +244,31 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     const prevEbookConcept = activeEbookIndex > 0 ? ebookConcepts[activeEbookIndex - 1] : null;
     const nextEbookConcept = activeEbookIndex < ebookConcepts.length - 1 ? ebookConcepts[activeEbookIndex + 1] : null;
 
-    // Filter levels for left sidebar index based on search
+    // Helper to determine if a level belongs to HTML or CSS
+    const isHtmlLevel = (title: string) => {
+      if (title.toUpperCase().includes('CSS')) return false;
+      const match = title.match(/Level\s+(\d+)/i);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num >= 21) return false;
+      }
+      return true;
+    };
+
+    // Auto-update active tab when navigating
+    const handleSetEbookIndex = (index: number) => {
+      setActiveEbookIndex(index);
+      const concept = ebookConcepts[index];
+      if (concept) {
+        if (isHtmlLevel(concept.levelTitle)) {
+          setEbookSubTab('HTML');
+        } else {
+          setEbookSubTab('CSS');
+        }
+      }
+    };
+
+    // Filter levels for left sidebar index based on search and selected roadmap tab
     const filteredSidebarLevels = guide.run.map(level => {
       const matched = level.list?.filter(item => {
         const [cmd, desc] = item.split('|');
@@ -251,7 +276,11 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
         return cmd.toLowerCase().includes(q) || desc.toLowerCase().includes(q);
       });
       return { ...level, list: matched || [] };
-    }).filter(level => level.list.length > 0);
+    }).filter(level => {
+      if (level.list.length === 0) return false;
+      const isHtml = isHtmlLevel(level.title);
+      return ebookSubTab === 'HTML' ? isHtml : !isHtml;
+    });
 
     return (
       <div className="flex flex-col h-full bg-[#0b0c10]/40 rounded-xl border border-white/5 overflow-hidden">
@@ -259,15 +288,15 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
         <div className="p-4 md:p-6 bg-gradient-to-r from-indigo-950/30 to-purple-950/20 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-md font-semibold uppercase tracking-wider">
+              <span className="text-[10px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-md font-semibold uppercase tracking-wider animate-pulse">
                 Ebook Reader Edition
               </span>
-              <span className="text-[10px] text-gray-500 font-mono">
+              <span className="text-[10px] text-gray-400 font-mono">
                 {activeEbookIndex + 1} of {ebookConcepts.length} chapters
               </span>
             </div>
-            <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight">
-              📚 HTML5 Roadmap Curriculum
+            <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
+              <span>📚 Web Core Learning Curriculum</span>
             </h1>
           </div>
           
@@ -288,10 +317,35 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
         <div className="flex-1 flex overflow-hidden">
           
           {/* Table of contents (Left sidebar) */}
-          <div className="hidden md:block w-72 border-r border-white/5 bg-black/20 overflow-y-auto p-4 space-y-4 flex-shrink-0">
-            <div className="flex items-center justify-between px-2 pb-1 border-b border-white/5">
+          <div className="hidden md:block w-72 border-r border-white/5 bg-black/20 overflow-y-auto p-4 flex-shrink-0">
+            
+            {/* Category tabs */}
+            <div className="grid grid-cols-2 gap-1.5 p-1 bg-black/40 rounded-xl border border-white/5 mb-4">
+              <button
+                onClick={() => setEbookSubTab('HTML')}
+                className={`py-2 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 cursor-pointer ${
+                  ebookSubTab === 'HTML'
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                }`}
+              >
+                <span>🌐 HTML5</span>
+              </button>
+              <button
+                onClick={() => setEbookSubTab('CSS')}
+                className={`py-2 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 cursor-pointer ${
+                  ebookSubTab === 'CSS'
+                    ? 'bg-purple-600 text-white shadow-md'
+                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                }`}
+              >
+                <span>🎨 CSS3</span>
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between px-2 pb-1.5 border-b border-white/5 mb-3">
               <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
-                Table of Contents
+                {ebookSubTab === 'HTML' ? 'HTML Chapters' : 'CSS Chapters'}
               </span>
               {linuxSearch && (
                 <button onClick={() => setLinuxSearch('')} className="text-[9px] text-indigo-400 hover:underline">
@@ -316,7 +370,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                           key={cmd}
                           onClick={() => {
                             if (itemFlatIndex !== -1) {
-                              setActiveEbookIndex(itemFlatIndex);
+                              handleSetEbookIndex(itemFlatIndex);
                             }
                           }}
                           className={`w-full text-left px-2.5 py-2 rounded-lg text-xs transition border flex flex-col items-start ${
@@ -487,7 +541,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               {prevEbookConcept ? (
                 <button
                   onClick={() => {
-                    setActiveEbookIndex(activeEbookIndex - 1);
+                    handleSetEbookIndex(activeEbookIndex - 1);
                     setEbookAiPrompt('');
                   }}
                   className="flex items-center space-x-2 px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white font-bold transition cursor-pointer"
@@ -501,7 +555,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               {nextEbookConcept ? (
                 <button
                   onClick={() => {
-                    setActiveEbookIndex(activeEbookIndex + 1);
+                    handleSetEbookIndex(activeEbookIndex + 1);
                     setEbookAiPrompt('');
                   }}
                   className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-xs text-white font-bold transition shadow-[0_0_15px_rgba(99,102,241,0.2)] cursor-pointer"
@@ -509,7 +563,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <span>Next: {nextEbookConcept.name} ➡️</span>
                 </button>
               ) : (
-                <div className="text-xs text-gray-500 font-bold">🎉 Congratulations! You completed the HTML5 Roadmap!</div>
+                <div className="text-xs text-gray-500 font-bold">🎉 Congratulations! You completed the Web Core Learning Roadmap!</div>
               )}
             </div>
 

@@ -9,7 +9,7 @@ export interface CommandSection {
 export interface TechnologyGuide {
   id: string;
   name: string;
-  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI';
+  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI' | 'Security';
   overview: string;
   requirements: CommandSection[];
   installation: CommandSection[];
@@ -962,6 +962,306 @@ export const commandsData: Record<string, TechnologyGuide> = {
       'Always use environment variables for keys; never hardcode them in version control.',
       'Implement prompt token usage logging to monitor API costs.',
       'Use streaming responses (`stream: true`) to deliver faster, smoother UI feedback.'
+    ]
+  },
+  hacking: {
+    id: 'hacking',
+    name: 'Cybersecurity & Hacking Tools',
+    category: 'Security',
+    overview: 'A premium, searchable catalog of industry-standard security assessment, enumeration, and penetration testing tools.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      {
+        title: '🔍 Information Gathering (OSINT)',
+        description: 'Passive and active OSINT tools to map out domains, emails, and users.',
+        list: [
+          'theHarvester|Gather emails, subdomains, IPs, and employee names|theHarvester -d target.com -l 500 -b google',
+          'Maltego|Interactive OSINT mapping and analysis tool|maltego',
+          'Amass|In-depth subdomain enumeration and mapping|amass enum -d target.com',
+          'Subfinder|Fast passive subdomain discovery tool|subfinder -d target.com -o subdomains.txt',
+          'Assetfinder|Find subdomains associated with a target domain|assetfinder --subs-only target.com',
+          'Whois|Retrieve domain registration ownership records|whois target.com',
+          'dig|Perform DNS record lookups|dig target.com ANY',
+          'nslookup|Query internet name servers interactively|nslookup target.com',
+          'dnsrecon|DNS enumeration and security auditing utility|dnsrecon -d target.com',
+          'dnsenum|Enumerate DNS information and scrape subdomains|dnsenum target.com',
+          'Fierce|DNS locator and scanner tool|fierce --domain target.com',
+          'Recon-ng|Web-based open source intelligence reconnaissance|recon-ng',
+          'Sherlock|Find usernames across social networks|sherlock username',
+          'SpiderFoot|Automated OSINT reconnaissance engine|sf.py -l 127.0.0.1:5001'
+        ]
+      },
+      {
+        title: '🌐 Network Scanning & Enumeration',
+        description: 'Map out port status, service fingerprints, and network topology.',
+        list: [
+          'Nmap|Network port scanner and service mapper|nmap -sS -sV -O -T4 target_ip',
+          'Masscan|High speed TCP port scanner (entire Internet in 6 min)|masscan -p80,443 target_subnet --rate=1000',
+          'RustScan|Extremely fast port scanner built in Rust|rustscan -a target_ip -- -sV',
+          'arp-scan|ARP packet scanner for local subnets|sudo arp-scan --localnet',
+          'Netdiscover|Active/passive local address address lookup scanning|sudo netdiscover -r 192.168.1.0/24',
+          'hping3|TCP/IP packet assembler and analyzer|sudo hping3 -S -p 80 -c 5 target_ip',
+          'fping|Send ICMP echo probes to multiple hosts|fping -a -g 192.168.1.0/24',
+          'enum4linux|Enumerate information from Windows/Samba targets|enum4linux -a target_ip',
+          'nbtscan|Scan networks for NetBIOS name information|nbtscan -r 192.168.1.0/24',
+          'snmpwalk|Query SNMP entities for values|snmpwalk -v2c -c public target_ip'
+        ]
+      },
+      {
+        title: '🌍 Web Application Testing',
+        description: 'Identify flaws, inject code, and fuzz directory endpoints.',
+        list: [
+          'Burp Suite|Web application penetration testing toolkit|burpsuite',
+          'OWASP ZAP|Automated web application vulnerability scanner|zaproxy',
+          'Nikto|General web server security scanner|nikto -h http://target.com',
+          'Gobuster|Directory, file, and DNS brute-forcing scanner|gobuster dir -u http://target.com -w wordlist.txt',
+          'Feroxbuster|Fast recursive directory brute-forcer in Rust|feroxbuster -u http://target.com',
+          'Dirsearch|Web path scanner using brute-force dictionaries|dirsearch -u http://target.com',
+          'ffuf|Fast web fuzzer written in Go|ffuf -u http://target.com/FUZZ -w wordlist.txt',
+          'Wfuzz|Web application vulnerability fuzzer|wfuzz -c -z file,wordlist.txt --hc 404 http://target.com/FUZZ',
+          'WhatWeb|Identify web frameworks and technologies on pages|whatweb target.com',
+          'httpx|Fast and multi-purpose HTTP toolkit|httpx -l urls.txt -status-code -title',
+          'nuclei|Fast template-based vulnerability scanner|nuclei -u http://target.com'
+        ]
+      },
+      {
+        title: '🔑 Password Auditing',
+        description: 'Audit hash robustness and brute force credential authentication.',
+        list: [
+          'John the Ripper|Fast offline password hash cracker|john --wordlist=rockyou.txt hashes.txt',
+          'Hashcat|Advanced GPU-accelerated password cracker|hashcat -m 0 -a 0 hashes.txt rockyou.txt',
+          'Hydra|Fast network login credentials brute-forcer|hydra -l admin -P pass.txt target_ip ssh',
+          'Medusa|Parallel login brute-forcing tool|medusa -h target_ip -u admin -P pass.txt -M ssh',
+          'CeWL|Custom wordlist generator from target webpage|cewl -d 2 -m 5 -w wordlist.txt http://target.com',
+          'Crunch|Generate custom wordlist tables using charsets|crunch 6 8 abcdef -o wordlist.txt'
+        ]
+      },
+      {
+        title: '📡 Wireless Security',
+        description: 'Audit 802.11 standards, capture handshakes, and spoof AP beacons.',
+        list: [
+          'Aircrack-ng|802.11 WEP and WPA-PSK keys cracking|aircrack-ng -w wordlist.txt handshake.cap',
+          'Airodump-ng|Capture wireless packets and identify BSSIDs|sudo airodump-ng wlan0mon',
+          'Aireplay-ng|Inject frames to deauthenticate clients|sudo aireplay-ng --deauth 10 -a BSSID -c CLIENT wlan0mon',
+          'Airbase-ng|Create rogue access points to capture traffic|sudo airbase-ng -e "Free Wifi" -c 6 wlan0mon',
+          'Kismet|Wireless network detector, sniffer, and wardriver|kismet',
+          'Wifite|Automated wireless auditing tool|sudo wifite',
+          'Reaver|Brute-force WPS PINs to recover WPA passwords|sudo reaver -i wlan0mon -b BSSID -vv',
+          'Bully|Implementation of WPS brute-force attack in C|sudo bully -b BSSID -c 6 wlan0mon'
+        ]
+      },
+      {
+        title: '📦 Packet Analysis & Network Monitoring',
+        description: 'Analyze telemetry, extract payloads, and debug raw traffic.',
+        list: [
+          'Wireshark|Graphical network packet analyzer|wireshark &',
+          'tcpdump|Command-line packet sniffer and dumper|sudo tcpdump -i eth0 -w capture.pcap',
+          'tshark|Terminal-based packet analyzer (Wireshark CLI)|tshark -r capture.pcap -Y "http"',
+          'Ettercap|Multipurpose sniffer and MITM interceptor|ettercap -G',
+          'Bettercap|Complete, modular MITM framework|sudo bettercap',
+          'ngrep|Network grep pattern matching sniffer|sudo ngrep -d eth0 "GET" port 80',
+          'Zeek|Powerful network security monitoring framework|zeek'
+        ]
+      },
+      {
+        title: '📱 Mobile Security',
+        description: 'Audit package bundles, bypass pinning, and trace mobile systems.',
+        list: [
+          'ADB|Android Debug Bridge command-line client|adb devices',
+          'Fastboot|Flash Android firmware and unlock bootloaders|fastboot oem unlock',
+          'JADX|Decompile Android DEX and APK files to Java code|jadx-gui app.apk',
+          'APKTool|Decompile and recompile Android APK files|apktool d app.apk',
+          'MobSF|Mobile Security Framework static/dynamic analyzer|python3 manage.py runserver',
+          'Frida|Dynamic instrumentation toolkit for developers/analysts|frida -U -f com.example.app --no-pause',
+          'Objection|Runtime mobile exploration tool powered by Frida|objection --gadget com.example.app explore',
+          'libimobiledevice|Software library to talk to iOS devices|ideviceinfo'
+        ]
+      },
+      {
+        title: '🧩 Reverse Engineering',
+        description: 'Disassemble, decompile, and inspect binary formats.',
+        list: [
+          'Ghidra|NSA software reverse engineering framework|ghidraRun',
+          'Radare2|Advanced command-line hex editor and disassembler|r2 /bin/ls',
+          'Cutter|GUI frontend for radare2 framework|cutter &',
+          'Binary Ninja|Decompiler and reverse engineering platform|binaryninja &',
+          'IDA Free|Interactive disassembler platform|ida64',
+          'objdump|Display information from object files|objdump -d /bin/ls',
+          'strings|Print printable characters from binary file|strings /bin/ls',
+          'readelf|Display information about ELF format files|readelf -h /bin/ls',
+          'ldd|Print shared library dependencies of a program|ldd /bin/ls'
+        ]
+      },
+      {
+        title: '🐳 Container & Cloud Security',
+        description: 'Identify configurations, audit registries, and monitor namespaces.',
+        list: [
+          'Docker Bench|Audit docker configurations against security baselines|docker run --rm -v /var/run/docker.sock:/var/run/docker.sock docker/docker-bench-security',
+          'Trivy|Vulnerability scanner for containers and clouds|trivy image nginx',
+          'Dive|Explore docker image layers and reduce size|dive nginx',
+          'kubectl|Kubernetes orchestrator command-line client|kubectl get secrets --all-namespaces',
+          'kube-bench|Check Kubernetes deployment against CIS benchmark|kube-bench run',
+          'kube-hunter|Hunt for security weaknesses in Kubernetes clusters|kube-hunter --remote target_ip',
+          'kubescape|Kubernetes security scan and compliance auditor|kubescape scan',
+          'ScoutSuite|Multi-cloud security posture assessment tool|scout aws',
+          'Prowler|AWS security assessment and hardening tool|prowler aws',
+          'CloudSploit|Cloud security auditing script|node index.js --cloud=aws'
+        ]
+      },
+      {
+        title: '🔐 Cryptography',
+        description: 'Manage hashes, compute certs, and verify signatures.',
+        list: [
+          'OpenSSL|Cryptography and SSL certificate toolkit|openssl x509 -in cert.pem -text -noout',
+          'GPG|GnuPG encryption and signature tool|gpg --encrypt --recipient user@domain.com secret.txt',
+          'Hashcat Utilities|Helper utilities for Hashcat tasks|cap2hccapx.bin capture.cap handshake.hccapx',
+          'sha256sum|Calculate and verify SHA256 checksums|sha256sum release.iso',
+          'md5sum|Calculate and verify MD5 checksums|md5sum release.iso'
+        ]
+      },
+      {
+        title: '📝 Log Analysis & Forensics',
+        description: 'Examine disk tables, memory dumps, and extract files.',
+        list: [
+          'Autopsy|Graphical digital forensics platform|autopsy &',
+          'Sleuth Kit|Command-line digital forensics tools|fls -r image.dd',
+          'Volatility|Memory forensics and analysis framework|volatility -f memory.raw --profile=Win7SP1x64 pslist',
+          'Binwalk|Tool for searching binary images for embedded files|binwalk -e firmware.bin',
+          'foremost|Recover lost files based on their headers|foremost -i image.dd -o output',
+          'exiftool|Read and write metadata in files|exiftool image.jpg',
+          'yara|Pattern matching tool for malware researchers|yara rules.yar file_to_scan'
+        ]
+      },
+      {
+        title: '🧬 Malware Analysis',
+        description: 'Run static and dynamic malware telemetry tasks.',
+        list: [
+          'YARA|Malware pattern matching utility|yara -r malware_rules/ suspicious_directory/',
+          'Cuckoo Sandbox|Automated malware analysis sandbox system|cuckoo',
+          'PEStudio|Static investigation tool for Windows PE files|pestudio.exe',
+          'Detect It Easy (DIE)|Program for determining file types and packers|diec /path/to/binary',
+          'CAPA|Detect capabilities in executable files|capa /path/to/binary'
+        ]
+      },
+      {
+        title: '🌎 DNS & Domain Analysis',
+        description: 'Perform active zone transfers and sub domain enumeration.',
+        list: [
+          'dnsrecon|Perform DNS reconnaissance tasks|dnsrecon -d target.com',
+          'dnsenum|DNS intelligence gathering tool|dnsenum target.com',
+          'dig|Perform targeted DNS queries|dig target.com TXT',
+          'host|Perform DNS lookups|host -t mx target.com',
+          'nslookup|DNS client lookup server utility|nslookup -type=ns target.com',
+          'Amass|DNS name collection mapping tool|amass intel -d target.com'
+        ]
+      },
+      {
+        title: '📂 SMB & Active Directory',
+        description: 'Audit Active Directory configurations and SMB shares.',
+        list: [
+          'enum4linux|Query SMB/Samba status information|enum4linux -v target_ip',
+          'smbclient|FTP-like client to access SMB shares|smbclient //target_ip/share -U user',
+          'rpcclient|Execute client-side MS-RPC functions|rpcclient -U "" target_ip',
+          'CrackMapExec|Swiss army knife for pentesting Active Directory|crackmapexec smb target_subnet -u user -p pass',
+          'NetExec|Modern active directory pentesting utility|nxc smb target_subnet -u user -p pass',
+          'ldapsearch|Query LDAP directory systems|ldapsearch -x -h target_ip -b "dc=domain,dc=local"'
+        ]
+      },
+      {
+        title: '🛠 Exploit Frameworks',
+        description: 'Database of shellcodes, payloads, and modules.',
+        list: [
+          'Metasploit Framework|Ruby penetration testing platform|msfconsole',
+          'SearchSploit|Offline search utility for Exploit-DB|searchsploit cisco ios',
+          'ExploitDB CLI|Search exploit database from terminal|searchsploit'
+        ]
+      },
+      {
+        title: '🔍 Vulnerability Assessment',
+        description: 'Scan targets for known bugs and out-of-date assets.',
+        list: [
+          'Nuclei|Scan vulnerabilities using YAML templates|nuclei -t cves/ -u http://target.com',
+          'Nikto|Check web servers for vulnerability configurations|nikto -h target.com',
+          'OpenVAS|Open Vulnerability Assessment System daemon|gvm-cli',
+          'Nessus (CLI)|Launch scan tasks via Nessus API|nessuscli scan launch',
+          'Lynis|System hardening audit tool for Linux/Unix|lynis audit system'
+        ]
+      },
+      {
+        title: '🧪 API Security',
+        description: 'Fuzz and audit REST, GraphQL, and JSON web credentials.',
+        list: [
+          'Postman|Interactive API client test tool (GUI)|postman',
+          'Insomnia|Streamlined REST and GraphQL client|insomnia',
+          'OWASP ZAP|Test API endpoints for injection errors|zap-api-scan.py -t http://api.target.com/v1/ -f openapi',
+          'Burp Suite|Intercept and replay API request payloads|burpsuite',
+          'jwt-tool|JSON Web Token auditing toolkit|python3 jwt-tool.py -t JWT_TOKEN'
+        ]
+      },
+      {
+        title: '🧠 OSINT & Social Media',
+        description: 'Correlate accounts, phone networks, and emails.',
+        list: [
+          'Sherlock|Find users across 300+ social sites|sherlock target_username',
+          'SpiderFoot|Scrape open source info automatically|sf.py',
+          'theHarvester|Harvest email subdomains from public sites|theHarvester -d target.com -b all',
+          'GHunt|OSINT tool for investigating Google accounts|ghunt email target@gmail.com',
+          'PhoneInfoga|Information gathering tool for phone numbers|phoneinfoga scan -n +1234567890',
+          'Holehe|Check if email is registered on 120+ sites|holehe target@domain.com'
+        ]
+      },
+      {
+        title: '🖥 Linux Security',
+        description: 'Harden host operating system kernels, users, and filters.',
+        list: [
+          'Lynis|Run local security audit audits|sudo lynis audit system',
+          'chkrootkit|Scan host for active rootkits|sudo chkrootkit',
+          'rkhunter|Rootkit Hunter security auditor|sudo rkhunter --check',
+          'auditd|Kernel auditing service monitor daemon|sudo auditctl -l',
+          'fail2ban-client|Ban brute force IPs in firewalls|sudo fail2ban-client status',
+          'ufw|Setup firewall packet filters|sudo ufw status verbose',
+          'nftables|High speed firewall rules administrator|sudo nft list ruleset'
+        ]
+      },
+      {
+        title: '☁ Cloud Security',
+        description: 'Assess cloud groups, firewall configs, and storage settings.',
+        list: [
+          'AWS CLI|Manage AWS cloud resources|aws ec2 describe-security-groups',
+          'Prowler|Hardening tool for AWS, Azure and GCP|prowler aws',
+          'Azure CLI|Manage Azure cloud resources|az account list',
+          'ScoutSuite|Cloud security posture audit utility|scout azure',
+          'gcloud CLI|Manage Google Cloud resources|gcloud compute firewall-rules list'
+        ]
+      },
+      {
+        title: '📚 Learning & Labs',
+        description: 'Vulnerable web applications, platforms, and practice playgrounds.',
+        list: [
+          'Kali Linux tools|Full reference directory of pentesting tools|kali-bloatware',
+          'OWASP projects|Standards and security guidelines portal|owasp',
+          'DVWA|Damn Vulnerable Web Application lab|docker run --rm -p 80:80 vulnerables/web-dvwa',
+          'Juice Shop|Modern insecure web app Node.js lab|docker run --rm -p 3000:3000 bkimminich/juice-shop',
+          'Metasploitable|Intentionally vulnerable virtual machine lab|metasploitable',
+          'Hack The Box|Immersive online gamified cybersecurity labs|htb',
+          'TryHackMe|Hands-on cybersecurity training platform|thm'
+        ]
+      }
+    ],
+    build: [],
+    troubleshooting: [],
+    usefulLinks: [
+      { label: 'Kali Tools', url: 'https://www.kali.org/tools/' },
+      { label: 'OWASP Top 10', url: 'https://owasp.org/www-project-top-ten/' }
+    ],
+    commonErrors: [
+      { error: 'Permission denied (Root required)', solution: 'Prepend `sudo` to commands that bind raw interfaces or parse network sockets.' }
+    ],
+    bestPractices: [
+      'Always secure explicit authorization before initiating security audits.',
+      'Document your audit trails clearly to maintain accountability.'
     ]
   }
 };

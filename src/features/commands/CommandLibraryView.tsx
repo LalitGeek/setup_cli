@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Folder, Play, Check, Copy, Download, Link2, AlertTriangle, Lightbulb, Search } from 'lucide-react';
+import { BookOpen, Folder, Play, Check, Copy, Download, Link2, AlertTriangle, Lightbulb, Search, X, ExternalLink, Shield, HelpCircle, Send, Terminal, Info } from 'lucide-react';
 import type { TechnologyGuide, CommandSection } from './commandsData';
 
 interface CommandLibraryViewProps {
@@ -119,6 +119,40 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   const [selectedLinuxCat, setSelectedLinuxCat] = useState('All');
   const [linuxCopiedCmd, setLinuxCopiedCmd] = useState<string | null>(null);
 
+  // Custom Hacking Tool detail view overlay states
+  const [selectedTool, setSelectedTool] = useState<{
+    name: string;
+    description: string;
+    example: string;
+  } | null>(null);
+  const [copiedModalCmd, setCopiedModalCmd] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiAnswers, setAiAnswers] = useState<Record<string, string[]>>({});
+  const [isAnswering, setIsAnswering] = useState(false);
+
+  const handleCopyModalCmd = (cmd: string) => {
+    navigator.clipboard.writeText(cmd);
+    setCopiedModalCmd(true);
+    setTimeout(() => setCopiedModalCmd(false), 1500);
+  };
+
+  const handleAskAI = (toolName: string) => {
+    if (!aiPrompt.trim()) return;
+    setIsAnswering(true);
+    const userQ = aiPrompt;
+    setAiPrompt('');
+    
+    setTimeout(() => {
+      const answersList = aiAnswers[toolName] || [];
+      const mockAnswer = `Here is a breakdown of your query "${userQ}" for the tool **${toolName}**:\n\n1. **Underlying mechanics**: This command initiates basic scanning and diagnostics parameters standard to this utility.\n2. **Common usage options**: Adjust flags like \`-v\` (verbose) or increase log levels if output is restricted.\n3. **Safety Checklist**: Ensure you have proper authorizations and explicit permissions before executing this action against remote endpoints.`;
+      setAiAnswers({
+        ...aiAnswers,
+        [toolName]: [...answersList, mockAnswer]
+      });
+      setIsAnswering(false);
+    }, 800);
+  };
+
   const handleCopyLinuxCmd = (cmd: string) => {
     navigator.clipboard.writeText(cmd);
     setLinuxCopiedCmd(cmd);
@@ -131,7 +165,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
 
-  if (guide.id === 'linux' || guide.id === 'frontend') {
+  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'hacking') {
     const filteredCategories = guide.run.map(category => {
       if (!category.list) return null;
       
@@ -162,7 +196,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {guide.category}
               </span>
               <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
-                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : '🐧 Linux Commands Directory'}</span>
+                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : '🐧 Linux Commands Directory'}</span>
               </h1>
               <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
                 {guide.overview}
@@ -174,7 +208,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : "Search commands, e.g. ls, grep, ufw..."}
+                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : "Search commands, e.g. ls, grep, ufw..."}
                 value={linuxSearch}
                 onChange={(e) => setLinuxSearch(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"
@@ -266,9 +300,19 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                       return (
                         <div
                           key={itemIdx}
-                          onClick={() => handleCopyLinuxCmd(targetCopy)}
+                          onClick={() => {
+                            if (guide.id === 'hacking') {
+                              setSelectedTool({
+                                name: cmd,
+                                description: desc,
+                                example: targetCopy
+                              });
+                            } else {
+                              handleCopyLinuxCmd(targetCopy);
+                            }
+                          }}
                           className="bg-gray-900/40 border border-white/5 p-4 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-3 relative"
-                          title="Click to copy usage example"
+                          title={guide.id === 'hacking' ? "Click to view full tool manual & options" : "Click to copy usage example"}
                         >
                           <div>
                             <div className="flex items-center justify-between">
@@ -276,7 +320,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                                 {cmd}
                               </code>
                               <span className="text-[9px] uppercase text-gray-500 font-mono tracking-wider font-bold bg-white/5 border border-white/5 px-1.5 py-0.5 rounded">
-                                command
+                                {guide.id === 'hacking' ? 'utility' : 'command'}
                               </span>
                             </div>
                             <p className="text-xs text-gray-400 leading-relaxed mt-2">
@@ -292,12 +336,22 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleCopyLinuxCmd(targetCopy);
+                                if (guide.id === 'hacking') {
+                                  setSelectedTool({
+                                    name: cmd,
+                                    description: desc,
+                                    example: targetCopy
+                                  });
+                                } else {
+                                  handleCopyLinuxCmd(targetCopy);
+                                }
                               }}
                               className="p-1 rounded text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
-                              title="Copy Example Usage"
+                              title={guide.id === 'hacking' ? "Open Tool Manual" : "Copy Example Usage"}
                             >
-                              {isCopied ? (
+                              {guide.id === 'hacking' ? (
+                                <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover/code:opacity-100 transition text-purple-400" />
+                              ) : isCopied ? (
                                 <Check className="w-3.5 h-3.5 text-green-400" />
                               ) : (
                                 <Copy className="w-3.5 h-3.5 opacity-40 group-hover/code:opacity-100 transition" />
@@ -305,7 +359,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             </button>
                           </div>
 
-                          {isCopied && (
+                          {isCopied && !selectedTool && (
                             <span className="absolute top-1 right-8 text-[9px] font-bold text-green-400 bg-green-950/60 border border-green-900 px-1.5 py-0.5 rounded">
                               Copied!
                             </span>
@@ -319,6 +373,204 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
             )}
           </div>
         </div>
+
+        {/* Premium Tool Sheet Modal (Cybersecurity Only) */}
+        {selectedTool && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-gray-900 border border-white/10 w-full max-w-4xl h-[90vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl animate-scale-in">
+              
+              {/* Modal Head */}
+              <div className="px-6 py-4 bg-gray-950 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center space-x-2.5">
+                  <Shield className="w-5 h-5 text-purple-400" />
+                  <div>
+                    <h2 className="text-lg font-extrabold text-white">{selectedTool.name}</h2>
+                    <span className="text-[10px] text-gray-400 font-medium">Cybersecurity Utility Reference Card</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedTool(null);
+                    setAiPrompt('');
+                  }}
+                  className="text-gray-400 hover:text-white p-1 rounded-lg bg-white/5 border border-white/5"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                
+                {/* 1. Overview */}
+                <div className="bg-purple-950/10 border border-purple-900/20 p-4.5 rounded-xl">
+                  <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1">Tool Overview</span>
+                  <p className="text-xs md:text-sm text-gray-200 leading-relaxed">
+                    {selectedTool.description} This application is loaded onto testing setups to verify hosts, endpoints, and directories for system vulnerabilities.
+                  </p>
+                </div>
+
+                {/* 2. Installation */}
+                <div>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center space-x-1.5">
+                    <Terminal className="w-4 h-4 text-purple-400" />
+                    <span>Installation commands</span>
+                  </h3>
+                  <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center">
+                    <code className="font-mono text-green-400 text-xs">
+                      sudo apt-get update && sudo apt-get install -y {selectedTool.name.toLowerCase()}
+                    </code>
+                    <button
+                      onClick={() => handleCopyModalCmd(`sudo apt-get update && sudo apt-get install -y ${selectedTool.name.toLowerCase()}`)}
+                      className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-white/5 transition"
+                    >
+                      <Copy className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 3. Basic Syntax & Commands */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Command Options</h3>
+                    <div className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2.5 text-xs text-gray-300">
+                      <div className="flex justify-between border-b border-white/5 pb-1">
+                        <code className="text-purple-400">-h, --help</code>
+                        <span className="text-gray-500">Show help context</span>
+                      </div>
+                      <div className="flex justify-between border-b border-white/5 pb-1">
+                        <code className="text-purple-400">-v, --verbose</code>
+                        <span className="text-gray-500">Enable verbose logging</span>
+                      </div>
+                      <div className="flex justify-between border-b border-white/5 pb-1">
+                        <code className="text-purple-400">-o, --output</code>
+                        <span className="text-gray-500">Save report to path</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Common Use Cases</h3>
+                    <ul className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2 text-xs text-gray-300 list-disc list-inside">
+                      <li>Endpoint scanning & discovery</li>
+                      <li>Diagnostic port verification</li>
+                      <li>Credential strength auditing</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* 4. Example Command & Output explanation */}
+                <div>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Example Commands</h3>
+                  <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center mb-3">
+                    <code className="font-mono text-purple-300 text-xs">
+                      {selectedTool.example}
+                    </code>
+                    <button
+                      onClick={() => handleCopyModalCmd(selectedTool.example)}
+                      className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-white/5 transition"
+                    >
+                      {copiedModalCmd ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  <div className="bg-gray-950/60 border border-white/5 rounded-xl p-4 space-y-1">
+                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Output Explanation</span>
+                    <p className="text-xs text-gray-400 leading-relaxed">
+                      Executing this output prints scanning telemetry to standard out. Successful responses return system fingerprints, server banners, or operational response flags.
+                    </p>
+                  </div>
+                </div>
+
+                {/* 5. Best Practices & Troubleshooting */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-purple-950/5 border border-purple-950/20 p-4 rounded-xl">
+                    <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1.5">Best Practices</span>
+                    <p className="text-xs text-gray-300 leading-relaxed">
+                      Run commands inside secure sandbox nodes. Limit parallel socket requests to prevent service degradation.
+                    </p>
+                  </div>
+                  <div className="bg-red-950/5 border border-red-950/25 p-4 rounded-xl">
+                    <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider block mb-1.5">Troubleshooting</span>
+                    <p className="text-xs text-gray-300 leading-relaxed">
+                      If commands return socket timeouts, verify system paths and ensure firewall rules are configured to permit local egress.
+                    </p>
+                  </div>
+                </div>
+
+                {/* 6. AI Explanation & Q&A */}
+                <div className="border border-white/5 rounded-xl overflow-hidden bg-black/20">
+                  <div className="bg-gray-950/80 px-4.5 py-3 border-b border-white/5 flex items-center justify-between">
+                    <div className="flex items-center space-x-2 text-xs font-bold text-white">
+                      <HelpCircle className="w-4 h-4 text-purple-400" />
+                      <span>Interactive AI Explain & Ask Q&A</span>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    {/* Chat Messages */}
+                    <div className="space-y-3 max-h-44 overflow-y-auto">
+                      <div className="bg-gray-900/60 p-3 rounded-lg text-xs text-gray-300 leading-relaxed border border-white/5">
+                        💡 **Tips**: You can ask me how this tool compares with alternatives, explain particular flags, or provide standard diagnostic parameters.
+                      </div>
+                      
+                      {aiAnswers[selectedTool.name]?.map((ans, idx) => (
+                        <div key={idx} className="bg-purple-950/10 p-3 rounded-lg text-xs text-gray-300 leading-relaxed border border-purple-900/10 whitespace-pre-line">
+                          {ans}
+                        </div>
+                      ))}
+
+                      {isAnswering && (
+                        <div className="text-xs text-gray-500 italic flex items-center space-x-1.5 px-1">
+                          <span className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-ping"></span>
+                          <span>AI is generating response...</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Query Input */}
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleAskAI(selectedTool.name);
+                      }}
+                      className="flex space-x-2"
+                    >
+                      <input
+                        type="text"
+                        placeholder={`Ask about ${selectedTool.name} usage or security context...`}
+                        value={aiPrompt}
+                        onChange={(e) => setAiPrompt(e.target.value)}
+                        className="flex-1 bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                      />
+                      <button
+                        type="submit"
+                        className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-4 flex items-center justify-center transition"
+                      >
+                        <Send className="w-4 h-4" />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                {/* 7. Related Tools & Reference links */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-white/5">
+                  <div className="flex items-center space-x-2 text-xs text-gray-500">
+                    <Info className="w-4 h-4 text-gray-500" />
+                    <span>Related: theHarvester, Nmap, OWASP ZAP, Metasploit</span>
+                  </div>
+                  
+                  <div className="flex space-x-3 text-xs">
+                    <a href="https://www.kali.org/tools/" target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 flex items-center space-x-1">
+                      <span>Kali tools doc</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        )}
       </div>
     );
   }

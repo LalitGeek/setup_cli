@@ -6,9 +6,57 @@ interface CommandLibraryViewProps {
   guide: TechnologyGuide;
 }
 
+const getTechTheme = (techId: string) => {
+  const themes: Record<string, { badge: string; text: string; bg: string; border: string }> = {
+    react: {
+      badge: 'bg-cyan-950/40 border-cyan-800 text-cyan-300',
+      text: 'text-cyan-400',
+      bg: 'from-cyan-950/25 via-transparent to-transparent',
+      border: 'border-cyan-500/20'
+    },
+    nextjs: {
+      badge: 'bg-zinc-800/40 border-zinc-700 text-zinc-300',
+      text: 'text-white',
+      bg: 'from-zinc-900/30 via-transparent to-transparent',
+      border: 'border-zinc-500/20'
+    },
+    django: {
+      badge: 'bg-emerald-950/40 border-emerald-800 text-emerald-300',
+      text: 'text-emerald-400',
+      bg: 'from-emerald-950/25 via-transparent to-transparent',
+      border: 'border-emerald-500/20'
+    },
+    docker: {
+      badge: 'bg-blue-950/40 border-blue-800 text-blue-300',
+      text: 'text-blue-400',
+      bg: 'from-blue-950/25 via-transparent to-transparent',
+      border: 'border-blue-500/20'
+    },
+    nginx: {
+      badge: 'bg-green-950/40 border-green-800 text-green-300',
+      text: 'text-green-400',
+      bg: 'from-green-950/25 via-transparent to-transparent',
+      border: 'border-green-500/20'
+    },
+    git: {
+      badge: 'bg-orange-950/40 border-orange-800 text-orange-300',
+      text: 'text-orange-400',
+      bg: 'from-orange-950/25 via-transparent to-transparent',
+      border: 'border-orange-500/20'
+    }
+  };
+  return themes[techId] || {
+    badge: 'bg-purple-950/40 border-purple-800 text-purple-300',
+    text: 'text-purple-400',
+    bg: 'from-purple-950/25 via-transparent to-transparent',
+    border: 'border-purple-500/20'
+  };
+};
+
 export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   guide
 }) => {
+  const theme = getTechTheme(guide.id);
   const [activeTab, setActiveTab] = useState<'setup' | 'structure' | 'prod' | 'errors'>('setup');
   const [copiedSectionIdx, setCopiedSectionIdx] = useState<string | null>(null);
 
@@ -74,20 +122,20 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   return (
     <div className="flex flex-col h-full bg-gray-950/20 rounded-xl border border-white/5 overflow-hidden">
       {/* Header Info */}
-      <div className="p-6 bg-gradient-to-r from-purple-950/20 via-transparent to-transparent border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className={`p-4 md:p-6 bg-gradient-to-r ${theme.bg} border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4`}>
         <div>
-          <span className="text-[10px] bg-purple-900/30 border border-purple-800 text-purple-300 px-2.5 py-1 rounded-md font-semibold tracking-wider uppercase">
+          <span className={`text-[10px] border px-2.5 py-1 rounded-md font-semibold tracking-wider uppercase ${theme.badge}`}>
             {guide.category}
           </span>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
+          <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
             <span>{guide.name} Setup Library</span>
           </h1>
-          <p className="text-sm text-gray-400 mt-2 max-w-2xl leading-relaxed">{guide.overview}</p>
+          <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-2xl leading-relaxed">{guide.overview}</p>
         </div>
 
         {/* Quick run details */}
         {guide.requirements.length > 0 && (
-          <div className="bg-black/40 border border-white/5 rounded-xl p-3 flex flex-col space-y-1">
+          <div className="bg-black/40 border border-white/5 rounded-xl p-3 flex flex-col space-y-1 w-full md:w-auto">
             <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">System Prerequisites</span>
             <div className="flex flex-col space-y-1">
               {guide.requirements.map((req, rIdx) => (

@@ -9,7 +9,7 @@ export interface CommandSection {
 export interface TechnologyGuide {
   id: string;
   name: string;
-  category: 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI' | 'Security' | 'Mobile';
+  category: 'Learning' | 'Frontend' | 'Backend' | 'Languages' | 'Databases' | 'Cloud' | 'DevOps' | 'Linux' | 'AI' | 'Security' | 'Mobile';
   overview: string;
   requirements: CommandSection[];
   installation: CommandSection[];
@@ -26,6 +26,85 @@ export interface TechnologyGuide {
 }
 
 export const commandsData: Record<string, TechnologyGuide> = {
+  learning: {
+    id: 'learning',
+    name: 'Web Core Learning',
+    category: 'Learning',
+    overview: 'A complete chapter-wise learning path for HTML5, CSS3, and JavaScript, ranging from absolute beginner basics to advanced expert implementations with interactive code examples.',
+    requirements: [],
+    installation: [],
+    projectCreation: [],
+    run: [
+      {
+        title: '🌐 Chapter 1: HTML5 Structure (Basic)',
+        description: 'Core concepts of semantic markup, standard page structure, input controls, and web media elements.',
+        list: [
+          '1.1 Document Structure|Basic HTML5 standard boilerplate configuration|<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Document</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n</body>\n</html>',
+          '1.2 Semantic Elements|Structure web layouts with header, nav, main, article, and footer sections|<header>\n  <nav>Navigation</nav>\n</header>\n<main>\n  <article>\n    <h2>Article Title</h2>\n    <p>Content</p>\n  </article>\n</main>\n<footer>Footer</footer>',
+          '1.3 Input Forms|Standard forms with label, email, password validation inputs, and submit button|<form action="/submit" method="POST">\n  <label for="email">Email Address:</label>\n  <input type="email" id="email" name="email" required>\n  <button type="submit">Submit Info</button>\n</form>',
+          '1.4 Media Embeds|Embedding images, video players, and audio media tags|<img src="banner.jpg" alt="Banner Image" width="400">\n<video src="clip.mp4" controls width="300">\n  Your browser does not support the video tag.\n</video>'
+        ]
+      },
+      {
+        title: '🎨 Chapter 2: CSS3 Styling & Layouts (Intermediate)',
+        description: 'Harness the styling power of CSS selectors, box modeling, Flexbox alignments, CSS Grid layouts, media queries, and transition animations.',
+        list: [
+          '2.1 Selectors & Specificity|Targeting elements via classes, IDs, elements, and structural attributes|/* ID selector (highest) */\n#main-header {\n  color: #8b5cf6;\n}\n/* Class selector */\n.card-container p > span.highlight {\n  background-color: yellow;\n}',
+          '2.2 Box Model|Adjust margin, borders, padding, and layout sizing boundaries|* {\n  box-sizing: border-box;\n}\n.box {\n  width: 300px;\n  padding: 20px;\n  border: 1px solid #ccc;\n  margin: 10px;\n}',
+          '2.3 Flexbox Layout|Dynamic layout alignment and spacing along horizontal and vertical axises|.flex-container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n}',
+          '2.4 CSS Grid Layout|Constructing two-dimensional row-and-column layout layouts|.grid-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 16px;\n}',
+          '2.5 Transitions & Animations|Creating smooth interface micro-interactions and custom keyframe animations|.btn-primary {\n  transition: background-color 0.3s ease, transform 0.2s;\n}\n.btn-primary:hover {\n  background-color: #8b5cf6;\n  transform: translateY(-2px);\n}',
+          '2.6 Responsive Queries|Applying styling breakpoints for mobile, tablet, and desktop viewports|@media (max-width: 768px) {\n  .sidebar {\n    display: none;\n  }\n  .content {\n    width: 100%;\n  }\n}'
+        ]
+      },
+      {
+        title: '⚡ Chapter 3: JavaScript Core Concepts (Intermediate)',
+        description: 'Mastering JavaScript primitives, let/const variable scopes, control flow structures, arrow functions, and arrays.',
+        list: [
+          '3.1 Variables & Scopes|Declaring block-scoped variables and read-only constants|const maxLimit = 100;\nlet currentCount = 0;\nconst user = { name: "Alice", active: true };\nconsole.log(typeof maxLimit); // "number"',
+          '3.2 Modern Arrow Functions|Writing arrow syntax functions with implicit returns|const multiply = (a, b) => a * b;\nconsole.log(multiply(5, 10)); // Output: 50',
+          '3.3 Array Iterators|Iterating lists using filter mapping, reductions, and search tools|const numbers = [1, 2, 3, 4, 5];\nconst doubledEvens = numbers\n  .filter(n => n % 2 === 0)\n  .map(n => n * 2);\nconsole.log(doubledEvens); // Output: [4, 8]',
+          '3.4 Destructuring Syntax|Unpacking values from array structures and objects|const profile = { username: "guest", role: "user" };\nconst { username, role } = profile;\nconsole.log(username); // Output: "guest"'
+        ]
+      },
+      {
+        title: '🌳 Chapter 4: JS DOM & Async Operations (Expert)',
+        description: 'Direct interactions with the Document Object Model, events handling, creating nodes, and async network operations.',
+        list: [
+          '4.1 Select & Edit Elements|Querying DOM nodes and changing contents/classes|const header = document.querySelector("#main-title");\nconst listItems = document.querySelectorAll(".item");\nheader.textContent = "New Web Core Title";',
+          '4.2 Custom Event Listeners|Binding user interactions (clicks, inputs, submits)|const button = document.querySelector(".btn-submit");\nbutton.addEventListener("click", (event) => {\n  event.preventDefault();\n  console.log("Submit button clicked!");\n});',
+          '4.3 Create & Append Nodes|Creating, adjusting, and appending elements dynamically|const alertBox = document.createElement("div");\nalertBox.className = "alert-message shadow";\nalertBox.textContent = "Operation completed successfully!";\ndocument.body.appendChild(alertBox);',
+          '4.4 Async Fetch API|Performing asynchronous REST API requests with async/await|async function fetchUserData() {\n  try {\n    const response = await fetch("https://api.github.com/users/lalit");\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n}'
+        ]
+      },
+      {
+        title: '🧠 Chapter 5: Advanced JavaScript APIs (Expert)',
+        description: 'Advanced ES6 Class patterns, Promise orchestrations, closure scoping, browser storage client APIs, and module bundles.',
+        list: [
+          '5.1 Promises & Async Flows|Handling callbacks, chains, and promise collections|const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));\nwait(1000).then(() => console.log("1 second passed"));\nPromise.all([p1, p2]).then(results => console.log(results));',
+          '5.2 ES6 Classes & OOP|Structuring Object-Oriented patterns using ES6 class specifications|class User {\n  constructor(name) {\n    this.name = name;\n  }\n  sayHello() {\n    return \`Hello, \${this.name}\`;\n  }\n}',
+          '5.3 Closures & Scopes|Understanding function scope boundaries and memory retention|function createCounter() {\n  let count = 0;\n  return function() {\n    count++;\n    return count;\n  };\n}\nconst counter = createCounter();',
+          '5.4 Web Storage Client APIs|Cache records dynamically using LocalStorage and SessionStorage|localStorage.setItem("user_theme", "dark");\nconst cachedTheme = localStorage.getItem("user_theme");\nlocalStorage.removeItem("user_theme");',
+          '5.5 JavaScript ES Modules|Separating concerns across files utilizing Import and Export statements|// math.js: export const add = (a, b) => a + b;\n// app.js: import { add } from "./math.js";\nconsole.log(add(5, 7));'
+        ]
+      }
+    ],
+    build: [],
+    troubleshooting: [],
+    usefulLinks: [
+      { label: 'MDN Web Docs (HTML)', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+      { label: 'MDN Web Docs (CSS)', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+      { label: 'MDN Web Docs (JS)', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' }
+    ],
+    commonErrors: [
+      { error: 'Uncaught TypeError: Cannot read properties of null', solution: 'Ensure the DOM element is fully loaded before selecting it (use DOMContentLoaded event or defer script tags).' }
+    ],
+    bestPractices: [
+      'Write clean, semantic HTML5 elements for screen-reader accessibility (A11y).',
+      'Prefer CSS Grid and Flexbox over absolute positioning rules.',
+      'Always utilize strict comparison triggers (===) instead of soft comparison checks (==).'
+    ]
+  },
   frontend: {
     id: 'frontend',
     name: 'Frontend Commands',

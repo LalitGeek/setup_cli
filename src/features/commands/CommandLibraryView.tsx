@@ -92,6 +92,12 @@ const getTechTheme = (techId: string) => {
       bg: 'from-purple-950/20 via-transparent to-transparent',
       border: 'border-purple-500/20'
     },
+    learning: {
+      badge: 'bg-indigo-950/40 border-indigo-800 text-indigo-300',
+      text: 'text-indigo-400',
+      bg: 'from-indigo-950/20 via-transparent to-transparent',
+      border: 'border-indigo-500/20'
+    },
     arch: {
       badge: 'bg-sky-950/40 border-sky-800 text-sky-300',
       text: 'text-sky-400',
@@ -165,7 +171,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     setTimeout(() => setCopiedSectionIdx(null), 2000);
   };
 
-  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'backend' || guide.id === 'hacking' || guide.id === 'termux') {
+  if (guide.id === 'linux' || guide.id === 'frontend' || guide.id === 'backend' || guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'learning') {
     const filteredCategories = guide.run.map(category => {
       if (!category.list) return null;
       
@@ -196,7 +202,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 {guide.category}
               </span>
               <h1 className="text-xl md:text-3xl font-extrabold text-white mt-2.5 tracking-tight flex items-center space-x-2">
-                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'backend' ? '⚙️ Backend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guide.id === 'termux' ? '📱 Termux Command Library' : '🐧 Linux Commands Directory'}</span>
+                <span>{guide.id === 'frontend' ? '⚡ Frontend Setup Directory' : guide.id === 'backend' ? '⚙️ Backend Setup Directory' : guide.id === 'hacking' ? '🛡️ Cybersecurity & Hacking Tools' : guide.id === 'termux' ? '📱 Termux Command Library' : guide.id === 'learning' ? '📚 Web Core Learning Curriculum' : '🐧 Linux Commands Directory'}</span>
               </h1>
               <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-3xl leading-relaxed">
                 {guide.overview}
@@ -208,7 +214,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'backend' ? "Search backend setups, e.g. django, express, laravel..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guide.id === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : "Search commands, e.g. ls, grep, ufw..."}
+                placeholder={guide.id === 'frontend' ? "Search frontend setups, e.g. next, tailwind..." : guide.id === 'backend' ? "Search backend setups, e.g. django, express, laravel..." : guide.id === 'hacking' ? "Search hacking tools, e.g. nmap, hydra..." : guide.id === 'termux' ? "Search termux commands, e.g. pkg, setup, ssh..." : guide.id === 'learning' ? "Search chapters or concepts, e.g. flexbox, classes..." : "Search commands, e.g. ls, grep, ufw..."}
                 value={linuxSearch}
                 onChange={(e) => setLinuxSearch(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition"
@@ -301,7 +307,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                         <div
                           key={itemIdx}
                           onClick={() => {
-                            if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend') {
+                            if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning') {
                               setSelectedTool({
                                 name: cmd,
                                 description: desc,
@@ -312,7 +318,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             }
                           }}
                           className="bg-gray-900/40 border border-white/5 p-4 rounded-xl hover:border-purple-500/30 hover:bg-purple-950/5 transition cursor-pointer group flex flex-col justify-between space-y-3 relative"
-                          title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? "Click to view full tool manual & options" : "Click to copy usage example"}
+                          title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning' ? "Click to view concept details & examples" : "Click to copy usage example"}
                         >
                           <div>
                             <div className="flex items-center justify-between">
@@ -320,7 +326,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                                 {cmd}
                               </code>
                               <span className="text-[9px] uppercase text-gray-500 font-mono tracking-wider font-bold bg-white/5 border border-white/5 px-1.5 py-0.5 rounded">
-                                {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? 'utility' : 'command'}
+                                {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning' ? 'concept' : 'command'}
                               </span>
                             </div>
                             <p className="text-xs text-gray-400 leading-relaxed mt-2">
@@ -336,7 +342,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend') {
+                                if (guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning') {
                                   setSelectedTool({
                                     name: cmd,
                                     description: desc,
@@ -347,9 +353,9 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                                 }
                               }}
                               className="p-1 rounded text-gray-500 hover:text-white hover:bg-white/5 transition flex-shrink-0"
-                              title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? "Open Tool Manual" : "Copy Example Usage"}
+                              title={guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning' ? "Open Concept Guide" : "Copy Example Usage"}
                             >
-                              {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' ? (
+                              {guide.id === 'hacking' || guide.id === 'termux' || guide.id === 'backend' || guide.id === 'learning' ? (
                                 <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover/code:opacity-100 transition text-purple-400" />
                               ) : isCopied ? (
                                 <Check className="w-3.5 h-3.5 text-green-400" />
@@ -374,7 +380,7 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
           </div>
         </div>
 
-        {/* Premium Tool Sheet Modal (Cybersecurity Only) */}
+        {/* Premium Tool Sheet Modal (Cybersecurity / Learning / Backend) */}
         {selectedTool && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
             <div className="bg-gray-900 border border-white/10 w-full max-w-4xl h-[90vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl animate-scale-in">
@@ -382,10 +388,16 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
               {/* Modal Head */}
               <div className="px-6 py-4 bg-gray-950 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
-                  <Shield className="w-5 h-5 text-purple-400" />
+                  {guide.id === 'learning' ? (
+                    <BookOpen className="w-5 h-5 text-indigo-400" />
+                  ) : (
+                    <Shield className="w-5 h-5 text-purple-400" />
+                  )}
                   <div>
                     <h2 className="text-lg font-extrabold text-white">{selectedTool.name}</h2>
-                    <span className="text-[10px] text-gray-400 font-medium">Cybersecurity Utility Reference Card</span>
+                    <span className="text-[10px] text-gray-400 font-medium">
+                      {guide.id === 'learning' ? 'Web Core Learning Reference Card' : guide.id === 'backend' ? 'Backend Reference Card' : guide.id === 'termux' ? 'Termux Command Reference Card' : 'Cybersecurity Utility Reference Card'}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -404,64 +416,88 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                 
                 {/* 1. Overview */}
                 <div className="bg-purple-950/10 border border-purple-900/20 p-4.5 rounded-xl">
-                  <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1">Tool Overview</span>
+                  <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1">
+                    {guide.id === 'learning' ? 'Concept Explanation' : 'Tool Overview'}
+                  </span>
                   <p className="text-xs md:text-sm text-gray-200 leading-relaxed">
-                    {selectedTool.description} This application is loaded onto testing setups to verify hosts, endpoints, and directories for system vulnerabilities.
+                    {selectedTool.description} {guide.id !== 'learning' && 'This application is loaded onto testing setups to verify hosts, endpoints, and directories for system vulnerabilities.'}
                   </p>
                 </div>
 
-                {/* 2. Installation */}
-                <div>
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center space-x-1.5">
-                    <Terminal className="w-4 h-4 text-purple-400" />
-                    <span>Installation commands</span>
-                  </h3>
-                  <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center">
-                    <code className="font-mono text-green-400 text-xs">
-                      sudo apt-get update && sudo apt-get install -y {selectedTool.name.toLowerCase()}
-                    </code>
-                    <button
-                      onClick={() => handleCopyModalCmd(`sudo apt-get update && sudo apt-get install -y ${selectedTool.name.toLowerCase()}`)}
-                      className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-white/5 transition"
-                    >
-                      <Copy className="w-4 h-4" />
-                    </button>
+                {/* 2. Installation (Hidden for learning concepts) */}
+                {guide.id !== 'learning' && (
+                  <div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center space-x-1.5">
+                      <Terminal className="w-4 h-4 text-purple-400" />
+                      <span>Installation commands</span>
+                    </h3>
+                    <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center">
+                      <code className="font-mono text-green-400 text-xs">
+                        sudo apt-get update && sudo apt-get install -y {selectedTool.name.toLowerCase()}
+                      </code>
+                      <button
+                        onClick={() => handleCopyModalCmd(`sudo apt-get update && sudo apt-get install -y ${selectedTool.name.toLowerCase()}`)}
+                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-white/5 transition"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* 3. Basic Syntax & Commands */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Command Options</h3>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">
+                      {guide.id === 'learning' ? 'Associated Technologies' : 'Command Options'}
+                    </h3>
                     <div className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2.5 text-xs text-gray-300">
-                      <div className="flex justify-between border-b border-white/5 pb-1">
-                        <code className="text-purple-400">-h, --help</code>
-                        <span className="text-gray-500">Show help context</span>
-                      </div>
-                      <div className="flex justify-between border-b border-white/5 pb-1">
-                        <code className="text-purple-400">-v, --verbose</code>
-                        <span className="text-gray-500">Enable verbose logging</span>
-                      </div>
-                      <div className="flex justify-between border-b border-white/5 pb-1">
-                        <code className="text-purple-400">-o, --output</code>
-                        <span className="text-gray-500">Save report to path</span>
-                      </div>
+                      {(guide.id === 'learning'
+                        ? [
+                            { code: 'HTML5', desc: 'Standard markup structures' },
+                            { code: 'CSS3', desc: 'Sleek presentation styling layout' },
+                            { code: 'JavaScript', desc: 'Dynamic client program script' }
+                          ]
+                        : [
+                            { code: '-h, --help', desc: 'Show help context' },
+                            { code: '-v, --verbose', desc: 'Enable verbose logging' },
+                            { code: '-o, --output', desc: 'Save report to path' }
+                          ]
+                      ).map((opt, oIdx) => (
+                        <div key={oIdx} className="flex justify-between border-b border-white/5 pb-1">
+                          <code className="text-purple-400">{opt.code}</code>
+                          <span className="text-gray-500">{opt.desc}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
                   <div>
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Common Use Cases</h3>
                     <ul className="bg-black/20 border border-white/5 rounded-xl p-4 space-y-2 text-xs text-gray-300 list-disc list-inside">
-                      <li>Endpoint scanning & discovery</li>
-                      <li>Diagnostic port verification</li>
-                      <li>Credential strength auditing</li>
+                      {(guide.id === 'learning'
+                        ? [
+                            'Building responsive layouts and page segments',
+                            'Validating inputs & dynamic DOM rendering',
+                            'Caching client preferences & state triggers'
+                          ]
+                        : [
+                            'Endpoint scanning & discovery',
+                            'Diagnostic port verification',
+                            'Credential strength auditing'
+                          ]
+                      ).map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
 
                 {/* 4. Example Command & Output explanation */}
                 <div>
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">Example Commands</h3>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">
+                    {guide.id === 'learning' ? 'Example Code Snippet' : 'Example Commands'}
+                  </h3>
                   <div className="bg-black/50 border border-white/5 rounded-xl p-4 flex justify-between items-center mb-3">
                     <code className="font-mono text-purple-300 text-xs">
                       {selectedTool.example}
@@ -474,9 +510,11 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                     </button>
                   </div>
                   <div className="bg-gray-950/60 border border-white/5 rounded-xl p-4 space-y-1">
-                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Output Explanation</span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
+                      {guide.id === 'learning' ? 'Execution & Presentation' : 'Output Explanation'}
+                    </span>
                     <p className="text-xs text-gray-400 leading-relaxed">
-                      Executing this output prints scanning telemetry to standard out. Successful responses return system fingerprints, server banners, or operational response flags.
+                      {guide.id === 'learning' ? 'Integrating this code snippet renders structure elements, styles the viewport, or manipulates DOM properties.' : 'Executing this output prints scanning telemetry to standard out. Successful responses return system fingerprints, server banners, or operational response flags.'}
                     </p>
                   </div>
                 </div>
@@ -486,13 +524,13 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
                   <div className="bg-purple-950/5 border border-purple-950/20 p-4 rounded-xl">
                     <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider block mb-1.5">Best Practices</span>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      Run commands inside secure sandbox nodes. Limit parallel socket requests to prevent service degradation.
+                      {guide.id === 'learning' ? 'Write clean, semantic layout markers and scope your variables to prevent memory leakage.' : 'Run commands inside secure sandbox nodes. Limit parallel socket requests to prevent service degradation.'}
                     </p>
                   </div>
                   <div className="bg-red-950/5 border border-red-950/25 p-4 rounded-xl">
                     <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider block mb-1.5">Troubleshooting</span>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      If commands return socket timeouts, verify system paths and ensure firewall rules are configured to permit local egress.
+                      {guide.id === 'learning' ? 'Double check class naming references, check scripts console logs, and verify styling properties in inspector.' : 'If commands return socket timeouts, verify system paths and ensure firewall rules are configured to permit local egress.'}
                     </p>
                   </div>
                 </div>

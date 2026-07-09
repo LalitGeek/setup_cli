@@ -168,16 +168,17 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
   const nextConcept = getNextConcept();
 
   // Ebook reader concepts array mapping
-  const ebookConcepts: { name: string; description: string; example: string; levelTitle: string }[] = [];
+  const ebookConcepts: { name: string; description: string; example: string; levelTitle: string; sectionIndex: number }[] = [];
   if (guide.id === 'learning') {
-    guide.run.forEach(level => {
+    guide.run.forEach((level, sIdx) => {
       level.list?.forEach(item => {
         const [cmd, desc, example] = item.split('|');
         ebookConcepts.push({
           name: cmd,
           description: desc,
           example: example || cmd,
-          levelTitle: level.title
+          levelTitle: level.title,
+          sectionIndex: sIdx
         });
       });
     });
@@ -244,23 +245,12 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     const prevEbookConcept = activeEbookIndex > 0 ? ebookConcepts[activeEbookIndex - 1] : null;
     const nextEbookConcept = activeEbookIndex < ebookConcepts.length - 1 ? ebookConcepts[activeEbookIndex + 1] : null;
 
-    // Helper to determine if a level belongs to HTML or CSS
-    const isHtmlLevel = (title: string) => {
-      if (title.toUpperCase().includes('CSS')) return false;
-      const match = title.match(/Level\s+(\d+)/i);
-      if (match) {
-        const num = parseInt(match[1], 10);
-        if (num >= 21) return false;
-      }
-      return true;
-    };
-
     // Auto-update active tab when navigating
     const handleSetEbookIndex = (index: number) => {
       setActiveEbookIndex(index);
       const concept = ebookConcepts[index];
       if (concept) {
-        if (isHtmlLevel(concept.levelTitle)) {
+        if (concept.sectionIndex <= 21) {
           setEbookSubTab('HTML');
         } else {
           setEbookSubTab('CSS');
@@ -269,16 +259,16 @@ export const CommandLibraryView: React.FC<CommandLibraryViewProps> = ({
     };
 
     // Filter levels for left sidebar index based on search and selected roadmap tab
-    const filteredSidebarLevels = guide.run.map(level => {
+    const filteredSidebarLevels = guide.run.map((level, idx) => {
       const matched = level.list?.filter(item => {
         const [cmd, desc] = item.split('|');
         const q = linuxSearch.toLowerCase();
         return cmd.toLowerCase().includes(q) || desc.toLowerCase().includes(q);
       });
-      return { ...level, list: matched || [] };
+      return { ...level, list: matched || [], originalIndex: idx };
     }).filter(level => {
       if (level.list.length === 0) return false;
-      const isHtml = isHtmlLevel(level.title);
+      const isHtml = level.originalIndex <= 21;
       return ebookSubTab === 'HTML' ? isHtml : !isHtml;
     });
 

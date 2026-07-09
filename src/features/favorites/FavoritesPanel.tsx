@@ -51,7 +51,7 @@ export const FavoritesPanel: React.FC<FavoritesPanelProps> = ({
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(favorites, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "devcommand_favorites_export.json");
+    downloadAnchor.setAttribute("download", "setup_cli_favorites_export.json");
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

@@ -23,7 +23,7 @@ export const ChatInterface: React.FC = () => {
     {
       id: 'welcome',
       role: 'assistant',
-      content: `### Welcome to DevCommand AI!
+      content: `### Welcome to Setup CLI!
 
 I am your local development assistant. Ask me anything about commands, deployment configurations, environment variables, or package setup.
 
@@ -144,7 +144,7 @@ I am your local development assistant. Ask me anything about commands, deploymen
                   <span className="uppercase text-purple-400 font-semibold">{language || 'code'}</span>
                   <div className="flex items-center space-x-3.5">
                     <button
-                      onClick={() => handleDownloadCode(code, `devcommand_${language || 'script'}.sh`)}
+                      onClick={() => handleDownloadCode(code, `setup_cli_${language || 'script'}.sh`)}
                       className="hover:text-purple-300 transition flex items-center space-x-1"
                       title="Download script"
                     >

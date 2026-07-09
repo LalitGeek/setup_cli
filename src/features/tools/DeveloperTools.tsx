@@ -38,7 +38,7 @@ export const DeveloperTools: React.FC = () => {
 
   // State variables for various tools
   // JSON Formatter State
-  const [jsonInput, setJsonInput] = useState<string>('{\n  "name": "DevCommand AI",\n  "status": "active",\n  "features": ["AI Chat", "Command Library", "Developer Utilities"]\n}');
+  const [jsonInput, setJsonInput] = useState<string>('{\n  "name": "Setup CLI",\n  "status": "active",\n  "features": ["AI Chat", "Command Library", "Developer Utilities"]\n}');
   const [jsonOutput, setJsonOutput] = useState<string>('');
   const [jsonIndent, setJsonIndent] = useState<number>(2);
 
@@ -49,7 +49,7 @@ export const DeveloperTools: React.FC = () => {
   const [jwtStatus, setJwtStatus] = useState<{ valid: boolean; message: string }>({ valid: true, message: '' });
 
   // Base64 State
-  const [base64Input, setBase64Input] = useState<string>('DevCommand AI is premium!');
+  const [base64Input, setBase64Input] = useState<string>('Setup CLI is premium!');
   const [base64Output, setBase64Output] = useState<string>('');
   const [base64Mode, setBase64Mode] = useState<'encode' | 'decode'>('encode');
 
@@ -59,7 +59,7 @@ export const DeveloperTools: React.FC = () => {
 
   // Regex State
   const [regexPattern, setRegexPattern] = useState<string>('\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b');
-  const [regexText, setRegexText] = useState<string>('Please contact us at support@devcommand.ai or sales-team@example.org.');
+  const [regexText, setRegexText] = useState<string>('Please contact us at support@setupcli.com or sales-team@example.org.');
   const [regexFlags, setRegexFlags] = useState<string>('g');
   const [regexMatches, setRegexMatches] = useState<string[]>([]);
 

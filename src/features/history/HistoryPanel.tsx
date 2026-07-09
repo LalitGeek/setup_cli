@@ -22,8 +22,8 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
   // Terminal emulator states
   const [terminalInput, setTerminalInput] = useState<string>('');
   const [terminalLines, setTerminalLines] = useState<string[]>([
-    'DevCommand AI Local Shell [Version 1.0.0]',
-    '(c) 2026 DevCommand AI Corporation. All rights reserved.',
+    'Setup CLI Local Shell [Version 1.0.0]',
+    '(c) 2026 Setup CLI Corporation. All rights reserved.',
     '',
     'Type "help" to view available commands, "clear" to empty history.',
     ''
@@ -40,7 +40,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
     const cmd = terminalInput.trim().toLowerCase();
     if (!cmd) return;
 
-    const newLines = [...terminalLines, `devcommand@user:~$ ${terminalInput}`];
+    const newLines = [...terminalLines, `setup_cli@user:~$ ${terminalInput}`];
     
     if (cmd === 'clear') {
       setTerminalLines([]);
@@ -202,7 +202,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
         </div>
 
         <form onSubmit={handleTerminalSubmit} className="bg-gray-950 p-2 border-t border-white/5 flex items-center">
-          <span className="text-xs text-purple-400 font-semibold mr-1.5">devcommand@user:~$</span>
+          <span className="text-xs text-purple-400 font-semibold mr-1.5">setup_cli@user:~$</span>
           <input
             type="text"
             value={terminalInput}

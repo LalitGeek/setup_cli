@@ -142,7 +142,7 @@ git init
 git add .
 
 # Commit changes
-git commit -m "feat: configure devcommand center"
+git commit -m "feat: configure setup_cli center"
 
 # Push to GitHub
 git branch -M main
@@ -201,7 +201,7 @@ sudo nginx -s reload
   }
 ];
 
-const fallbackResponse = `# DevCommand AI Assistant
+const fallbackResponse = `# Setup CLI AI Assistant
 
 I am your developer assistant. I can help you with commands, setups, syntax, and debugging logs. 
 

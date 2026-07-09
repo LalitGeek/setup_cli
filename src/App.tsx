@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Sparkles, Cpu, Search, Moon, Sun, Menu, X
+  Sparkles, Cpu, Search, Menu, X
 } from 'lucide-react';
 
 // Import components
@@ -62,19 +62,13 @@ export const App: React.FC = () => {
   const [selectedTechId, setSelectedTechId] = useState<string>('react');
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
-  // Theme Sync
+  // Enforce Dark Mode
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      root.style.backgroundColor = '#0b0c10';
-    } else {
-      root.classList.remove('dark');
-      root.style.backgroundColor = '#f9fafb';
-    }
-  }, [theme]);
+    root.classList.add('dark');
+    root.style.backgroundColor = '#0b0c10';
+  }, []);
 
   // Global Keyboard Shortcuts
   useEffect(() => {
@@ -115,16 +109,13 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className={`flex h-screen overflow-hidden text-sm select-none transition-colors duration-200 ${theme === 'dark' ? 'bg-[#0b0c10] text-[#f3f4f6]' : 'bg-[#f3f4f6] text-[#1f2937]'
-      }`}>
+    <div className="flex h-screen overflow-hidden text-sm select-none transition-colors duration-200 bg-[#0b0c10] text-[#f3f4f6]">
 
       {/* Mobile Header Bar (Only visible on mobile screens) */}
-      <div className={`md:hidden fixed top-0 left-0 right-0 h-14 border-b px-4 flex items-center justify-between z-30 ${theme === 'dark' ? 'bg-[#0f111a] border-white/5' : 'bg-white border-gray-200'
-        }`}>
+      <div className="md:hidden fixed top-0 left-0 right-0 h-14 border-b px-4 flex items-center justify-between z-30 bg-[#0f111a] border-white/5">
         <button
           onClick={() => setSidebarOpen(true)}
-          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${theme === 'dark' ? 'hover:bg-white/5 text-gray-400 hover:text-white' : 'hover:bg-gray-100 text-gray-600 hover:text-black'
-            }`}
+          className="p-1.5 rounded-lg transition-colors cursor-pointer hover:bg-white/5 text-gray-400 hover:text-white"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -136,13 +127,8 @@ export const App: React.FC = () => {
           </span>
         </div>
 
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${theme === 'dark' ? 'hover:bg-white/5 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
-            }`}
-        >
-          {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-        </button>
+        {/* Empty placeholder for flex alignment layout balance */}
+        <div className="w-8" />
       </div>
 
       {/* Sidebar Backdrop (Mobile overlay close trigger) */}
@@ -154,9 +140,9 @@ export const App: React.FC = () => {
       )}
 
       {/* Sidebar Layout */}
-      <aside className={`fixed md:relative inset-y-0 left-0 w-64 border-r flex flex-col transition-transform duration-300 z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        } ${theme === 'dark' ? 'bg-[#0f111a] border-white/5' : 'bg-white border-gray-200'
-        }`}>
+      <aside className={`fixed md:relative inset-y-0 left-0 w-64 border-r flex flex-col transition-transform duration-300 z-50 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      } bg-[#0f111a] border-white/5`}>
 
         {/* Brand Header */}
         <div className="p-4.5 border-b border-white/5 flex items-center justify-between">
@@ -169,7 +155,7 @@ export const App: React.FC = () => {
 
           <button
             onClick={() => setSidebarOpen(false)}
-            className={`md:hidden p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 cursor-pointer`}
+            className="md:hidden p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -179,10 +165,7 @@ export const App: React.FC = () => {
         <div className="p-3">
           <button
             onClick={() => setSearchOpen(true)}
-            className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg border text-left transition duration-150 cursor-pointer ${theme === 'dark'
-              ? 'bg-gray-950/60 border-white/5 text-gray-500 hover:border-purple-500/40 hover:text-gray-400'
-              : 'bg-gray-50 border-gray-200 text-gray-400 hover:border-purple-400/50 hover:text-gray-600'
-              }`}
+            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg border text-left transition duration-150 cursor-pointer bg-gray-950/60 border-white/5 text-gray-500 hover:border-purple-500/40 hover:text-gray-400"
           >
             <Search className="w-3.5 h-3.5" />
             <span className="text-xs flex-1">Search Guides...</span>
@@ -199,10 +182,11 @@ export const App: React.FC = () => {
               setActiveView('chat');
               setSidebarOpen(false);
             }}
-            className={`w-full text-left px-3 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center space-x-2.5 ${activeView === 'chat'
-              ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/10'
-              : theme === 'dark' ? 'text-gray-400 hover:bg-white/5 hover:text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-black'
-              }`}
+            className={`w-full text-left px-3 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center space-x-2.5 ${
+              activeView === 'chat'
+                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/10'
+                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+            }`}
           >
             <Sparkles className="w-4 h-4" />
             <span>AI Assistant</span>
@@ -213,10 +197,11 @@ export const App: React.FC = () => {
               setActiveView('tools');
               setSidebarOpen(false);
             }}
-            className={`w-full text-left px-3 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center space-x-2.5 ${activeView === 'tools'
-              ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/10'
-              : theme === 'dark' ? 'text-gray-400 hover:bg-white/5 hover:text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-black'
-              }`}
+            className={`w-full text-left px-3 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center space-x-2.5 ${
+              activeView === 'tools'
+                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/10'
+                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+            }`}
           >
             <Cpu className="w-4 h-4" />
             <span>Developer Utilities</span>
@@ -238,10 +223,11 @@ export const App: React.FC = () => {
                     <button
                       key={tech.id}
                       onClick={() => handleSelectTech(tech.id)}
-                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition ${activeView === 'library' && selectedTechId === tech.id
-                        ? 'bg-purple-950/40 text-purple-400 font-bold border-l-2 border-purple-500'
-                        : theme === 'dark' ? 'text-gray-400 hover:bg-white/5 hover:text-gray-200' : 'text-gray-600 hover:bg-gray-100 hover:text-black'
-                        }`}
+                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition ${
+                        activeView === 'library' && selectedTechId === tech.id
+                          ? 'bg-purple-950/40 text-purple-400 font-bold border-l-2 border-purple-500'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                      }`}
                     >
                       {tech.name}
                     </button>
@@ -252,17 +238,10 @@ export const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Sidebar Footer - Theme Toggle (Hidden on mobile as it is inside the header) */}
+        {/* Sidebar Footer */}
         <div className="hidden md:flex p-3 border-t border-white/5 items-center justify-between bg-black/10">
           <span className="text-[10px] text-gray-500 font-mono">Local Mode</span>
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${theme === 'dark' ? 'hover:bg-white/5 text-gray-400 hover:text-white' : 'hover:bg-gray-100 text-gray-600 hover:text-black'
-              }`}
-            title="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-          </button>
+          <span className="text-[10px] text-purple-400 font-semibold tracking-wider uppercase bg-purple-950/40 border border-purple-900 px-2 py-0.5 rounded-md">v1.0.0</span>
         </div>
       </aside>
 
@@ -294,4 +273,5 @@ export const App: React.FC = () => {
     </div>
   );
 };
+
 export default App;

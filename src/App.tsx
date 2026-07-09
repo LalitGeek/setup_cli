@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Terminal, Sparkles, Cpu, Search, Moon, Sun, Menu, X
+  Sparkles, Cpu, Search, Moon, Sun, Menu, X
 } from 'lucide-react';
 
 // Import components
@@ -15,6 +15,46 @@ import type { TechnologyGuide } from './features/commands/commandsData';
 
 // Types for navigation
 type ViewType = 'chat' | 'library' | 'tools';
+
+// Custom Brand SVG Icon Logo for Setup CLI
+const LogoIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="app-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#d946ef" />
+        <stop offset="50%" stop-color="#8b5cf6" />
+        <stop offset="100%" stop-color="#3b82f6" />
+      </linearGradient>
+      <linearGradient id="app-glow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e879f9" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.05" />
+      </linearGradient>
+    </defs>
+    <polygon 
+      points="50,8 88,28 88,72 50,92 12,72 12,28" 
+      fill="url(#app-glow-grad)" 
+      stroke="url(#app-logo-grad)" 
+      stroke-width="5" 
+      stroke-linejoin="round" 
+    />
+    <path 
+      d="M 32,34 L 52,50 L 32,66" 
+      stroke="#ffffff" 
+      stroke-width="8" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+    />
+    <line 
+      x1="60" 
+      y1="66" 
+      x2="74" 
+      y2="66" 
+      stroke="url(#app-logo-grad)" 
+      stroke-width="8" 
+      stroke-linecap="round" 
+    />
+  </svg>
+);
 
 export const App: React.FC = () => {
   // Navigation & Core States
@@ -90,9 +130,7 @@ export const App: React.FC = () => {
         </button>
 
         <div className="flex items-center space-x-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center">
-            <Terminal className="w-4 h-4 text-white" />
-          </div>
+          <LogoIcon className="w-7 h-7" />
           <span className="font-bold tracking-tight text-white bg-gradient-to-r from-white via-purple-300 to-purple-500 bg-clip-text text-transparent">
             Setup CLI
           </span>
@@ -123,9 +161,7 @@ export const App: React.FC = () => {
         {/* Brand Header */}
         <div className="p-4.5 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
-              <Terminal className="w-4.5 h-4.5 text-white" />
-            </div>
+            <LogoIcon className="w-8 h-8 filter drop-shadow-[0_4px_10px_rgba(139,92,246,0.15)]" />
             <span className="font-extrabold tracking-tight text-white bg-gradient-to-r from-white via-purple-300 to-purple-500 bg-clip-text text-transparent">
               Setup CLI
             </span>

@@ -361,7 +361,7 @@ I am your local development assistant. Ask me anything about commands, deploymen
                 handleSendMessage(inputValue);
               }
             }}
-            placeholder="Ask anything or setup a command... (Ctrl + / to focus)"
+            placeholder="Ask anything or setup a command..."
             className="flex-1 bg-transparent border-0 text-sm text-white placeholder-gray-500 focus:outline-none resize-none h-9 py-1.5"
           />
 

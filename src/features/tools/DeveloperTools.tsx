@@ -425,8 +425,8 @@ export const DeveloperTools: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-full overflow-hidden bg-gray-950/40 rounded-xl border border-white/5">
-      {/* Sidebar List */}
-      <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/10 p-4 overflow-y-auto space-y-1 bg-black/25">
+      {/* Sidebar List (Visible on Desktop only) */}
+      <div className="hidden md:block w-64 border-r border-white/10 p-4 overflow-y-auto space-y-1 bg-black/25">
         <div className="flex items-center space-x-2 px-2 py-1 mb-4 text-purple-400 font-semibold tracking-wider text-xs uppercase">
           <Cpu className="w-4 h-4" />
           <span>Developer Tools</span>
@@ -451,7 +451,27 @@ export const DeveloperTools: React.FC = () => {
       </div>
 
       {/* Main Tool Workspace */}
-      <div className="flex-1 p-6 overflow-y-auto bg-gray-900/10">
+      <div className="flex-1 p-4 md:p-6 overflow-y-auto bg-gray-900/10">
+        
+        {/* Mobile Dropdown utility selector (Visible on Mobile only) */}
+        <div className="block md:hidden mb-5">
+          <label className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Select Utility Tool</label>
+          <select
+            value={activeTool}
+            onChange={(e) => {
+              setActiveTool(e.target.value);
+              setErrorMsg(null);
+            }}
+            className="w-full bg-gray-900 border border-white/10 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+          >
+            {TOOLS_LIST.map((tool) => (
+              <option key={tool.id} value={tool.id}>
+                {tool.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center space-x-2">
@@ -751,7 +771,7 @@ export const DeveloperTools: React.FC = () => {
           {/* CRON GENERATOR */}
           {activeTool === 'cron' && (
             <div className="space-y-4">
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 <div>
                   <label className="text-[10px] text-gray-400 block mb-1">Minute</label>
                   <input type="text" value={cronMin} onChange={(e) => setCronMin(e.target.value)} className="w-full bg-gray-900 border border-white/10 rounded p-1.5 font-mono text-xs text-center text-white" />
